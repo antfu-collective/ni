@@ -1,6 +1,6 @@
 {
   "name": "@antfu/ni",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Smart packages install that sense your current package manager",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
