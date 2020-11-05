@@ -13,11 +13,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: install
-      run: yarn global add @antfu/ni
-
-    - run: ni
-
-    - run: nr lint
-
-    - run: nr test
+    - run: |
+        yarn global add @antfu/ni
+        ni
+        nr lint
+        nr test
