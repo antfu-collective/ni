@@ -19,4 +19,4 @@ test('-D', _('eslint @types/node -D', 'pnpm i eslint @types/node -D'))
 
 test('global', _('eslint -g', 'pnpm i -g eslint'))
 
-test('ci', _('--ci', 'pnpm i --frozen-lockfile'))
+test('frozen', _('--frozen', 'pnpm i --frozen-lockfile'))

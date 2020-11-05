@@ -41,6 +41,14 @@ ni @types/node -D
 # pnpm i axios -D
 ```
 
+```bash
+ni --frozen
+
+# npm ci
+# yarn install --frozen-lockfile
+# pnpm install --frozen-lockfile
+```
+
 ### `nr` - Run
 
 ```bash
@@ -59,8 +67,17 @@ nr dev --port=3000
 # pnpm run dev -- --port=3000
 ```
 
+### Config
+
+```ini
+; ~/.nirc
+
+; default agent will be used for global installs and the fallback when no lock found.
+defaultAgent=npm
+```
+
 ### How?
 
-**ni** assumes that you work with lock files (and you should)
+**ni** assumes that you work with lockfiles (and you should)
 
 Before it runs, it will detect your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` to know current package mangar, and runs the corresponding commands.

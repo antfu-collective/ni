@@ -19,4 +19,4 @@ test('-D', _('eslint @types/node -D', 'yarn add eslint @types/node -D'))
 
 test('global', _('eslint ni -g', 'yarn global add eslint ni'))
 
-test('ci', _('--ci', 'yarn install --frozen-lockfile'))
+test('frozen', _('--frozen', 'yarn install --frozen-lockfile'))

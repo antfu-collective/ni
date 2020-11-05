@@ -1,6 +1,3 @@
-/* eslint-disable no-use-before-define */
-export const DEFAULT_AGENT: Agent = 'npm'
-
 const npmRun = (agent: string) => (args: string[]) => {
   if (args.length > 1)
     return `${agent} run ${args[0]} -- ${args.slice(1).join(' ')}`
@@ -32,11 +29,11 @@ export const AGENTS = {
   },
 }
 
+export type Agent = keyof typeof AGENTS
+export type Command = keyof typeof AGENTS.npm
+
 export const LOCKS: Record<string, Agent> = {
   'pnpm-lock.yaml': 'pnpm',
   'yarn.lock': 'yarn',
   'package-lock.json': 'npm',
 }
-
-export type Agent = keyof typeof AGENTS
-export type Command = keyof typeof AGENTS.npm

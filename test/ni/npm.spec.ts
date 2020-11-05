@@ -19,4 +19,4 @@ test('-D', _('eslint @types/node -D', 'npm i eslint @types/node -D'))
 
 test('global', _('eslint -g', 'npm i -g eslint'))
 
-test('ci', _('--ci', 'npm ci'))
+test('frozen', _('--frozen', 'npm ci'))

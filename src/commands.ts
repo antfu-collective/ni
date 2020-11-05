@@ -2,6 +2,9 @@ import { Agent, AGENTS, Command } from './agents'
 import { exclude } from './utils'
 
 export function getCommand(agent: Agent, commnad: Command, args: string[]) {
+  if (!(agent in AGENTS))
+    throw new Error(`Unsupported agent "${agent}"`)
+
   const c = AGENTS[agent][commnad]
 
   if (typeof c === 'function')
@@ -22,9 +25,9 @@ export function parseNi(agent: Agent, _args: string[]): string {
     command = 'global'
     args = exclude(_args, '-g')
   }
-  else if (_args.includes('--ci')) {
+  else if (_args.includes('--frozen')) {
     command = 'frozen'
-    args = exclude(_args, '--ci')
+    args = exclude(_args, '--frozen')
   }
   else {
     command = 'add'
