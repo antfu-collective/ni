@@ -4,7 +4,7 @@
 
 **ni** - use the right package manager.
 
-`ni` => `npm install` / `yarn add` / `pnpm install`
+`ni` => <code><a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> install</code> / <code><a href='https://yarnpkg.com'>yarn</a> add</code> / <code><a href='https://pnpm.js.org/en/'>pnpm</a> install</code>
 
 <pre>
 $ npm i -g <b>@antfu/ni</b>
