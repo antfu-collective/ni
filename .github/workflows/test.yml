@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -14,11 +13,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Install
-      run: npm ci
+    - name: install
+      run: yarn global add @antfu/ni
 
-    - name: Lint
-      run: npm run lint
+    - run: ni
 
-    - name: Test
-      run: npm test
+    - run: nr lint
+
+    - run: nr test
