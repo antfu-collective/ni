@@ -90,4 +90,4 @@ defaultAgent=npm
 
 **ni** assumes that you work with lockfiles (and you should)
 
-Before it runs, it will detect your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` to know current package mangar, and runs the corresponding commands.
+Before it runs, it will detect your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` to know current package manager, and runs the corresponding commands.
