@@ -52,6 +52,15 @@ ni --frozen
 # pnpm install --frozen-lockfile
 ```
 
+```bash
+ni -g iroiro
+
+# npm i -g iroiro
+# yarn global add iroiro
+# pnpm i -g iroiro
+# ! uses default agent, regardless CWD
+```
+
 <br>
 
 ### `nr` - run

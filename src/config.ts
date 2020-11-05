@@ -1,17 +1,22 @@
 import fs from 'fs'
 import path from 'path'
 import ini from 'ini'
+import { Agent } from './agents'
 
 const home = process.platform === 'win32'
   ? process.env.USERPROFILE
   : process.env.HOME
 const rcPath = path.join(home || '~/', '.nirc')
 
-const defaultConfig = {
+interface Config {
+  defaultAgent: Agent
+}
+
+const defaultConfig: Config = {
   defaultAgent: 'npm',
 }
 
-let config: typeof defaultConfig | undefined
+let config: Config | undefined
 
 export async function getConfig() {
   if (!config) {
