@@ -1,10 +1,8 @@
 # ni
 
-~~`npm i` in a yarn project, again? F**k!~~
+~~*`npm i` in a yarn project, again? F**k!*~~
 
 **ni** - use the right package manager.
-
-`ni` => <code><a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> install</code> / <code><a href='https://yarnpkg.com'>yarn</a> add</code> / <code><a href='https://pnpm.js.org/en/'>pnpm</a> install</code>
 
 <pre>
 $ npm i -g <b>@antfu/ni</b>
@@ -12,7 +10,11 @@ $ npm i -g <b>@antfu/ni</b>
 $ <b>ni</b>
 </pre>
 
----
+`ni` => <code><a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> install</code> / <code><a href='https://yarnpkg.com'>yarn</a> add</code> / <code><a href='https://pnpm.js.org/en/'>pnpm</a> install</code>
+
+
+<br>
+<br>
 
 
 ### `ni` - Install
@@ -67,14 +69,19 @@ nr dev --port=3000
 # pnpm run dev -- --port=3000
 ```
 
+<br>
+
 ### Config
 
 ```ini
 ; ~/.nirc
 
-; default agent will be used for global installs and the fallback when no lock found.
+; default agent will be used for global installs 
+; and the fallback when no lock found.
 defaultAgent=npm
 ```
+
+<br>
 
 ### How?
 
