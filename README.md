@@ -51,6 +51,8 @@ ni --frozen
 # pnpm install --frozen-lockfile
 ```
 
+<br>
+
 ### `nr` - Run
 
 ```bash
