@@ -1,6 +1,6 @@
 # ni
 
-~~*`npm i` in a yarn project, again? F**k!*~~
+~~*`npm i` in a yarn project, again? F\*\*k!*~~
 
 **ni** - use the right package manager.
 
