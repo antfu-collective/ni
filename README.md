@@ -2,22 +2,23 @@
 
 ~~*`npm i` in a yarn project, again? F\*\*k!*~~
 
-**ni** - use the right package manager.
+**ni** - use the right package manager
+
+<br>
 
 <pre>
-$ npm i -g <b>@antfu/ni</b>
+npm i -g <b>@antfu/ni</b>
 
-$ <b>ni</b>
+<b>ni</b>
 </pre>
 
-`ni` => <code><a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> install</code> / <code><a href='https://yarnpkg.com'>yarn</a> add</code> / <code><a href='https://pnpm.js.org/en/'>pnpm</a> install</code>
+<a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.js.org/en/'>pnpm</a>
 
 
 <br>
-<br>
 
 
-### `ni` - Install
+### `ni` - install
 
 ```bash
 ni
@@ -53,13 +54,13 @@ ni --frozen
 
 <br>
 
-### `nr` - Run
+### `nr` - run
 
 ```bash
 nr
 
 # npm run start
-# yarn run
+# yarn run start
 # pnpm run start
 ```
 
