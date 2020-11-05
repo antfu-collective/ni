@@ -1,0 +1,78 @@
+{
+  "name": "@antfu/ni",
+  "version": "0.0.0",
+  "description": "Smart packages install that sense your current package manager",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+  "license": "MIT",
+  "bin": {
+    "ni": "bin/ni.js",
+    "nr": "bin/nr.js"
+  },
+  "bugs": {
+    "url": "https://github.com/antfu/ni/issues"
+  },
+  "homepage": "https://github.com/antfu/ni#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antfu/ni.git"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "watch": "npm run build -- --watch",
+    "ni": "esno src/ni.ts",
+    "nr": "esno src/nr.ts",
+    "dev": "esno src/ni.ts",
+    "build": "tsup src/ni.ts src/nr.ts --format cjs,esm --dts",
+    "publish:ci": "npm publish --access public",
+    "release": "npx bumpp --commit --push --tag && npm run publish:ci",
+    "lint": "eslint \"{src,test}/**/*.ts\"",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "c8 ava"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config-ts": "^0.4.3",
+    "@types/node": "^14.14.6",
+    "c8": "^7.3.3",
+    "esbuild-register": "^1.0.2",
+    "eslint": "^7.11.0",
+    "esm": "^3.2.25",
+    "esno": "^0.2.4",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.1",
+    "tsup": "^3.7.1",
+    "typescript": "^4.0.5"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "ava": "^3.13.0",
+    "find-up": "^5.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "@antfu/eslint-config-ts"
+  },
+  "ava": {
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "esm",
+      "esbuild-register"
+    ]
+  }
+}
