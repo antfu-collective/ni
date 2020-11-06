@@ -39,9 +39,9 @@ ni axios
 ```bash
 ni @types/node -D
 
-# npm i axios -D
-# yarn add axios -D
-# pnpm i axios -D
+# npm i @types/node -D
+# yarn add @types/node -D
+# pnpm i @types/node -D
 ```
 
 ```bash
