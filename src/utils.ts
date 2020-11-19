@@ -1,3 +1,5 @@
+import { execSync } from 'child_process'
+
 export function exclude<T>(arr: T[], v: T) {
   const clone = [...arr]
   const index = clone.indexOf(v)
@@ -13,4 +15,14 @@ export function remove<T>(arr: T[], v: T) {
     arr.splice(index, 1)
 
   return arr
+}
+
+export function cmdExists(cmd: string) {
+  try {
+    execSync(`command -v ${cmd}`)
+    return true
+  }
+  catch {
+    return false
+  }
 }
