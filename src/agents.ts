@@ -37,3 +37,9 @@ export const LOCKS: Record<string, Agent> = {
   'yarn.lock': 'yarn',
   'package-lock.json': 'npm',
 }
+
+export const INSTALL_PAGE: Record<Agent, string> = {
+  pnpm: 'https://pnpm.js.org/en/installation',
+  yarn: 'https://yarnpkg.com/getting-started/install',
+  npm: 'https://www.npmjs.com/get-npm',
+}
