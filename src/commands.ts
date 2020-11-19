@@ -13,28 +13,22 @@ export function getCommand(agent: Agent, commnad: Command, args: string[]) {
   return c.replace('{0}', args.join(' '))
 }
 
-export function parseNi(agent: Agent, _args: string[]): string {
-  let command: Command = 'install'
-  let args: string[] = []
+export function parseNi(agent: Agent, args: string[]): string {
+  if (args.length === 0)
+    return getCommand(agent, 'install', [])
 
-  if (_args.length === 0) {
-    command = 'install'
-    args = []
-  }
-  else if (_args.includes('-g')) {
-    command = 'global'
-    args = exclude(_args, '-g')
-  }
-  else if (_args.includes('--frozen')) {
-    command = 'frozen'
-    args = exclude(_args, '--frozen')
-  }
-  else {
-    command = 'add'
-    args = _args
+  if (args.includes('-g'))
+    return getCommand(agent, 'global', exclude(args, '-g'))
+
+  if (args.includes('--frozen'))
+    return getCommand(agent, 'frozen', exclude(args, '--frozen'))
+
+  if (args.includes('--frozen=safe')) {
+    args = exclude(args, '--frozen=safe')
+    return `${getCommand(agent, 'frozen', args)} || ${getCommand(agent, 'install', args)}`
   }
 
-  return getCommand(agent, command, args)
+  return getCommand(agent, 'add', args)
 }
 
 export function parseNr(agent: Agent, args: string[]): string {
