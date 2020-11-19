@@ -1,7 +1,7 @@
 import { Agent, AGENTS, Command } from './agents'
 import { exclude } from './utils'
 
-export function getCommand(agent: Agent, commnad: Command, args: string[]) {
+export function getCommand(agent: Agent, commnad: Command, args: string[] = []) {
   if (!(agent in AGENTS))
     throw new Error(`Unsupported agent "${agent}"`)
 
@@ -13,9 +13,9 @@ export function getCommand(agent: Agent, commnad: Command, args: string[]) {
   return c.replace('{0}', args.join(' '))
 }
 
-export function parseNi(agent: Agent, args: string[]): string {
+export function parseNi(agent: Agent, args: string[], hasLock?: boolean): string {
   if (args.length === 0)
-    return getCommand(agent, 'install', [])
+    return getCommand(agent, 'install')
 
   if (args.includes('-g'))
     return getCommand(agent, 'global', exclude(args, '-g'))
@@ -23,9 +23,9 @@ export function parseNi(agent: Agent, args: string[]): string {
   if (args.includes('--frozen'))
     return getCommand(agent, 'frozen', exclude(args, '--frozen'))
 
-  if (args.includes('--frozen=safe')) {
-    args = exclude(args, '--frozen=safe')
-    return `${getCommand(agent, 'frozen', args)} || ${getCommand(agent, 'install', args)}`
+  if (args.includes('--frozen-if-present')) {
+    args = exclude(args, '--frozen-if-present')
+    return getCommand(agent, hasLock ? 'frozen' : 'install', args)
   }
 
   return getCommand(agent, 'add', args)
