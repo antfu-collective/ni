@@ -2,9 +2,6 @@
   "name": "@antfu/ni",
   "version": "0.1.2",
   "description": "Use the right package manager",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
   "bin": {
