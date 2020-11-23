@@ -11,6 +11,9 @@ export async function detect() {
   const agent = (result ? LOCKS[path.basename(result)] : null)
 
   if (agent && !cmdExists(agent)) {
+    if (process.env.CI)
+      throw new Error(`Detected ${agent} but it doesn't seem to be installed`)
+
     const link = terminalLink(agent, INSTALL_PAGE[agent])
     console.log(`Detected ${link} but it doesn't seem to be installed.\n`)
 
