@@ -1,7 +1,7 @@
 import { execSync } from 'child_process'
 import { Agent } from './agents'
 import { getDefaultAgent } from './config'
-import { detect } from './detect'
+import { detect, DetectOptions } from './detect'
 import { remove } from './utils'
 
 const args = process.argv.slice(2).filter(Boolean)
@@ -9,7 +9,7 @@ const DEBUG_SIGN = '?'
 
 export type Runner = (agent: Agent, args: string[], hasLock?: boolean) => Promise<string>
 
-export async function run(fn: Runner, options? = {}) {
+export async function run(fn: Runner, options: DetectOptions = {}) {
   const debug = args.includes(DEBUG_SIGN)
   if (debug)
     remove(args, DEBUG_SIGN)

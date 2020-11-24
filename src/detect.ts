@@ -6,7 +6,11 @@ import inquirer from 'inquirer'
 import { LOCKS, INSTALL_PAGE } from './agents'
 import { cmdExists } from './utils'
 
-export async function detect({ autoInstall }) {
+export interface DetectOptions {
+  autoInstall?: boolean
+}
+
+export async function detect({ autoInstall }: DetectOptions) {
   const result = await findUp(Object.keys(LOCKS))
   const agent = (result ? LOCKS[path.basename(result)] : null)
 

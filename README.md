@@ -58,7 +58,7 @@ ni -g iroiro
 # npm i -g iroiro
 # yarn global add iroiro
 # pnpm i -g iroiro
-# ! uses default agent, regardless CWD
+# this uses default agent, regardless CWD
 ```
 
 <br>
@@ -80,6 +80,18 @@ nr dev --port=3000
 # yarn run dev --port=3000
 # pnpm run dev -- --port=3000
 ```
+
+### `nci` - clean install
+
+```bash
+nci
+
+# npm ci
+# yarn install --frozen-lockfile
+# pnpm install --frozen-lockfile
+```
+
+if the corresponding node manager is not present, this command will install it globally along the way.
 
 <br>
 
