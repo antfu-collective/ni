@@ -16,7 +16,6 @@ export async function detect() {
       process.exit(1)
 
     const link = terminalLink(agent, INSTALL_PAGE[agent])
-
     const { tryInstall } = await inquirer.prompt([{
       name: 'tryInstall',
       type: 'confirm',
