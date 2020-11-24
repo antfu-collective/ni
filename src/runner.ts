@@ -9,7 +9,7 @@ const DEBUG_SIGN = '?'
 
 export type Runner = (agent: Agent, args: string[], hasLock?: boolean) => Promise<string>
 
-export async function run(fn: Runner) {
+export async function run(fn: Runner, options? = {}) {
   const debug = args.includes(DEBUG_SIGN)
   if (debug)
     remove(args, DEBUG_SIGN)
@@ -21,7 +21,7 @@ export async function run(fn: Runner) {
     command = await fn(await getDefaultAgent(), args)
   }
   else {
-    const agent = await detect()
+    const agent = await detect(options)
     command = await fn(agent || await getDefaultAgent(), args, Boolean(agent))
   }
 

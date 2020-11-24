@@ -6,6 +6,7 @@
   "license": "MIT",
   "bin": {
     "ni": "bin/ni.js",
+    "nci": "bin/nci.js",
     "nr": "bin/nr.js"
   },
   "bugs": {
@@ -24,9 +25,10 @@
     "prepublishOnly": "rimraf dist && npm run build",
     "watch": "npm run build -- --watch",
     "ni": "esno src/ni.ts",
+    "nci": "esno src/nci.ts",
     "nr": "esno src/nr.ts",
     "dev": "esno src/ni.ts",
-    "build": "tsup src/ni.ts src/nr.ts --format cjs,esm --dts",
+    "build": "tsup src/ni.ts src/nci.ts src/nr.ts --format cjs,esm --dts",
     "release": "npx bumpp --commit --push --tag && npm publish --access public",
     "lint": "eslint \"{src,test}/**/*.ts\"",
     "lint:fix": "npm run lint -- --fix",
