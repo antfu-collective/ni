@@ -11,11 +11,11 @@ export async function detect() {
   const agent = (result ? LOCKS[path.basename(result)] : null)
 
   if (agent && !cmdExists(agent)) {
+    console.warn(`Detected ${agent} but it doesn't seem to be installed.\n`)
     if (process.env.CI)
-      throw new Error(`Detected ${agent} but it doesn't seem to be installed`)
+      process.exit(1)
 
     const link = terminalLink(agent, INSTALL_PAGE[agent])
-    console.log(`Detected ${link} but it doesn't seem to be installed.\n`)
 
     const { tryInstall } = await inquirer.prompt([{
       name: 'tryInstall',
