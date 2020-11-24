@@ -20,13 +20,13 @@ export function parseNi(agent: Agent, args: string[], hasLock?: boolean): string
   if (args.includes('-g'))
     return getCommand(agent, 'global', exclude(args, '-g'))
 
-  if (args.includes('--frozen'))
-    return getCommand(agent, 'frozen', exclude(args, '--frozen'))
-
   if (args.includes('--frozen-if-present')) {
     args = exclude(args, '--frozen-if-present')
     return getCommand(agent, hasLock ? 'frozen' : 'install', args)
   }
+
+  if (args.includes('--frozen'))
+    return getCommand(agent, 'frozen', exclude(args, '--frozen'))
 
   return getCommand(agent, 'add', args)
 }
