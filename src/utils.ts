@@ -1,4 +1,5 @@
 import { execSync } from 'child_process'
+import os from 'os'
 
 export function remove<T>(arr: T[], v: T) {
   const index = arr.indexOf(v)
@@ -14,7 +15,12 @@ export function exclude<T>(arr: T[], v: T) {
 
 export function cmdExists(cmd: string) {
   try {
-    execSync(`command -v ${cmd}`)
+    // #8
+    execSync(
+      os.platform() === 'win32'
+        ? `cmd /c "(help ${cmd} > nul || exit 0) && where ${cmd} > nul 2> nul"`
+        : `command -v ${cmd}`,
+    )
     return true
   }
   catch {
