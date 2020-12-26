@@ -66,19 +66,17 @@ ni -g iroiro
 ### `nr` - run
 
 ```bash
-nr
-
-# npm run start
-# yarn run start
-# pnpm run start
-```
-
-```bash
 nr dev --port=3000
 
 # npm run dev -- --port=3000
 # yarn run dev --port=3000
 # pnpm run dev -- --port=3000
+```
+
+```bash
+nr
+
+# interactively select the script to run
 ```
 
 ### `nci` - clean install
