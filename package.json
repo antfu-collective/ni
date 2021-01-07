@@ -30,7 +30,7 @@
     "nr": "esno src/nr.ts",
     "nu": "esno src/nu.ts",
     "dev": "esno src/ni.ts",
-    "build": "tsup src/ni.ts src/nci.ts src/nr.ts --format cjs,esm --dts",
+    "build": "tsup src/ni.ts src/nci.ts src/nr.ts src/nu.ts --format cjs,esm --dts",
     "release": "npx bumpp --commit --push --tag && npm publish --access public",
     "lint": "eslint \"**/*.ts\"",
     "lint:fix": "npm run lint -- --fix",
