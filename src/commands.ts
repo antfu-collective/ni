@@ -10,6 +10,9 @@ export function getCommand(agent: Agent, commnad: Command, args: string[] = []) 
   if (typeof c === 'function')
     return c(args)
 
+  if (!c)
+    throw new Error(`Command "${commnad}" is not support by agent "${agent}"`)
+
   return c.replace('{0}', args.join(' '))
 }
 
@@ -36,4 +39,11 @@ export function parseNr(agent: Agent, args: string[]): string {
     args.push('start')
 
   return getCommand(agent, 'run', args)
+}
+
+export function parseNu(agent: Agent, args: string[]): string {
+  if (args.includes('-i'))
+    return getCommand(agent, 'upgrade-interactive', exclude(args, '-i'))
+
+  return getCommand(agent, 'upgrade', args)
 }

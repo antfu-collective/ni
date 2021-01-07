@@ -1,6 +1,7 @@
 import { execSync } from 'child_process'
-import { Agent } from './agents'
-import { getDefaultAgent } from './config'
+import inquirer from 'inquirer'
+import { Agent, agents } from './agents'
+import { getDefaultAgent, getGlobalAgent } from './config'
 import { detect, DetectOptions } from './detect'
 import { remove } from './utils'
 
@@ -18,11 +19,21 @@ export async function run(fn: Runner, options: DetectOptions = {}) {
   let command
 
   if (isGlobal) {
-    command = await fn(await getDefaultAgent(), args)
+    command = await fn(getGlobalAgent(), args)
   }
   else {
-    const agent = await detect(options)
-    command = await fn(agent || await getDefaultAgent(), args, Boolean(agent))
+    let agent = await detect(options) || getDefaultAgent()
+    if (agent === 'prompt') {
+      agent = (await inquirer.prompt({
+        name: 'agent',
+        type: 'list',
+        message: 'Choose the agent',
+        choices: agents,
+      })).agent
+      if (!agent)
+        return
+    }
+    command = await fn(agent as Agent, args, Boolean(agent))
   }
 
   if (!command)

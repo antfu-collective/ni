@@ -6,28 +6,38 @@ import { Agent } from './agents'
 const home = process.platform === 'win32'
   ? process.env.USERPROFILE
   : process.env.HOME
+
 const rcPath = path.join(home || '~/', '.nirc')
 
 interface Config {
-  defaultAgent: Agent
+  defaultAgent: Agent | 'prompt'
+  globalAgent: Agent
 }
 
 const defaultConfig: Config = {
-  defaultAgent: 'npm',
+  defaultAgent: 'prompt',
+  globalAgent: 'npm',
 }
 
 let config: Config | undefined
 
-export async function getConfig() {
+export function getConfig() {
   if (!config) {
     if (!fs.existsSync(rcPath))
       config = defaultConfig
     else
-      config = Object.assign({}, defaultConfig, ini.parse(await fs.promises.readFile(rcPath, 'utf-8')))
+      config = Object.assign({}, defaultConfig, ini.parse(fs.readFileSync(rcPath, 'utf-8')))
   }
   return config
 }
 
-export async function getDefaultAgent() {
-  return (await getConfig())?.defaultAgent
+export function getDefaultAgent() {
+  const agent = getConfig().defaultAgent
+  if (agent === 'prompt' && process.env.CI)
+    return 'npm'
+  return agent
+}
+
+export function getGlobalAgent() {
+  return getConfig().globalAgent
 }

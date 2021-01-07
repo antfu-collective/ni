@@ -79,6 +79,25 @@ nr
 # interactively select the script to run
 ```
 
+
+### `nu` - upgrade
+
+```bash
+nu
+
+# npm upgrade
+# yarn upgrade
+# pnpm upgrade
+```
+
+```bash
+nu -i
+
+# (not available for npm)
+# yarn upgrade-interactive
+# pnpm upgrade -i
+```
+
 ### `nci` - clean install
 
 ```bash
@@ -98,9 +117,11 @@ if the corresponding node manager is not present, this command will install it g
 ```ini
 ; ~/.nirc
 
-; default agent will be used for global installs 
-; and the fallback when no lock found.
-defaultAgent=npm
+; fallback when no lock found
+defaultAgent=npm # default "prompt"
+
+; for global installs
+globalAgent=npm
 ```
 
 <br>
