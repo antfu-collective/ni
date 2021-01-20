@@ -2,7 +2,7 @@ import path from 'path'
 import { execSync } from 'child_process'
 import findUp from 'find-up'
 import terminalLink from 'terminal-link'
-import inquirer from 'inquirer'
+import prompts from 'prompts'
 import { LOCKS, INSTALL_PAGE } from './agents'
 import { cmdExists } from './utils'
 
@@ -22,11 +22,11 @@ export async function detect({ autoInstall }: DetectOptions) {
         process.exit(1)
 
       const link = terminalLink(agent, INSTALL_PAGE[agent])
-      const { tryInstall } = await inquirer.prompt([{
+      const { tryInstall } = await prompts({
         name: 'tryInstall',
         type: 'confirm',
         message: `Would you like to globally install ${link}?`,
-      }])
+      })
       if (!tryInstall)
         process.exit(1)
     }

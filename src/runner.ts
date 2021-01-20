@@ -1,5 +1,5 @@
 import { execSync } from 'child_process'
-import inquirer from 'inquirer'
+import prompts from 'prompts'
 import { Agent, agents } from './agents'
 import { getDefaultAgent, getGlobalAgent } from './config'
 import { detect, DetectOptions } from './detect'
@@ -24,11 +24,11 @@ export async function run(fn: Runner, options: DetectOptions = {}) {
   else {
     let agent = await detect(options) || getDefaultAgent()
     if (agent === 'prompt') {
-      agent = (await inquirer.prompt({
+      agent = (await prompts({
         name: 'agent',
-        type: 'list',
+        type: 'select',
         message: 'Choose the agent',
-        choices: agents,
+        choices: agents.map(value => ({ title: value, value })),
       })).agent
       if (!agent)
         return
@@ -42,5 +42,5 @@ export async function run(fn: Runner, options: DetectOptions = {}) {
   if (debug)
     console.log(command)
   else
-    execSync(command, { stdio: 'inherit' })
+    execSync(command, { stdio: 'inherit', encoding: 'utf-8' })
 }
