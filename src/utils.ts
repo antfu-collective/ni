@@ -1,5 +1,5 @@
 import os from 'os'
-import execa from 'execa'
+import { execSync } from 'child_process'
 
 export function remove<T>(arr: T[], v: T) {
   const index = arr.indexOf(v)
@@ -13,15 +13,15 @@ export function exclude<T>(arr: T[], v: T) {
   return remove(arr.slice(), v)
 }
 
-export async function cmdExists(cmd: string) {
+export function cmdExists(cmd: string) {
   try {
     // #8
-    const { stdout } = await execa.command(
+    execSync(
       os.platform() === 'win32'
         ? `cmd /c "(help ${cmd} > nul || exit 0) && where ${cmd} > nul 2> nul"`
         : `command -v ${cmd}`,
     )
-    return !stdout
+    return true
   }
   catch {
     return false

@@ -14,7 +14,7 @@ export async function detect({ autoInstall }: DetectOptions) {
   const result = await findUp(Object.keys(LOCKS))
   const agent = (result ? LOCKS[path.basename(result)] : null)
 
-  if (agent && !await cmdExists(agent)) {
+  if (agent && !cmdExists(agent)) {
     if (!autoInstall) {
       console.warn(`Detected ${agent} but it doesn't seem to be installed.\n`)
 
