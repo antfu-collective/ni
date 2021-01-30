@@ -16,12 +16,12 @@ export function exclude<T>(arr: T[], v: T) {
 export async function cmdExists(cmd: string) {
   try {
     // #8
-    await execa.command(
+    const { stdout } = await execa.command(
       os.platform() === 'win32'
         ? `cmd /c "(help ${cmd} > nul || exit 0) && where ${cmd} > nul 2> nul"`
         : `command -v ${cmd}`,
     )
-    return true
+    return !stdout
   }
   catch {
     return false
