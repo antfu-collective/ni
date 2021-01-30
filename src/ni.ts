@@ -1,6 +1,4 @@
 import { parseNi } from './commands'
-import { run } from './runner'
+import { runCli } from './runner'
 
-run(async(agent, args, hasLock) => {
-  return parseNi(agent, args, hasLock)
-})
+runCli(parseNi)

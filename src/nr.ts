@@ -1,9 +1,9 @@
 import prompts from 'prompts'
 import { parseNr } from './commands'
 import { getPackageJSON } from './fs'
-import { run } from './runner'
+import { runCli } from './runner'
 
-run(async(agent, args) => {
+runCli(async(agent, args) => {
   if (args.length === 0) {
     const scripts = getPackageJSON().scripts || {}
 
@@ -27,5 +27,6 @@ run(async(agent, args) => {
       process.exit(0)
     }
   }
+
   return parseNr(agent, args)
 })

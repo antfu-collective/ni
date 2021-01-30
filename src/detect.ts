@@ -1,5 +1,5 @@
 import path from 'path'
-import { execSync } from 'child_process'
+import execa from 'execa'
 import findUp from 'find-up'
 import terminalLink from 'terminal-link'
 import prompts from 'prompts'
@@ -14,7 +14,7 @@ export async function detect({ autoInstall }: DetectOptions) {
   const result = await findUp(Object.keys(LOCKS))
   const agent = (result ? LOCKS[path.basename(result)] : null)
 
-  if (agent && !cmdExists(agent)) {
+  if (agent && !await cmdExists(agent)) {
     if (!autoInstall) {
       console.warn(`Detected ${agent} but it doesn't seem to be installed.\n`)
 
@@ -31,7 +31,7 @@ export async function detect({ autoInstall }: DetectOptions) {
         process.exit(1)
     }
 
-    execSync(`npm i -g ${agent}`, { stdio: 'inherit' })
+    await execa.command(`npm i -g ${agent}`, { stdio: 'inherit' })
   }
 
   return agent

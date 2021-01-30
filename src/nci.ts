@@ -1,9 +1,7 @@
 import { parseNi } from './commands'
-import { run } from './runner'
+import { runCli } from './runner'
 
-run(
-  async(agent, _, hasLock) => {
-    return parseNi(agent, ['--frozen-if-present'], hasLock)
-  },
+runCli(
+  (agent, _, hasLock) => parseNi(agent, ['--frozen-if-present'], hasLock),
   { autoInstall: true },
 )

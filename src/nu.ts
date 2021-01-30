@@ -1,6 +1,4 @@
 import { parseNu } from './commands'
-import { run } from './runner'
+import { runCli } from './runner'
 
-run(async(agent, args) => {
-  return parseNu(agent, args)
-})
+runCli(parseNu)

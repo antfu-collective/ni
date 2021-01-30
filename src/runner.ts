@@ -1,16 +1,22 @@
-import { execSync } from 'child_process'
 import prompts from 'prompts'
+import execa from 'execa'
 import { Agent, agents } from './agents'
 import { getDefaultAgent, getGlobalAgent } from './config'
 import { detect, DetectOptions } from './detect'
 import { remove } from './utils'
 
-const args = process.argv.slice(2).filter(Boolean)
 const DEBUG_SIGN = '?'
 
-export type Runner = (agent: Agent, args: string[], hasLock?: boolean) => Promise<string | undefined>
+export type Runner = (agent: Agent, args: string[], hasLock?: boolean) => Promise<string | undefined> | string | undefined
 
-export async function run(fn: Runner, options: DetectOptions = {}) {
+export async function runCli(fn: Runner, options: DetectOptions = {}) {
+  const args = process.argv.slice(2).filter(Boolean)
+  const result = await run(fn, args, options)
+  if (result === false)
+    process.exit(1)
+}
+
+export async function run(fn: Runner, args: string[], options: DetectOptions = {}) {
   const debug = args.includes(DEBUG_SIGN)
   if (debug)
     remove(args, DEBUG_SIGN)
@@ -39,8 +45,16 @@ export async function run(fn: Runner, options: DetectOptions = {}) {
   if (!command)
     return
 
-  if (debug)
+  if (debug) {
     console.log(command)
-  else
-    execSync(command, { stdio: 'inherit', encoding: 'utf-8' })
+    return
+  }
+
+  try {
+    await execa.command(command, { stdio: 'inherit', encoding: 'utf-8' })
+  }
+  catch (e) {
+    // console.error(e)
+    return false
+  }
 }
