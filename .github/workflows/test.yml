@@ -15,6 +15,7 @@ jobs:
 
     - run: |
         sudo npm i -g @antfu/ni pnpm
+        pnpm -v
         ni
         nr lint
         nr test
