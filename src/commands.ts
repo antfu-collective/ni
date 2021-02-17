@@ -38,6 +38,11 @@ export function parseNr(agent: Agent, args: string[]): string {
   if (args.length === 0)
     args.push('start')
 
+  if (args.includes('--if-present')) {
+    args = exclude(args, '--if-present')
+    args[0] = `--if-present ${args[0]}`
+  }
+
   return getCommand(agent, 'run', args)
 }
 

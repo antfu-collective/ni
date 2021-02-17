@@ -11,6 +11,8 @@ const _ = (arg: string, expected: string) => (t: ExecutionContext) => {
 
 test('empty', _('', 'pnpm run start'))
 
+test('if-present', _('test --if-present', 'pnpm run --if-present test'))
+
 test('script', _('dev', 'pnpm run dev'))
 
 test('script with arguments', _('build --watch -o', 'pnpm run build -- --watch -o'))

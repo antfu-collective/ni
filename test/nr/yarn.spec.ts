@@ -11,6 +11,8 @@ const _ = (arg: string, expected: string) => (t: ExecutionContext) => {
 
 test('empty', _('', 'yarn run start'))
 
+test('if-present', _('test --if-present', 'yarn run --if-present test'))
+
 test('script', _('dev', 'yarn run dev'))
 
 test('script with arguments', _('build --watch -o', 'yarn run build --watch -o'))
