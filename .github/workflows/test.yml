@@ -1,6 +1,15 @@
 name: Test
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - master
+
+  pull_request:
+    branches:
+      - main
+      - master
 
 jobs:
   build:
@@ -8,14 +17,24 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [12.x, 14.x, 15.x]
 
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
-    - run: |
-        sudo npm i -g @antfu/ni pnpm
-        pnpm -v
-        ni
-        nr lint
-        nr test
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Setup
+        run: npm i -g pnpm @antfu/ni
+
+      - name: Install
+        run: nci
+
+      - name: Lint
+        run: nr lint --if-present
+
+      - name: Test
+        run: nr test --if-present
