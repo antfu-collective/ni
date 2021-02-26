@@ -58,7 +58,8 @@ ni -g iroiro
 # npm i -g iroiro
 # yarn global add iroiro
 # pnpm i -g iroiro
-# this uses default agent, regardless CWD
+
+# this uses default agent, regardless your current working directory
 ```
 
 <br>
@@ -79,6 +80,7 @@ nr
 # interactively select the script to run
 ```
 
+<br>
 
 ### `nu` - upgrade
 
@@ -97,6 +99,8 @@ nu -i
 # yarn upgrade-interactive
 # pnpm upgrade -i
 ```
+
+<br>
 
 ### `nci` - clean install
 
