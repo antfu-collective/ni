@@ -11,9 +11,12 @@ export type Runner = (agent: Agent, args: string[], hasLock?: boolean) => Promis
 
 export async function runCli(fn: Runner, options: DetectOptions = {}) {
   const args = process.argv.slice(2).filter(Boolean)
-  const result = await run(fn, args, options)
-  if (result === false)
+  try {
+    await run(fn, args, options)
+  }
+  catch (error) {
     process.exit(1)
+  }
 }
 
 export async function run(fn: Runner, args: string[], options: DetectOptions = {}) {
@@ -50,11 +53,5 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     return
   }
 
-  try {
-    await execa.command(command, { stdio: 'inherit', encoding: 'utf-8' })
-  }
-  catch (e) {
-    // console.error(e)
-    return false
-  }
+  await execa.command(command, { stdio: 'inherit', encoding: 'utf-8' })
 }
