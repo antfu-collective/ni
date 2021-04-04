@@ -30,8 +30,8 @@ export const AGENTS = {
     frozen: 'pnpm i --frozen-lockfile',
     global: 'pnpm i -g {0}',
     add: 'pnpm i {0}',
-    upgrade: 'pnpm upgrade',
-    'upgrade-interactive': 'yarn upgrade -i',
+    upgrade: 'pnpm update',
+    'upgrade-interactive': 'pnpm update -i',
   },
 }
 
