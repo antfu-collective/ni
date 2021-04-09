@@ -13,7 +13,7 @@ export function getCommand(agent: Agent, commnad: Command, args: string[] = []) 
   if (!c)
     throw new Error(`Command "${commnad}" is not support by agent "${agent}"`)
 
-  return c.replace('{0}', args.join(' '))
+  return c.replace('{0}', args.join(' ')).trim()
 }
 
 export function parseNi(agent: Agent, args: string[], hasLock?: boolean): string {
