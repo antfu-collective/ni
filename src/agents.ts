@@ -12,7 +12,7 @@ export const AGENTS = {
     'frozen': 'npm ci',
     'global': 'npm i -g {0}',
     'add': 'npm i {0}',
-    'upgrade': 'npm upgrade',
+    'upgrade': 'npm update {0}',
     'upgrade-interactive': null,
   },
   yarn: {
@@ -21,7 +21,7 @@ export const AGENTS = {
     'frozen': 'yarn install --frozen-lockfile',
     'global': 'yarn global add {0}',
     'add': 'yarn add {0}',
-    'upgrade': 'yarn upgrade',
+    'upgrade': 'yarn upgrade {0}',
     'upgrade-interactive': 'yarn upgrade-interactive',
   },
   pnpm: {
@@ -30,7 +30,7 @@ export const AGENTS = {
     'frozen': 'pnpm i --frozen-lockfile',
     'global': 'pnpm i -g {0}',
     'add': 'pnpm i {0}',
-    'upgrade': 'pnpm update',
+    'upgrade': 'pnpm update {0}',
     'upgrade-interactive': 'pnpm update -i',
   },
 }
