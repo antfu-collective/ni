@@ -1,6 +1,6 @@
 {
   "name": "@antfu/ni",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "Use the right package manager",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
