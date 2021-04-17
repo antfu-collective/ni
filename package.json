@@ -39,27 +39,25 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "c8 ava"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@antfu/eslint-config-ts": "^0.6.2",
+    "@types/ini": "^1.3.30",
+    "@types/node": "^14.14.41",
+    "@types/prompts": "^2.4.0",
+    "ava": "^3.15.0",
+    "c8": "^7.7.1",
+    "esbuild-register": "^2.4.0",
+    "eslint": "^7.24.0",
+    "esm": "^3.2.25",
+    "esno": "^0.5.0",
     "execa": "^5.0.0",
     "find-up": "^5.0.0",
     "ini": "^2.0.0",
     "prompts": "^2.4.1",
-    "terminal-link": "^2.1.1"
-  },
-  "devDependencies": {
-    "@antfu/eslint-config-ts": "^0.6.2",
-    "@types/ini": "^1.3.30",
-    "@types/node": "^14.14.37",
-    "@types/prompts": "^2.4.0",
-    "ava": "^3.15.0",
-    "c8": "^7.7.0",
-    "esbuild-register": "^2.3.0",
-    "eslint": "^7.23.0",
-    "esm": "^3.2.25",
-    "esno": "^0.5.0",
     "rimraf": "^3.0.2",
+    "terminal-link": "^2.1.1",
     "tsup": "^4.8.21",
-    "typescript": "^4.2.3"
+    "typescript": "^4.2.4"
   },
   "eslintConfig": {
     "extends": "@antfu/eslint-config-ts"
