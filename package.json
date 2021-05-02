@@ -2,8 +2,16 @@
   "name": "@antfu/ni",
   "version": "0.5.9",
   "description": "Use the right package manager",
-  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antfu/ni.git"
+  },
+  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+  "files": [
+    "dist",
+    "bin"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -18,14 +26,6 @@
     "url": "https://github.com/antfu/ni/issues"
   },
   "homepage": "https://github.com/antfu/ni#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/antfu/ni.git"
-  },
-  "files": [
-    "dist",
-    "bin"
-  ],
   "scripts": {
     "prepublishOnly": "rimraf dist && npm run build",
     "watch": "npm run build -- --watch",

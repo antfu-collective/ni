@@ -82,6 +82,18 @@ nr
 
 <br>
 
+## `nx` - execute
+
+```bash
+nu jest
+
+# npx jest
+# yarn dls jest
+# pnpx jest
+```
+
+<br>
+
 ### `nu` - upgrade
 
 ```bash
