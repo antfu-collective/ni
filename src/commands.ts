@@ -6,11 +6,13 @@ export function getCommand(
   command: Command,
   args: string[] = [],
 ) {
-  if (!(agent in AGENTS)) throw new Error(`Unsupported agent "${agent}"`)
+  if (!(agent in AGENTS))
+    throw new Error(`Unsupported agent "${agent}"`)
 
   const c = AGENTS[agent][command]
 
-  if (typeof c === 'function') return c(args)
+  if (typeof c === 'function')
+    return c(args)
 
   if (!c)
     throw new Error(`Command "${command}" is not support by agent "${agent}"`)
@@ -23,7 +25,8 @@ export function parseNi(
   args: string[],
   hasLock?: boolean,
 ): string {
-  if (args.length === 0) return getCommand(agent, 'install')
+  if (args.length === 0)
+    return getCommand(agent, 'install')
 
   if (args.includes('-g'))
     return getCommand(agent, 'global', exclude(args, '-g'))
@@ -40,7 +43,8 @@ export function parseNi(
 }
 
 export function parseNr(agent: Agent, args: string[]): string {
-  if (args.length === 0) args.push('start')
+  if (args.length === 0)
+    args.push('start')
 
   if (args.includes('--if-present')) {
     args = exclude(args, '--if-present')

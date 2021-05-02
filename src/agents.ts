@@ -23,7 +23,7 @@ export const AGENTS = {
     'add': 'yarn add {0}',
     'upgrade': 'yarn upgrade {0}',
     'upgrade-interactive': 'yarn upgrade-interactive',
-    'execute': 'yarn {0}',
+    'execute': 'yarn dls {0}',
   },
   pnpm: {
     'run': npmRun('pnpm'),
