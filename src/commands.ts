@@ -1,24 +1,29 @@
 import { Agent, AGENTS, Command } from './agents'
 import { exclude } from './utils'
 
-export function getCommand(agent: Agent, commnad: Command, args: string[] = []) {
-  if (!(agent in AGENTS))
-    throw new Error(`Unsupported agent "${agent}"`)
+export function getCommand(
+  agent: Agent,
+  command: Command,
+  args: string[] = [],
+) {
+  if (!(agent in AGENTS)) throw new Error(`Unsupported agent "${agent}"`)
 
-  const c = AGENTS[agent][commnad]
+  const c = AGENTS[agent][command]
 
-  if (typeof c === 'function')
-    return c(args)
+  if (typeof c === 'function') return c(args)
 
   if (!c)
-    throw new Error(`Command "${commnad}" is not support by agent "${agent}"`)
+    throw new Error(`Command "${command}" is not support by agent "${agent}"`)
 
   return c.replace('{0}', args.join(' ')).trim()
 }
 
-export function parseNi(agent: Agent, args: string[], hasLock?: boolean): string {
-  if (args.length === 0)
-    return getCommand(agent, 'install')
+export function parseNi(
+  agent: Agent,
+  args: string[],
+  hasLock?: boolean,
+): string {
+  if (args.length === 0) return getCommand(agent, 'install')
 
   if (args.includes('-g'))
     return getCommand(agent, 'global', exclude(args, '-g'))
@@ -35,8 +40,7 @@ export function parseNi(agent: Agent, args: string[], hasLock?: boolean): string
 }
 
 export function parseNr(agent: Agent, args: string[]): string {
-  if (args.length === 0)
-    args.push('start')
+  if (args.length === 0) args.push('start')
 
   if (args.includes('--if-present')) {
     args = exclude(args, '--if-present')
@@ -51,4 +55,8 @@ export function parseNu(agent: Agent, args: string[]): string {
     return getCommand(agent, 'upgrade-interactive', exclude(args, '-i'))
 
   return getCommand(agent, 'upgrade', args)
+}
+
+export function parseNx(agent: Agent, args: string[]): string {
+  return getCommand(agent, 'execute', args)
 }

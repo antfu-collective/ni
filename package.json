@@ -11,7 +11,8 @@
     "ni": "bin/ni.js",
     "nci": "bin/nci.js",
     "nr": "bin/nr.js",
-    "nu": "bin/nu.js"
+    "nu": "bin/nu.js",
+    "nx": "bin/nx.js"
   },
   "bugs": {
     "url": "https://github.com/antfu/ni/issues"
@@ -32,6 +33,7 @@
     "nci": "esno src/nci.ts",
     "nr": "esno src/nr.ts",
     "nu": "esno src/nu.ts",
+    "nx": "esno src/nx.ts",
     "dev": "esno src/ni.ts",
     "build": "rimraf dist && tsup src/ni.ts src/nci.ts src/nr.ts src/nu.ts src/index.ts --format cjs,esm --dts",
     "release": "npx git-ensure && npx bumpp --commit --push --tag",

@@ -1,8 +1,7 @@
 const npmRun = (agent: string) => (args: string[]) => {
   if (args.length > 1)
     return `${agent} run ${args[0]} -- ${args.slice(1).join(' ')}`
-  else
-    return `${agent} run ${args[0]}`
+  else return `${agent} run ${args[0]}`
 }
 
 export const AGENTS = {
@@ -14,6 +13,7 @@ export const AGENTS = {
     'add': 'npm i {0}',
     'upgrade': 'npm update {0}',
     'upgrade-interactive': null,
+    'execute': 'npx {0}',
   },
   yarn: {
     'run': 'yarn run {0}',
@@ -23,6 +23,7 @@ export const AGENTS = {
     'add': 'yarn add {0}',
     'upgrade': 'yarn upgrade {0}',
     'upgrade-interactive': 'yarn upgrade-interactive',
+    'execute': 'yarn {0}',
   },
   pnpm: {
     'run': npmRun('pnpm'),
@@ -32,6 +33,7 @@ export const AGENTS = {
     'add': 'pnpm i {0}',
     'upgrade': 'pnpm update {0}',
     'upgrade-interactive': 'pnpm update -i',
+    'execute': 'pnpx {0}',
   },
 }
 
