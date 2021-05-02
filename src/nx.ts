@@ -1,4 +1,4 @@
-import { parseNi } from './commands'
+import { parseNx } from './commands'
 import { runCli } from './runner'
 
-runCli(parseNi)
+runCli(parseNx)
