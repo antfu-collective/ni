@@ -82,7 +82,7 @@ nr
 
 <br>
 
-## `nx` - execute
+### `nx` - execute
 
 ```bash
 nx jest
