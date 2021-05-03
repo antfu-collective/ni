@@ -128,10 +128,10 @@ if the corresponding node manager is not present, this command will install it g
 
 <br>
 
-### `nrm` - uninstall
+### `nrm` - remove
 
 ```bash
-nrm
+nrm axios
 
 # npm uninstall axios
 # yarn remove axios
