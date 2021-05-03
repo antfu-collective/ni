@@ -16,7 +16,7 @@ export function getCommand(
 
   if (!c)
     throw new Error(`Command "${command}" is not support by agent "${agent}"`)
-
+// console.log(c.replace('{0}', args.join(' ')).trim());
   return c.replace('{0}', args.join(' ')).trim()
 }
 
@@ -59,6 +59,13 @@ export function parseNu(agent: Agent, args: string[]): string {
     return getCommand(agent, 'upgrade-interactive', exclude(args, '-i'))
 
   return getCommand(agent, 'upgrade', args)
+}
+
+
+export function parseNrm(agent: Agent, args: string[]): string {
+  if (args.includes('-g'))
+    return getCommand(agent, 'global_uninstall', exclude(args, '-g'))
+  return getCommand(agent, 'uninstall', args)
 }
 
 export function parseNx(agent: Agent, args: string[]): string {

@@ -1,4 +1,4 @@
-import { parseNu } from './commands'
+import { parseNrm } from './commands'
 import { runCli } from './runner'
 
-runCli(parseNu)
+runCli(parseNrm)
