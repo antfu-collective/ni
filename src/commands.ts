@@ -16,7 +16,6 @@ export function getCommand(
 
   if (!c)
     throw new Error(`Command "${command}" is not support by agent "${agent}"`)
-// console.log(c.replace('{0}', args.join(' ')).trim());
   return c.replace('{0}', args.join(' ')).trim()
 }
 
