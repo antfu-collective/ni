@@ -1,6 +1,6 @@
 {
   "name": "@antfu/ni",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Use the right package manager",
   "license": "MIT",
   "repository": {
