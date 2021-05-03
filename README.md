@@ -85,7 +85,7 @@ nr
 ## `nx` - execute
 
 ```bash
-nu jest
+nx jest
 
 # npx jest
 # yarn dls jest
