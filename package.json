@@ -35,7 +35,7 @@
     "nu": "esno src/nu.ts",
     "nx": "esno src/nx.ts",
     "dev": "esno src/ni.ts",
-    "build": "rimraf dist && tsup src/ni.ts src/nci.ts src/nr.ts src/nu.ts src/index.ts --format cjs,esm --dts",
+    "build": "rimraf dist && tsup src/ni.ts src/nci.ts src/nr.ts src/nu.ts src/nx.ts src/index.ts --format cjs,esm --dts",
     "release": "npx git-ensure && npx bumpp --commit --push --tag",
     "lint": "eslint \"**/*.ts\"",
     "lint:fix": "npm run lint -- --fix",
