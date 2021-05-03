@@ -60,7 +60,6 @@ export function parseNu(agent: Agent, args: string[]): string {
   return getCommand(agent, 'upgrade', args)
 }
 
-
 export function parseNrm(agent: Agent, args: string[]): string {
   if (args.includes('-g'))
     return getCommand(agent, 'global_uninstall', exclude(args, '-g'))
