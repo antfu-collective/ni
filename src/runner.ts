@@ -1,11 +1,11 @@
 import prompts from 'prompts'
 import execa from 'execa'
+import updateNotifier from 'update-notifier'
+import pkg from '../package.json'
 import { Agent, agents } from './agents'
 import { getDefaultAgent, getGlobalAgent } from './config'
 import { detect, DetectOptions } from './detect'
 import { remove } from './utils'
-import updateNotifier from 'update-notifier';
-import pkg from '../package.json';
 
 const DEBUG_SIGN = '?'
 
@@ -22,12 +22,8 @@ export async function runCli(fn: Runner, options: DetectOptions = {}) {
 }
 
 export async function run(fn: Runner, args: string[], options: DetectOptions = {}) {
-  
-  // check if a new version of ncu is available and print an update notification
-  const notifier = updateNotifier({ pkg })
-  if (notifier.update && notifier.update.latest !== pkg.version) {
-    notifier.notify({ defer: false, isGlobal: true })
-  }
+  // check if a new version of ni is available and print an update notification
+  updateNotifier({ pkg }).notify({ isGlobal: true })
   const debug = args.includes(DEBUG_SIGN)
   if (debug)
     remove(args, DEBUG_SIGN)
