@@ -82,7 +82,7 @@ nr
 
 <br>
 
-## `nx` - execute
+### `nx` - execute
 
 ```bash
 nx jest
@@ -125,6 +125,36 @@ nci
 ```
 
 if the corresponding node manager is not present, this command will install it globally along the way.
+
+<br>
+
+### `nrm` - remove
+
+```bash
+nrm axios
+
+# npm uninstall axios
+# yarn remove axios
+# pnpm remove axios
+```
+
+```bash
+nrm @types/node -D
+
+# npm uninstall @types/node -D
+# yarn remove @types/node -D
+# pnpm remove @types/node -D
+```
+
+```bash
+nrm -g iroiro
+
+# npm uninstall -g iroiro
+# yarn global remove iroiro
+# pnpm remove -g iroiro
+
+# this uses default agent, regardless your current working directory
+```
 
 <br>
 

@@ -14,6 +14,8 @@ export const AGENTS = {
     'upgrade': 'npm update {0}',
     'upgrade-interactive': null,
     'execute': 'npx {0}',
+    'uninstall': 'npm uninstall {0}',
+    'global_uninstall': 'npm uninstall -g {0}',
   },
   yarn: {
     'run': 'yarn run {0}',
@@ -24,6 +26,8 @@ export const AGENTS = {
     'upgrade': 'yarn upgrade {0}',
     'upgrade-interactive': 'yarn upgrade-interactive',
     'execute': 'yarn dls {0}',
+    'uninstall': 'yarn remove {0}',
+    'global_uninstall': 'yarn global remove {0}',
   },
   pnpm: {
     'run': npmRun('pnpm'),
@@ -34,6 +38,8 @@ export const AGENTS = {
     'upgrade': 'pnpm update {0}',
     'upgrade-interactive': 'pnpm update -i',
     'execute': 'pnpx {0}',
+    'uninstall': 'pnpm remove {0}',
+    'global_uninstall': 'pnpm remove -g {0}',
   },
 }
 
