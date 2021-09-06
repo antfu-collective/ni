@@ -26,7 +26,7 @@ runCli(async(agent, args) => {
       const { fn } = await prompts({
         name: 'fn',
         message: 'script to run',
-        type: 'select',
+        type: 'autocomplete',
         choices,
       })
       if (!fn)
