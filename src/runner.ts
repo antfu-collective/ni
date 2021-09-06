@@ -15,6 +15,7 @@ export async function runCli(fn: Runner, options: DetectOptions = {}) {
     await run(fn, args, options)
   }
   catch (error) {
+    console.error(error)
     process.exit(1)
   }
 }
