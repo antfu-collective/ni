@@ -1,3 +1,4 @@
+import { resolve } from 'path/posix'
 import prompts from 'prompts'
 import execa from 'execa'
 import { Agent, agents } from './agents'
@@ -25,14 +26,20 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   if (debug)
     remove(args, DEBUG_SIGN)
 
-  const isGlobal = args.includes('-g')
+  let cwd = process.cwd()
   let command
 
+  if (args[0] === '-C') {
+    cwd = resolve(cwd, args[1])
+    args.splice(0, 2)
+  }
+
+  const isGlobal = args.includes('-g')
   if (isGlobal) {
     command = await fn(getGlobalAgent(), args)
   }
   else {
-    let agent = await detect(options) || getDefaultAgent()
+    let agent = await detect({ ...options, cwd }) || getDefaultAgent()
     if (agent === 'prompt') {
       agent = (await prompts({
         name: 'agent',
@@ -55,5 +62,5 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     return
   }
 
-  await execa.command(command, { stdio: 'inherit', encoding: 'utf-8' })
+  await execa.command(command, { stdio: 'inherit', encoding: 'utf-8', cwd })
 }

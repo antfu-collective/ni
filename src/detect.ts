@@ -8,10 +8,11 @@ import { cmdExists } from './utils'
 
 export interface DetectOptions {
   autoInstall?: boolean
+  cwd?: string
 }
 
-export async function detect({ autoInstall }: DetectOptions) {
-  const result = await findUp(Object.keys(LOCKS))
+export async function detect({ autoInstall, cwd }: DetectOptions) {
+  const result = await findUp(Object.keys(LOCKS), { cwd })
   const agent = (result ? LOCKS[path.basename(result)] : null)
 
   if (agent && !cmdExists(agent)) {
@@ -31,7 +32,7 @@ export async function detect({ autoInstall }: DetectOptions) {
         process.exit(1)
     }
 
-    await execa.command(`npm i -g ${agent}`, { stdio: 'inherit' })
+    await execa.command(`npm i -g ${agent}`, { stdio: 'inherit', cwd })
   }
 
   return agent

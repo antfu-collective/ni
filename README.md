@@ -159,6 +159,13 @@ nrm -g iroiro
 
 <br>
 
+### Change Directory
+
+```bash
+ni -C packages/foo vite
+nr -C playground dev
+```
+
 ### Config
 
 ```ini

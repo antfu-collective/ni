@@ -1,6 +1,7 @@
 import { version } from '../package.json'
 import { Agent, AGENTS, Command } from './agents'
 import { exclude } from './utils'
+import { Runner } from './runner'
 
 export function getCommand(
   agent: Agent,
@@ -20,11 +21,7 @@ export function getCommand(
   return c.replace('{0}', args.join(' ')).trim()
 }
 
-export function parseNi(
-  agent: Agent,
-  args: string[],
-  hasLock?: boolean,
-): string {
+export const parseNi = <Runner>((agent, args, hasLock) => {
   if (args.length === 1 && args[0] === '-v') {
     // eslint-disable-next-line no-console
     console.log(`@antfu/ni v${version}`)
@@ -49,9 +46,9 @@ export function parseNi(
     return getCommand(agent, 'frozen', exclude(args, '--frozen'))
 
   return getCommand(agent, 'add', args)
-}
+})
 
-export function parseNr(agent: Agent, args: string[]): string {
+export const parseNr = <Runner>((agent, args) => {
   if (args.length === 0)
     args.push('start')
 
@@ -61,21 +58,21 @@ export function parseNr(agent: Agent, args: string[]): string {
   }
 
   return getCommand(agent, 'run', args)
-}
+})
 
-export function parseNu(agent: Agent, args: string[]): string {
+export const parseNu = <Runner>((agent, args) => {
   if (args.includes('-i'))
     return getCommand(agent, 'upgrade-interactive', exclude(args, '-i'))
 
   return getCommand(agent, 'upgrade', args)
-}
+})
 
-export function parseNrm(agent: Agent, args: string[]): string {
+export const parseNrm = <Runner>((agent, args) => {
   if (args.includes('-g'))
     return getCommand(agent, 'global_uninstall', exclude(args, '-g'))
   return getCommand(agent, 'uninstall', args)
-}
+})
 
-export function parseNx(agent: Agent, args: string[]): string {
+export const parseNx = <Runner>((agent, args) => {
   return getCommand(agent, 'execute', args)
-}
+})
