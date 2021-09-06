@@ -81,6 +81,12 @@ nr
 # supports https://www.npmjs.com/package/npm-scripts-info convention
 ```
 
+```bash
+nr -
+
+# rerun the last command
+```
+
 <br>
 
 ### `nx` - execute

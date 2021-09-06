@@ -5,6 +5,16 @@ import { getPackageJSON } from './fs'
 import { runCli } from './runner'
 
 runCli(async(agent, args) => {
+  const storage = await load()
+
+  if (args[0] === '-') {
+    if (!storage.lastRunCommand) {
+      console.error('No last command found')
+      process.exit(1)
+    }
+    args[0] = storage.lastRunCommand
+  }
+
   if (args.length === 0) {
     // support https://www.npmjs.com/package/npm-scripts-info conventions
     const scripts = getPackageJSON().scripts || {}
@@ -15,7 +25,6 @@ runCli(async(agent, args) => {
     if (!names.length)
       return
 
-    const storage = await load()
     const choices: Choice[] = names
       .filter(i => !i[0].startsWith('?'))
       .map(([value, cmd]) => ({
@@ -39,16 +48,17 @@ runCli(async(agent, args) => {
       })
       if (!fn)
         return
-      if (storage.lastRunCommand !== fn) {
-        storage.lastRunCommand = fn
-        dump()
-      }
       args.push(fn)
     }
     catch (e) {
       console.error(e)
       process.exit(1)
     }
+  }
+
+  if (storage.lastRunCommand !== args[0]) {
+    storage.lastRunCommand = args[0]
+    dump()
   }
 
   return parseNr(agent, args)
