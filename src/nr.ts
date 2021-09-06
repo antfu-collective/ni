@@ -52,7 +52,6 @@ runCli(async(agent, args, ctx) => {
       args.push(fn)
     }
     catch (e) {
-      console.error(e)
       process.exit(1)
     }
   }
