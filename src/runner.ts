@@ -8,7 +8,12 @@ import { remove } from './utils'
 
 const DEBUG_SIGN = '?'
 
-export type Runner = (agent: Agent, args: string[], hasLock?: boolean) => Promise<string | undefined> | string | undefined
+export interface RunnerContext {
+  hasLock?: boolean
+  cwd?: string
+}
+
+export type Runner = (agent: Agent, args: string[], ctx?: RunnerContext) => Promise<string | undefined> | string | undefined
 
 export async function runCli(fn: Runner, options: DetectOptions = {}) {
   const args = process.argv.slice(2).filter(Boolean)
@@ -50,7 +55,10 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
       if (!agent)
         return
     }
-    command = await fn(agent as Agent, args, Boolean(agent))
+    command = await fn(agent as Agent, args, {
+      hasLock: Boolean(agent),
+      cwd,
+    })
   }
 
   if (!command)

@@ -1,8 +1,8 @@
 import { resolve } from 'path'
 import fs from 'fs'
 
-export function getPackageJSON(): any {
-  const path = resolve(process.cwd(), 'package.json')
+export function getPackageJSON(cwd = process.cwd()): any {
+  const path = resolve(cwd, 'package.json')
 
   if (fs.existsSync(path)) {
     try {

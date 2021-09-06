@@ -4,7 +4,7 @@ import { parseNr } from './commands'
 import { getPackageJSON } from './fs'
 import { runCli } from './runner'
 
-runCli(async(agent, args) => {
+runCli(async(agent, args, ctx) => {
   const storage = await load()
 
   if (args[0] === '-') {
@@ -17,8 +17,9 @@ runCli(async(agent, args) => {
 
   if (args.length === 0) {
     // support https://www.npmjs.com/package/npm-scripts-info conventions
-    const scripts = getPackageJSON().scripts || {}
-    const scriptsInfo = getPackageJSON()['scripts-info'] || {}
+    const pkg = getPackageJSON(ctx?.cwd)
+    const scripts = pkg.scripts || {}
+    const scriptsInfo = pkg['scripts-info'] || {}
 
     const names = Object.entries(scripts) as [string, string][]
 

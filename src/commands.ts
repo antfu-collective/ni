@@ -21,7 +21,7 @@ export function getCommand(
   return c.replace('{0}', args.join(' ')).trim()
 }
 
-export const parseNi = <Runner>((agent, args, hasLock) => {
+export const parseNi = <Runner>((agent, args, ctx) => {
   if (args.length === 1 && args[0] === '-v') {
     // eslint-disable-next-line no-console
     console.log(`@antfu/ni v${version}`)
@@ -39,7 +39,7 @@ export const parseNi = <Runner>((agent, args, hasLock) => {
 
   if (args.includes('--frozen-if-present')) {
     args = exclude(args, '--frozen-if-present')
-    return getCommand(agent, hasLock ? 'frozen' : 'install', args)
+    return getCommand(agent, ctx?.hasLock ? 'frozen' : 'install', args)
   }
 
   if (args.includes('--frozen'))
