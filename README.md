@@ -78,6 +78,7 @@ nr dev --port=3000
 nr
 
 # interactively select the script to run
+# supports https://www.npmjs.com/package/npm-scripts-info convention
 ```
 
 <br>

@@ -6,7 +6,9 @@ import { runCli } from './runner'
 
 runCli(async(agent, args) => {
   if (args.length === 0) {
+    // support https://www.npmjs.com/package/npm-scripts-info conventions
     const scripts = getPackageJSON().scripts || {}
+    const scriptsInfo = getPackageJSON()['scripts-info'] || {}
 
     const names = Object.entries(scripts) as [string, string][]
 
@@ -14,7 +16,13 @@ runCli(async(agent, args) => {
       return
 
     const storage = await load()
-    const choices: Choice[] = names.map(([value, description]) => ({ title: value, value, description }))
+    const choices: Choice[] = names
+      .filter(i => !i[0].startsWith('?'))
+      .map(([value, cmd]) => ({
+        title: value,
+        value,
+        description: scriptsInfo[value] || scripts[`?${value}`] || cmd,
+      }))
 
     if (storage.lastRunCommand) {
       const last = choices.find(i => i.value === storage.lastRunCommand)

@@ -30,6 +30,7 @@
   "scripts": {
     "prepublishOnly": "rimraf dist && npm run build",
     "watch": "npm run build -- --watch",
+    "?ni": "npm install",
     "ni": "esno src/ni.ts",
     "nci": "esno src/nci.ts",
     "nr": "esno src/nr.ts",
