@@ -1,4 +1,4 @@
-import { resolve } from 'path/posix'
+import { resolve } from 'path'
 import prompts from 'prompts'
 import execa from 'execa'
 import { Agent, agents } from './agents'
