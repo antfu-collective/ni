@@ -30,6 +30,11 @@ export function parseNi(
   if (args.includes('-g'))
     return getCommand(agent, 'global', exclude(args, '-g'))
 
+
+  if (args[0] === '-f' && args.length === 1)
+    return getCommand(agent, 'install', args)
+
+
   if (args.includes('--frozen-if-present')) {
     args = exclude(args, '--frozen-if-present')
     return getCommand(agent, hasLock ? 'frozen' : 'install', args)
