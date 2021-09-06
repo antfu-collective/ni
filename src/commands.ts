@@ -1,3 +1,4 @@
+import { version } from '../package.json'
 import { Agent, AGENTS, Command } from './agents'
 import { exclude } from './utils'
 
@@ -24,16 +25,20 @@ export function parseNi(
   args: string[],
   hasLock?: boolean,
 ): string {
+  if (args.length === 1 && args[0] === '-v') {
+    // eslint-disable-next-line no-console
+    console.log(`@antfu/ni v${version}`)
+    process.exit(0)
+  }
+
   if (args.length === 0)
     return getCommand(agent, 'install')
 
   if (args.includes('-g'))
     return getCommand(agent, 'global', exclude(args, '-g'))
 
-
-  if (args[0] === '-f' && args.length === 1)
+  if (args.length === 1 && args[0] === '-f')
     return getCommand(agent, 'install', args)
-
 
   if (args.includes('--frozen-if-present')) {
     args = exclude(args, '--frozen-if-present')

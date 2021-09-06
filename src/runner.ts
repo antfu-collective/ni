@@ -49,6 +49,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     return
 
   if (debug) {
+    // eslint-disable-next-line no-console
     console.log(command)
     return
   }
