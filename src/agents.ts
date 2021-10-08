@@ -37,7 +37,7 @@ export const AGENTS = {
     'add': 'pnpm i {0}',
     'upgrade': 'pnpm update {0}',
     'upgrade-interactive': 'pnpm update -i',
-    'execute': 'pnpx {0}',
+    'execute': 'pnpm dlx {0}',
     'uninstall': 'pnpm remove {0}',
     'global_uninstall': 'pnpm remove -g {0}',
   },

@@ -1,6 +1,6 @@
 # ni
 
-~~*`npm i` in a yarn project, again? F\*\*k!*~~
+~~_`npm i` in a yarn project, again? F\*\*k!_~~
 
 **ni** - use the right package manager
 
@@ -14,9 +14,7 @@ npm i -g <b>@antfu/ni</b>
 
 <a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.js.org/en/'>pnpm</a>
 
-
 <br>
-
 
 ### `ni` - install
 
@@ -96,7 +94,7 @@ nx jest
 
 # npx jest
 # yarn dls jest
-# pnpx jest
+# pnpm dlx jest
 ```
 
 <br>
