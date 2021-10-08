@@ -96,7 +96,7 @@ nx jest
 
 # npx jest
 # yarn dls jest
-# pnpx jest
+# pnpm dlx jest
 ```
 
 <br>
