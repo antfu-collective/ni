@@ -95,7 +95,7 @@ nr -
 nx jest
 
 # npx jest
-# yarn dls jest
+# yarn dlx jest
 # pnpm dlx jest
 ```
 
