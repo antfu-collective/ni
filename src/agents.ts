@@ -25,7 +25,7 @@ export const AGENTS = {
     'add': 'yarn add {0}',
     'upgrade': 'yarn upgrade {0}',
     'upgrade-interactive': 'yarn upgrade-interactive',
-    'execute': 'yarn dls {0}',
+    'execute': 'yarn dlx {0}',
     'uninstall': 'yarn remove {0}',
     'global_uninstall': 'yarn global remove {0}',
   },
