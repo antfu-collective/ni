@@ -3,11 +3,15 @@ import path from 'path'
 import ini from 'ini'
 import { Agent } from './agents'
 
+const customRcPath = process.env.NI_CONFIG_FILE
+
 const home = process.platform === 'win32'
   ? process.env.USERPROFILE
   : process.env.HOME
 
-const rcPath = path.join(home || '~/', '.nirc')
+const defaultRcPath = path.join(home || '~/', '.nirc')
+
+const rcPath = customRcPath || defaultRcPath
 
 interface Config {
   defaultAgent: Agent | 'prompt'
