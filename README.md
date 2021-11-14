@@ -176,13 +176,6 @@ nr -C playground dev
 
 ### Config
 
-```bash
-# ~/.bashrc
-
-# custom configuration file path
-export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
-```
-
 ```ini
 ; ~/.nirc
 
@@ -191,6 +184,13 @@ defaultAgent=npm # default "prompt"
 
 ; for global installs
 globalAgent=npm
+```
+
+```bash
+# ~/.bashrc
+
+# custom configuration file path
+export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 ```
 
 <br>
