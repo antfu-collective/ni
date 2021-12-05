@@ -12,7 +12,7 @@ specifiers:
   esm: ^3.2.25
   esno: ^0.9.1
   execa: ^5.1.1
-  find-up: ^5.0.0
+  find-up: 6.2.0
   ini: ^2.0.0
   prompts: ^2.4.1
   rimraf: ^3.0.2
@@ -32,7 +32,7 @@ devDependencies:
   esm: 3.2.25
   esno: 0.9.1
   execa: 5.1.1
-  find-up: 5.0.0
+  find-up: registry.npmmirror.com/find-up/6.2.0
   ini: 2.0.0
   prompts: 2.4.1
   rimraf: 3.0.2
@@ -3851,4 +3851,55 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: true
+
+  registry.nlark.com/locate-path/7.0.0:
+    resolution: {integrity: sha1-8KYMjdfvD3N2meuUYblWepK8l9o=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/locate-path/download/locate-path-7.0.0.tgz}
+    name: locate-path
+    version: 7.0.0
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      p-locate: registry.nlark.com/p-locate/6.0.0
+    dev: true
+
+  registry.nlark.com/p-limit/4.0.0:
+    resolution: {integrity: sha1-kUr2VE7TK/pUZwsGHK/L0EmEtkQ=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/p-limit/download/p-limit-4.0.0.tgz}
+    name: p-limit
+    version: 4.0.0
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      yocto-queue: registry.nlark.com/yocto-queue/1.0.0
+    dev: true
+
+  registry.nlark.com/p-locate/6.0.0:
+    resolution: {integrity: sha1-PamknUk0uQEIncozAvpl3FoFwE8=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/p-locate/download/p-locate-6.0.0.tgz}
+    name: p-locate
+    version: 6.0.0
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      p-limit: registry.nlark.com/p-limit/4.0.0
+    dev: true
+
+  registry.nlark.com/path-exists/5.0.0:
+    resolution: {integrity: sha1-pqrZSJIAsh+rMeSc8JJ35RFvuec=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/path-exists/download/path-exists-5.0.0.tgz}
+    name: path-exists
+    version: 5.0.0
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dev: true
+
+  registry.nlark.com/yocto-queue/1.0.0:
+    resolution: {integrity: sha1-f4FkM/ssvFEeyL99Jjw7WKGjwlE=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/yocto-queue/download/yocto-queue-1.0.0.tgz}
+    name: yocto-queue
+    version: 1.0.0
+    engines: {node: '>=12.20'}
+    dev: true
+
+  registry.npmmirror.com/find-up/6.2.0:
+    resolution: {integrity: sha1-87gdYz+oO+vmT4OourNX+G1ZFL4=, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/find-up/download/find-up-6.2.0.tgz}
+    name: find-up
+    version: 6.2.0
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      locate-path: registry.nlark.com/locate-path/7.0.0
+      path-exists: registry.nlark.com/path-exists/5.0.0
     dev: true

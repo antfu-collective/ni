@@ -1,6 +1,6 @@
 import path from 'path'
 import execa from 'execa'
-import findUp from 'find-up'
+import { findUp } from 'find-up'
 import terminalLink from 'terminal-link'
 import prompts from 'prompts'
 import { LOCKS, INSTALL_PAGE } from './agents'
@@ -12,7 +12,7 @@ export interface DetectOptions {
 }
 
 export async function detect({ autoInstall, cwd }: DetectOptions) {
-  const result = await findUp(Object.keys(LOCKS), { cwd })
+  const result = await findUp(Object.keys(LOCKS), { cwd, stopAt: cwd })
   const agent = (result ? LOCKS[path.basename(result)] : null)
 
   if (agent && !cmdExists(agent)) {
