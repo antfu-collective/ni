@@ -1,7 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 import ini from 'ini'
-import { Agent } from './agents'
+import findUp from 'find-up'
+import { Agent, LOCKS } from './agents'
 
 const customRcPath = process.env.NI_CONFIG_FILE
 
@@ -25,9 +26,16 @@ const defaultConfig: Config = {
 
 let config: Config | undefined
 
-export function getConfig() {
+export async function getConfig(): Promise<Config> {
   if (!config) {
-    if (!fs.existsSync(rcPath))
+    const result = await findUp('package.json') || ''
+    let packageManager = ''
+    if (result)
+      packageManager = JSON.parse(fs.readFileSync(result, 'utf8')).packageManager ?? ''
+    const [, agent] = packageManager.match(new RegExp(`^(${Object.values(LOCKS).join('|')})@.*?$`)) || []
+    if (agent)
+      config = Object.assign({}, defaultConfig, { defaultAgent: agent })
+    else if (!fs.existsSync(rcPath))
       config = defaultConfig
     else
       config = Object.assign({}, defaultConfig, ini.parse(fs.readFileSync(rcPath, 'utf-8')))
@@ -35,13 +43,14 @@ export function getConfig() {
   return config
 }
 
-export function getDefaultAgent() {
-  const agent = getConfig().defaultAgent
-  if (agent === 'prompt' && process.env.CI)
+export async function getDefaultAgent() {
+  const { defaultAgent } = await getConfig()
+  if (defaultAgent === 'prompt' && process.env.CI)
     return 'npm'
-  return agent
+  return defaultAgent
 }
 
-export function getGlobalAgent() {
-  return getConfig().globalAgent
+export async function getGlobalAgent() {
+  const { globalAgent } = await getConfig()
+  return globalAgent
 }

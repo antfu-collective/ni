@@ -40,10 +40,10 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
 
   const isGlobal = args.includes('-g')
   if (isGlobal) {
-    command = await fn(getGlobalAgent(), args)
+    command = await fn(await getGlobalAgent(), args)
   }
   else {
-    let agent = await detect({ ...options, cwd }) || getDefaultAgent()
+    let agent = await detect({ ...options, cwd }) || await getDefaultAgent()
     if (agent === 'prompt') {
       agent = (await prompts({
         name: 'agent',
