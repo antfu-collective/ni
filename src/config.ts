@@ -27,7 +27,11 @@ let config: Config | undefined
 
 export function getConfig() {
   if (!config) {
-    if (!fs.existsSync(rcPath))
+    const { packageManager = '' } = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf8') || '{}')
+    const [, agent] = packageManager.match(/^(npm|pnpm|yarn)@.*?$/) || []
+    if (agent)
+      config = Object.assign({}, defaultConfig, { defaultAgent: agent })
+    else if (!fs.existsSync(rcPath))
       config = defaultConfig
     else
       config = Object.assign({}, defaultConfig, ini.parse(fs.readFileSync(rcPath, 'utf-8')))
