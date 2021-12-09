@@ -43,13 +43,22 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     command = await fn(await getGlobalAgent(), args)
   }
   else {
-    let agent = await detect({ ...options, cwd }) || await getDefaultAgent()
-    if (agent === 'prompt') {
+    let detectAgents = await detect({ ...options, cwd })
+    let agent = ''
+
+    if (detectAgents.length === 1) {
+      agent = detectAgents[0]
+    } else if (detectAgents.length === 0) {
+      agent = await getDefaultAgent()
+      detectAgents = agents
+    }
+
+    if (!agent || agent === 'prompt') {
       agent = (await prompts({
         name: 'agent',
         type: 'select',
         message: 'Choose the agent',
-        choices: agents.map(value => ({ title: value, value })),
+        choices: detectAgents.map(value => ({ title: value, value })),
       })).agent
       if (!agent)
         return

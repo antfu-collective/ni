@@ -1,6 +1,6 @@
 import path from 'path'
 import execa from 'execa'
-import findUp from 'find-up'
+import {findUpMultiple} from 'find-up'
 import terminalLink from 'terminal-link'
 import prompts from 'prompts'
 import { LOCKS, INSTALL_PAGE } from './agents'
@@ -12,17 +12,17 @@ export interface DetectOptions {
 }
 
 export async function detect({ autoInstall, cwd }: DetectOptions) {
-  const result = await findUp(Object.keys(LOCKS), { cwd })
-  const agent = (result ? LOCKS[path.basename(result)] : null)
+  const result = await findUpMultiple(Object.keys(LOCKS), { cwd })
+  const agents = result.map(filePath => LOCKS[path.basename(filePath)]) || []
 
-  if (agent && !cmdExists(agent)) {
+  if (agents.length === 1 && !cmdExists(agents[0])) {
     if (!autoInstall) {
-      console.warn(`Detected ${agent} but it doesn't seem to be installed.\n`)
+      console.warn(`Detected ${agents[0]} but it doesn't seem to be installed.\n`)
 
       if (process.env.CI)
         process.exit(1)
 
-      const link = terminalLink(agent, INSTALL_PAGE[agent])
+      const link = terminalLink(agents[0], INSTALL_PAGE[agents[0]])
       const { tryInstall } = await prompts({
         name: 'tryInstall',
         type: 'confirm',
@@ -32,8 +32,8 @@ export async function detect({ autoInstall, cwd }: DetectOptions) {
         process.exit(1)
     }
 
-    await execa.command(`npm i -g ${agent}`, { stdio: 'inherit', cwd })
+    await execa.command(`npm i -g ${agents[0]}`, { stdio: 'inherit', cwd })
   }
 
-  return agent
+  return agents
 }
