@@ -80,3 +80,6 @@ dist
 # IDE
 .idea
 _storage.json
+
+# System files
+.DS_Store

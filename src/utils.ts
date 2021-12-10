@@ -1,5 +1,6 @@
 import os from 'os'
 import { execSync } from 'child_process'
+import which from 'which'
 
 export function remove<T>(arr: T[], v: T) {
   const index = arr.indexOf(v)
@@ -26,4 +27,11 @@ export function cmdExists(cmd: string) {
   catch {
     return false
   }
+}
+
+export function getVoltaPrefix(): string {
+  // https://blog.volta.sh/2020/11/25/command-spotlight-volta-run/
+  const VOLTA_PREFIX = 'volta run'
+  const hasVoltaCommand = which.sync('volta', { nothrow: true }) !== null
+  return hasVoltaCommand ? VOLTA_PREFIX : ''
 }

@@ -4,7 +4,7 @@ import execa from 'execa'
 import { Agent, agents } from './agents'
 import { getDefaultAgent, getGlobalAgent } from './config'
 import { detect, DetectOptions } from './detect'
-import { remove } from './utils'
+import { remove, getVoltaPrefix } from './utils'
 
 const DEBUG_SIGN = '?'
 
@@ -62,6 +62,10 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
 
   if (!command)
     return
+
+  const voltaPrefix = getVoltaPrefix()
+  if (voltaPrefix)
+    command = voltaPrefix.concat(' ').concat(command)
 
   if (debug) {
     // eslint-disable-next-line no-console
