@@ -89,6 +89,28 @@ nr -
 
 <br>
 
+### `nrm` - remove
+
+```bash
+nrm axios
+
+# npm uninstall axios
+# yarn remove axios
+# pnpm remove axios
+```
+
+```bash
+nrm -g iroiro
+
+# npm uninstall -g iroiro
+# yarn global remove iroiro
+# pnpm remove -g iroiro
+
+# this uses default agent, regardless your current working directory
+```
+
+<br>
+
 ### `nx` - execute
 
 ```bash
