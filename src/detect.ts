@@ -24,7 +24,7 @@ export async function detect({ autoInstall, cwd }: DetectOptions) {
         const pkg = JSON.parse(fs.readFileSync(packageJSON, 'utf8'))
         if (pkg.packageManager) {
           const [name, version] = pkg.packageManager.split('@')
-          if (name === 'yarn' && version > '1') agent = 'yarn@berry'
+          if (name === 'yarn' && parseInt(version) > 1) agent = 'yarn@berry'
         }
       }
       catch {}
