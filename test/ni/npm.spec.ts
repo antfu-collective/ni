@@ -1,10 +1,11 @@
-import test, { ExecutionContext } from 'ava'
+import { test, expect } from 'vitest'
 import { parseNi } from '../../src/commands'
 
 const agent = 'npm'
-const _ = (arg: string, expected: string) => (t: ExecutionContext) => {
-  t.is(
+const _ = (arg: string, expected: string) => () => {
+  expect(
     parseNi(agent, arg.split(' ').filter(Boolean)),
+  ).toBe(
     expected,
   )
 }

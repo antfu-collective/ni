@@ -1,10 +1,11 @@
-import test, { ExecutionContext } from 'ava'
+import { test, expect } from 'vitest'
 import { parseNr } from '../../src/commands'
 
 const agent = 'yarn'
-const _ = (arg: string, expected: string) => (t: ExecutionContext) => {
-  t.is(
+const _ = (arg: string, expected: string) => () => {
+  expect(
     parseNr(agent, arg.split(' ').filter(Boolean)),
+  ).toBe(
     expected,
   )
 }

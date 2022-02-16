@@ -40,7 +40,7 @@
     "release": "npx bumpp --commit --push --tag",
     "lint": "eslint \"**/*.ts\"",
     "lint:fix": "npm run lint -- --fix",
-    "test": "c8 ava"
+    "test": "vitest"
   },
   "devDependencies": {
     "@antfu/eslint-config-ts": "^0.7.0",
@@ -48,11 +48,7 @@
     "@types/node": "^16.7.10",
     "@types/prompts": "^2.4.0",
     "@types/which": "^2.0.1",
-    "ava": "^3.15.0",
-    "c8": "^7.8.0",
-    "esbuild-register": "^3.0.0",
     "eslint": "^7.32.0",
-    "esm": "^3.2.25",
     "esno": "^0.9.1",
     "execa": "^5.1.1",
     "find-up": "^5.0.0",
@@ -62,18 +58,10 @@
     "terminal-link": "^3.0.0",
     "tsup": "^4.14.0",
     "typescript": "^4.4.2",
+    "vitest": "^0.3.5",
     "which": "^2.0.2"
   },
   "eslintConfig": {
     "extends": "@antfu/eslint-config-ts"
-  },
-  "ava": {
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "esm",
-      "esbuild-register"
-    ]
   }
 }
