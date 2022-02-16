@@ -32,9 +32,9 @@ export async function getConfig(): Promise<Config> {
     let packageManager = ''
     if (result)
       packageManager = JSON.parse(fs.readFileSync(result, 'utf8')).packageManager ?? ''
-    const [, agent] = packageManager.match(new RegExp(`^(${Object.values(LOCKS).join('|')})@.*?$`)) || []
+    const [, agent, version] = packageManager.match(new RegExp(`^(${Object.values(LOCKS).join('|')})@(\d).*?$`)) || []
     if (agent)
-      config = Object.assign({}, defaultConfig, { defaultAgent: agent })
+      config = Object.assign({}, defaultConfig, { defaultAgent: (agent === 'yarn' && parseInt(version) > 1) ? 'yarn@berry' : agent })
     else if (!fs.existsSync(rcPath))
       config = defaultConfig
     else

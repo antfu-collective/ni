@@ -5,7 +5,7 @@ const npmRun = (agent: string) => (args: string[]) => {
 }
 
 export const AGENTS = {
-  npm: {
+  'npm': {
     'run': npmRun('npm'),
     'install': 'npm i',
     'frozen': 'npm ci',
@@ -17,7 +17,7 @@ export const AGENTS = {
     'uninstall': 'npm uninstall {0}',
     'global_uninstall': 'npm uninstall -g {0}',
   },
-  yarn: {
+  'yarn': {
     'run': 'yarn run {0}',
     'install': 'yarn install',
     'frozen': 'yarn install --frozen-lockfile',
@@ -29,7 +29,20 @@ export const AGENTS = {
     'uninstall': 'yarn remove {0}',
     'global_uninstall': 'yarn global remove {0}',
   },
-  pnpm: {
+  'yarn@berry': {
+    'run': 'yarn run {0}',
+    'install': 'yarn install',
+    'frozen': 'yarn install --immutable',
+    // yarn3 removed 'global', see https://github.com/yarnpkg/berry/issues/821
+    'global': 'npm i -g {0}',
+    'add': 'yarn add {0}',
+    'upgrade': 'yarn up {0}',
+    'upgrade-interactive': 'yarn up -i {0}',
+    'execute': 'yarn dlx {0}',
+    'uninstall': 'yarn remove {0}',
+    'global_uninstall': 'npm uninstall -g {0}',
+  },
+  'pnpm': {
     'run': npmRun('pnpm'),
     'install': 'pnpm i',
     'frozen': 'pnpm i --frozen-lockfile',
@@ -55,7 +68,8 @@ export const LOCKS: Record<string, Agent> = {
 }
 
 export const INSTALL_PAGE: Record<Agent, string> = {
-  pnpm: 'https://pnpm.js.org/en/installation',
-  yarn: 'https://yarnpkg.com/getting-started/install',
-  npm: 'https://www.npmjs.com/get-npm',
+  'pnpm': 'https://pnpm.js.org/en/installation',
+  'yarn': 'https://yarnpkg.com/getting-started/install',
+  'yarn@berry': 'https://yarnpkg.com/getting-started/install',
+  'npm': 'https://www.npmjs.com/get-npm',
 }
