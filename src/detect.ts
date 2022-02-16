@@ -4,7 +4,7 @@ import execa from 'execa'
 import findUp from 'find-up'
 import terminalLink from 'terminal-link'
 import prompts from 'prompts'
-import { LOCKS, INSTALL_PAGE, Agent } from './agents'
+import { LOCKS, INSTALL_PAGE, Agent, AGENTS } from './agents'
 import { cmdExists } from './utils'
 
 export interface DetectOptions {
@@ -13,28 +13,41 @@ export interface DetectOptions {
 }
 
 export async function detect({ autoInstall, cwd }: DetectOptions) {
-  const result = await findUp(Object.keys(LOCKS), { cwd })
-
   let agent: Agent | null = null
-  // handle "packageManager"
-  if (result) {
-    const packageJSON = path.resolve(result, '../package.json')
-    if (fs.existsSync(packageJSON)) {
-      try {
-        const pkg = JSON.parse(fs.readFileSync(packageJSON, 'utf8'))
-        if (pkg.packageManager) {
-          const [name, version] = pkg.packageManager.split('@')
-          if (name === 'yarn' && parseInt(version) > 1) agent = 'yarn@berry'
-        }
+
+  const lockPath = await findUp(Object.keys(LOCKS), { cwd })
+  let packageJsonPath: string | undefined
+
+  if (lockPath)
+    packageJsonPath = path.resolve(lockPath, '../package.json')
+  else
+    packageJsonPath = await findUp(Object.keys('package.json'), { cwd })
+
+  // read `packageManager` field in package.json
+  if (packageJsonPath && fs.existsSync(packageJsonPath)) {
+    try {
+      const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
+      if (typeof pkg.packageManager === 'string') {
+        const [name, version] = pkg.packageManager.split('@')
+        if (name === 'yarn' && parseInt(version) > 1)
+          agent = 'yarn@berry'
+        else if (name in AGENTS)
+          agent = name
+        else
+          console.warn('[ni] Unknown packageManager:', pkg.packageManager)
       }
-      catch {}
     }
-    agent ||= LOCKS[path.basename(result)]
+    catch {}
   }
 
+  // detect based on lock
+  if (!agent && lockPath)
+    agent = LOCKS[path.basename(lockPath)]
+
+  // auto install
   if (agent && !cmdExists(agent.split('@')[0])) {
     if (!autoInstall) {
-      console.warn(`Detected ${agent} but it doesn't seem to be installed.\n`)
+      console.warn(`[ni] Detected ${agent} but it doesn't seem to be installed.\n`)
 
       if (process.env.CI)
         process.exit(1)
