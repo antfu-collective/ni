@@ -21,7 +21,7 @@ export async function detect({ autoInstall, cwd }: DetectOptions) {
   if (lockPath)
     packageJsonPath = path.resolve(lockPath, '../package.json')
   else
-    packageJsonPath = await findUp(Object.keys('package.json'), { cwd })
+    packageJsonPath = await findUp('package.json', { cwd })
 
   // read `packageManager` field in package.json
   if (packageJsonPath && fs.existsSync(packageJsonPath)) {
