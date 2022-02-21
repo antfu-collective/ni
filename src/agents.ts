@@ -69,7 +69,7 @@ export const LOCKS: Record<string, Agent> = {
 
 export const INSTALL_PAGE: Record<Agent, string> = {
   'pnpm': 'https://pnpm.js.org/en/installation',
-  'yarn': 'https://yarnpkg.com/getting-started/install',
+  'yarn': 'https://classic.yarnpkg.com/en/docs/install',
   'yarn@berry': 'https://yarnpkg.com/getting-started/install',
   'npm': 'https://www.npmjs.com/get-npm',
 }
