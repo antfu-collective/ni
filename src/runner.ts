@@ -49,7 +49,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
         name: 'agent',
         type: 'select',
         message: 'Choose the agent',
-        choices: agents.map(value => ({ title: value, value })),
+        choices: agents.filter(i => !i.includes('@')).map(value => ({ title: value, value })),
       })).agent
       if (!agent)
         return
