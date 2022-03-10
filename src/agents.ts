@@ -46,13 +46,13 @@ export const AGENTS = {
     'run': npmRun('pnpm'),
     'install': 'pnpm i',
     'frozen': 'pnpm i --frozen-lockfile',
-    'global': 'pnpm i -g {0}',
-    'add': 'pnpm i {0}',
+    'global': 'pnpm add -g {0}',
+    'add': 'pnpm add {0}',
     'upgrade': 'pnpm update {0}',
     'upgrade-interactive': 'pnpm update -i {0}',
     'execute': 'pnpm dlx {0}',
     'uninstall': 'pnpm remove {0}',
-    'global_uninstall': 'pnpm remove -g {0}',
+    'global_uninstall': 'pnpm remove --global {0}',
   },
 }
 
