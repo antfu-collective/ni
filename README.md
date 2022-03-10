@@ -33,7 +33,7 @@ ni axios
 
 # npm i axios
 # yarn add axios
-# pnpm i axios
+# pnpm add axios
 ```
 
 ```bash
@@ -41,7 +41,7 @@ ni @types/node -D
 
 # npm i @types/node -D
 # yarn add @types/node -D
-# pnpm i @types/node -D
+# pnpm add -D @types/node
 ```
 
 ```bash
@@ -57,7 +57,7 @@ ni -g iroiro
 
 # npm i -g iroiro
 # yarn global add iroiro
-# pnpm i -g iroiro
+# pnpm add -g iroiro
 
 # this uses default agent, regardless your current working directory
 ```
@@ -108,7 +108,7 @@ nu
 
 # npm upgrade
 # yarn upgrade
-# pnpm upgrade
+# pnpm update
 ```
 
 ```bash
@@ -116,7 +116,7 @@ nu -i
 
 # (not available for npm)
 # yarn upgrade-interactive
-# pnpm upgrade -i
+# pnpm update -i
 ```
 
 <br>
