@@ -121,6 +121,34 @@ nu -i
 
 <br>
 
+### `nun` - uninstall
+
+```bash
+nun axios
+
+# npm uninstall axios
+# yarn remove axios
+# pnpm remove axios
+```
+
+```bash
+nun @types/node -D
+
+# npm uninstall @types/node -D
+# yarn remove @types/node -D
+# pnpm remove -D @types/node
+```
+
+```bash
+nun -g eslint
+
+# npm uninstall -g eslint
+# yarn global remove eslint
+# pnpm remove -g eslint
+```
+
+<br>
+
 ### `nci` - clean install
 
 ```bash

@@ -67,7 +67,7 @@ export const parseNu = <Runner>((agent, args) => {
   return getCommand(agent, 'upgrade', args)
 })
 
-export const parseNrm = <Runner>((agent, args) => {
+export const parseNun = <Runner>((agent, args) => {
   if (args.includes('-g'))
     return getCommand(agent, 'global_uninstall', exclude(args, '-g'))
   return getCommand(agent, 'uninstall', args)
