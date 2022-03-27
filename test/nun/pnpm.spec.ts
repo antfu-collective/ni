@@ -1,10 +1,10 @@
 import { test, expect } from 'vitest'
-import { parseNrm } from '../../src/commands'
+import { parseNun } from '../../src/commands'
 
 const agent = 'pnpm'
 const _ = (arg: string, expected: string) => () => {
   expect(
-    parseNrm(agent, arg.split(' ').filter(Boolean)),
+    parseNun(agent, arg.split(' ').filter(Boolean)),
   ).toBe(
     expected,
   )

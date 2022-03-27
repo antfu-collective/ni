@@ -21,7 +21,7 @@
     "nr": "bin/nr.js",
     "nu": "bin/nu.js",
     "nx": "bin/nx.js",
-    "nrm": "bin/nrm.js"
+    "nun": "bin/nun.js"
   },
   "bugs": {
     "url": "https://github.com/antfu/ni/issues"
@@ -36,9 +36,9 @@
     "nr": "esno src/nr.ts",
     "nu": "esno src/nu.ts",
     "nx": "esno src/nx.ts",
-    "nrm": "esno src/nrm.ts",
+    "nun": "esno src/nun.ts",
     "dev": "esno src/ni.ts",
-    "build": "rimraf dist && tsup src/ni.ts src/nci.ts src/nr.ts src/nu.ts src/nx.ts src/nrm.ts src/index.ts --format cjs,esm --dts",
+    "build": "rimraf dist && tsup src/ni.ts src/nci.ts src/nr.ts src/nu.ts src/nx.ts src/nun.ts src/index.ts --format cjs,esm --dts",
     "release": "npx bumpp --commit --push --tag",
     "lint": "eslint \"**/*.ts\"",
     "lint:fix": "npm run lint -- --fix",

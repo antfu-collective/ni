@@ -121,10 +121,10 @@ nu -i
 
 <br>
 
-### `nrm` - remove
+### `nun` - uninstall
 
 ```bash
-nrm axios
+nun axios
 
 # npm uninstall axios
 # yarn remove axios
@@ -132,7 +132,7 @@ nrm axios
 ```
 
 ```bash
-nrm @types/node -D
+nun @types/node -D
 
 # npm uninstall @types/node -D
 # yarn remove @types/node -D
@@ -140,7 +140,7 @@ nrm @types/node -D
 ```
 
 ```bash
-nrm -g eslint
+nun -g eslint
 
 # npm uninstall -g eslint
 # yarn global remove eslint
