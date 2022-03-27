@@ -1,10 +1,11 @@
 import fs from 'fs'
 import path from 'path'
-import execa from 'execa'
-import findUp from 'find-up'
+import { execaCommand } from 'execa'
+import { findUp } from 'find-up'
 import terminalLink from 'terminal-link'
 import prompts from 'prompts'
-import { LOCKS, INSTALL_PAGE, Agent, AGENTS } from './agents'
+import type { Agent } from './agents'
+import { AGENTS, INSTALL_PAGE, LOCKS } from './agents'
 import { cmdExists } from './utils'
 
 export interface DetectOptions {
@@ -62,7 +63,7 @@ export async function detect({ autoInstall, cwd }: DetectOptions) {
         process.exit(1)
     }
 
-    await execa.command(`npm i -g ${agent}`, { stdio: 'inherit', cwd })
+    await execaCommand(`npm i -g ${agent}`, { stdio: 'inherit', cwd })
   }
 
   return agent

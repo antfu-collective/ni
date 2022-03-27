@@ -1,7 +1,8 @@
 import { version } from '../package.json'
-import { Agent, AGENTS, Command } from './agents'
+import type { Agent, Command } from './agents'
+import { AGENTS } from './agents'
 import { exclude } from './utils'
-import { Runner } from './runner'
+import type { Runner } from './runner'
 
 export function getCommand(
   agent: Agent,

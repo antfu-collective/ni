@@ -1,8 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 import ini from 'ini'
-import findUp from 'find-up'
-import { Agent, LOCKS } from './agents'
+import { findUp } from 'find-up'
+import type { Agent } from './agents'
+import { LOCKS } from './agents'
 
 const customRcPath = process.env.NI_CONFIG_FILE
 

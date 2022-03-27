@@ -1,4 +1,4 @@
-import { test, expect } from 'vitest'
+import { expect, test } from 'vitest'
 import { parseNi } from '../../src/commands'
 
 const agent = 'yarn'

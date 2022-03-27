@@ -1,4 +1,5 @@
-import prompts, { Choice } from 'prompts'
+import type { Choice } from 'prompts'
+import prompts from 'prompts'
 import { dump, load } from './storage'
 import { parseNr } from './commands'
 import { getPackageJSON } from './fs'

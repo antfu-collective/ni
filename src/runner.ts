@@ -1,10 +1,12 @@
 import { resolve } from 'path'
 import prompts from 'prompts'
-import execa from 'execa'
-import { Agent, agents } from './agents'
+import { execaCommand } from 'execa'
+import type { Agent } from './agents'
+import { agents } from './agents'
 import { getDefaultAgent, getGlobalAgent } from './config'
-import { detect, DetectOptions } from './detect'
-import { remove, getVoltaPrefix } from './utils'
+import type { DetectOptions } from './detect'
+import { detect } from './detect'
+import { getVoltaPrefix, remove } from './utils'
 
 const DEBUG_SIGN = '?'
 
@@ -73,5 +75,5 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     return
   }
 
-  await execa.command(command, { stdio: 'inherit', encoding: 'utf-8', cwd })
+  await execaCommand(command, { stdio: 'inherit', encoding: 'utf-8', cwd })
 }
