@@ -16,6 +16,7 @@ export const AGENTS = {
     'execute': 'npx {0}',
     'uninstall': 'npm uninstall {0}',
     'global_uninstall': 'npm uninstall -g {0}',
+    'list': 'npm list {0}',
   },
   'yarn': {
     'run': 'yarn run {0}',
@@ -28,6 +29,7 @@ export const AGENTS = {
     'execute': 'yarn dlx {0}',
     'uninstall': 'yarn remove {0}',
     'global_uninstall': 'yarn global remove {0}',
+    'list': 'yarn list {0}',
   },
   'yarn@berry': {
     'run': 'yarn run {0}',
@@ -41,6 +43,7 @@ export const AGENTS = {
     'execute': 'yarn dlx {0}',
     'uninstall': 'yarn remove {0}',
     'global_uninstall': 'npm uninstall -g {0}',
+    'list': 'yarn info -A -R --name-only {0}',
   },
   'pnpm': {
     'run': npmRun('pnpm'),
@@ -53,6 +56,7 @@ export const AGENTS = {
     'execute': 'pnpm dlx {0}',
     'uninstall': 'pnpm remove {0}',
     'global_uninstall': 'pnpm remove --global {0}',
+    'list': 'pnpm list {0}',
   },
 }
 

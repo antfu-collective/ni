@@ -163,6 +163,34 @@ if the corresponding node manager is not present, this command will install it g
 
 <br>
 
+### `nls` - list
+
+```bash
+nls
+
+# npm list --depth 0
+# yarn list --depth 0
+# pnpm list --depth 0
+```
+
+```bash
+nls 1
+
+# npm list --depth 1
+# yarn list --depth 1
+# pnpm list --depth 1
+```
+
+```bash
+nls axios --depth=1
+
+# npm list axios --depth=1
+# yarn list axios --depth=1
+# pnpm list axios --depth=1
+```
+
+<br>
+
 ### Change Directory
 
 ```bash

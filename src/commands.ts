@@ -77,3 +77,9 @@ export const parseNun = <Runner>((agent, args) => {
 export const parseNx = <Runner>((agent, args) => {
   return getCommand(agent, 'execute', args)
 })
+
+export const parseNls = <Runner>((agent, args) => {
+  if (args.length === 0) return getCommand(agent, 'list', ['--depth 0'])
+  if (!Number.isNaN(+args[0])) return getCommand(agent, 'list', [`--depth ${args[0]}`])
+  return getCommand(agent, 'list', args)
+})
