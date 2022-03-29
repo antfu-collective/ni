@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 'use strict'
-require('../dist/nx')
+require('../dist/nls')
