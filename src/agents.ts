@@ -7,7 +7,7 @@ const npmRun = (agent: string) => (args: string[]) => {
 export const AGENTS = {
   'npm': {
     'run': npmRun('npm'),
-    'install': 'npm i',
+    'install': 'npm i {0}',
     'frozen': 'npm ci',
     'global': 'npm i -g {0}',
     'add': 'npm i {0}',
@@ -19,7 +19,7 @@ export const AGENTS = {
   },
   'yarn': {
     'run': 'yarn run {0}',
-    'install': 'yarn install',
+    'install': 'yarn install {0}',
     'frozen': 'yarn install --frozen-lockfile',
     'global': 'yarn global add {0}',
     'add': 'yarn add {0}',
@@ -31,7 +31,7 @@ export const AGENTS = {
   },
   'yarn@berry': {
     'run': 'yarn run {0}',
-    'install': 'yarn install',
+    'install': 'yarn install {0}',
     'frozen': 'yarn install --immutable',
     // yarn3 removed 'global', see https://github.com/yarnpkg/berry/issues/821
     'global': 'npm i -g {0}',
@@ -44,7 +44,7 @@ export const AGENTS = {
   },
   'pnpm': {
     'run': npmRun('pnpm'),
-    'install': 'pnpm i',
+    'install': 'pnpm i {0}',
     'frozen': 'pnpm i --frozen-lockfile',
     'global': 'pnpm add -g {0}',
     'add': 'pnpm add {0}',

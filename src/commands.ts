@@ -29,14 +29,8 @@ export const parseNi = <Runner>((agent, args, ctx) => {
     process.exit(0)
   }
 
-  if (args.length === 0)
-    return getCommand(agent, 'install')
-
   if (args.includes('-g'))
     return getCommand(agent, 'global', exclude(args, '-g'))
-
-  if (args.length === 1 && args[0] === '-f')
-    return getCommand(agent, 'install', args)
 
   if (args.includes('--frozen-if-present')) {
     args = exclude(args, '--frozen-if-present')
@@ -45,6 +39,9 @@ export const parseNi = <Runner>((agent, args, ctx) => {
 
   if (args.includes('--frozen'))
     return getCommand(agent, 'frozen', exclude(args, '--frozen'))
+
+  if (args.length === 0 || args.every(i => i.startsWith('-')))
+    return getCommand(agent, 'install', args)
 
   return getCommand(agent, 'add', args)
 })
