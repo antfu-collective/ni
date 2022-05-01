@@ -163,6 +163,26 @@ if the corresponding node manager is not present, this command will install it g
 
 <br>
 
+### `na` - agent alias
+
+```bash
+na
+
+# npm
+# yarn
+# pnpm
+```
+
+```bash
+na run foo
+
+# npm run foo
+# yarn run foo
+# pnpm run foo
+```
+
+<br>
+
 ### Change Directory
 
 ```bash

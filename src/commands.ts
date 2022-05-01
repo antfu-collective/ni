@@ -74,3 +74,7 @@ export const parseNun = <Runner>((agent, args) => {
 export const parseNx = <Runner>((agent, args) => {
   return getCommand(agent, 'execute', args)
 })
+
+export const parseNa = <Runner>((agent, args) => {
+  return getCommand(agent, 'agent', args)
+})

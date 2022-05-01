@@ -6,6 +6,7 @@ const npmRun = (agent: string) => (args: string[]) => {
 
 export const AGENTS = {
   'npm': {
+    'agent': 'npm {0}',
     'run': npmRun('npm'),
     'install': 'npm i {0}',
     'frozen': 'npm ci',
@@ -18,6 +19,7 @@ export const AGENTS = {
     'global_uninstall': 'npm uninstall -g {0}',
   },
   'yarn': {
+    'agent': 'yarn {0}',
     'run': 'yarn run {0}',
     'install': 'yarn install {0}',
     'frozen': 'yarn install --frozen-lockfile',
@@ -30,6 +32,7 @@ export const AGENTS = {
     'global_uninstall': 'yarn global remove {0}',
   },
   'yarn@berry': {
+    'agent': 'yarn {0}',
     'run': 'yarn run {0}',
     'install': 'yarn install {0}',
     'frozen': 'yarn install --immutable',
@@ -43,6 +46,7 @@ export const AGENTS = {
     'global_uninstall': 'npm uninstall -g {0}',
   },
   'pnpm': {
+    'agent': 'pnpm {0}',
     'run': npmRun('pnpm'),
     'install': 'pnpm i {0}',
     'frozen': 'pnpm i --frozen-lockfile',
