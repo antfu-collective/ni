@@ -1,9 +1,9 @@
 import type { Choice } from 'prompts'
 import prompts from 'prompts'
-import { dump, load } from './storage'
-import { parseNr } from './commands'
-import { getPackageJSON } from './fs'
-import { runCli } from './runner'
+import { dump, load } from '../storage'
+import { parseNr } from '../parse'
+import { getPackageJSON } from '../fs'
+import { runCli } from '../runner'
 
 runCli(async(agent, args, ctx) => {
   const storage = await load()

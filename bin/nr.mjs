@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 'use strict'
-require('../dist/nci')
+import '../dist/nr.mjs'

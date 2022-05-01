@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 'use strict'
-require('../dist/na')
+import '../dist/na.mjs'
