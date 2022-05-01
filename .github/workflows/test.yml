@@ -4,12 +4,10 @@ on:
   push:
     branches:
       - main
-      - master
 
   pull_request:
     branches:
       - main
-      - master
 
 jobs:
   build:
@@ -20,21 +18,16 @@ jobs:
         node-version: [14.x, 16.x, 18.x]
 
     steps:
-      - uses: actions/checkout@v2
-
+      - uses: actions/checkout@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Setup
-        run: npm i -g pnpm @antfu/ni
-
       - name: Install
-        run: nci
-
+        run: pnpm install
       - name: Lint
-        run: nr lint --if-present
-
+        run: pnpm run lint
       - name: Test
-        run: nr test --if-present
+        run: pnpm run test
