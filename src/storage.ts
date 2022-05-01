@@ -1,5 +1,6 @@
 import { existsSync, promises as fs } from 'fs'
-import { join } from 'path'
+import { resolve } from 'path'
+import { fileURLToPath } from 'url'
 
 export interface Storage {
   lastRunCommand?: string
@@ -7,7 +8,7 @@ export interface Storage {
 
 let storage: Storage | undefined
 
-const storagePath = join(__dirname, '_storage.json')
+const storagePath = resolve(fileURLToPath(import.meta.url), '../_storage.json')
 
 export async function load(fn?: (storage: Storage) => Promise<boolean> | boolean) {
   if (!storage) {
