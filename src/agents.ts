@@ -4,6 +4,33 @@ const npmRun = (agent: string) => (args: string[]) => {
   else return `${agent} run ${args[0]}`
 }
 
+const yarn = {
+  'agent': 'yarn {0}',
+  'run': 'yarn run {0}',
+  'install': 'yarn install {0}',
+  'frozen': 'yarn install --frozen-lockfile',
+  'global': 'yarn global add {0}',
+  'add': 'yarn add {0}',
+  'upgrade': 'yarn upgrade {0}',
+  'upgrade-interactive': 'yarn upgrade-interactive {0}',
+  'execute': 'yarn dlx {0}',
+  'uninstall': 'yarn remove {0}',
+  'global_uninstall': 'yarn global remove {0}',
+}
+const pnpm = {
+  'agent': 'pnpm {0}',
+  'run': 'pnpm run {0}',
+  'install': 'pnpm i {0}',
+  'frozen': 'pnpm i --frozen-lockfile',
+  'global': 'pnpm add -g {0}',
+  'add': 'pnpm add {0}',
+  'upgrade': 'pnpm update {0}',
+  'upgrade-interactive': 'pnpm update -i {0}',
+  'execute': 'pnpm dlx {0}',
+  'uninstall': 'pnpm remove {0}',
+  'global_uninstall': 'pnpm remove --global {0}',
+}
+
 export const AGENTS = {
   'npm': {
     'agent': 'npm {0}',
@@ -18,45 +45,21 @@ export const AGENTS = {
     'uninstall': 'npm uninstall {0}',
     'global_uninstall': 'npm uninstall -g {0}',
   },
-  'yarn': {
-    'agent': 'yarn {0}',
-    'run': 'yarn run {0}',
-    'install': 'yarn install {0}',
-    'frozen': 'yarn install --frozen-lockfile',
-    'global': 'yarn global add {0}',
-    'add': 'yarn add {0}',
-    'upgrade': 'yarn upgrade {0}',
-    'upgrade-interactive': 'yarn upgrade-interactive {0}',
-    'execute': 'yarn dlx {0}',
-    'uninstall': 'yarn remove {0}',
-    'global_uninstall': 'yarn global remove {0}',
-  },
+  'yarn': yarn,
   'yarn@berry': {
-    'agent': 'yarn {0}',
-    'run': 'yarn run {0}',
-    'install': 'yarn install {0}',
+    ...yarn,
     'frozen': 'yarn install --immutable',
-    // yarn3 removed 'global', see https://github.com/yarnpkg/berry/issues/821
-    'global': 'npm i -g {0}',
-    'add': 'yarn add {0}',
     'upgrade': 'yarn up {0}',
     'upgrade-interactive': 'yarn up -i {0}',
-    'execute': 'yarn dlx {0}',
-    'uninstall': 'yarn remove {0}',
+    // yarn3 removed 'global', see https://github.com/yarnpkg/berry/issues/821
+    'global': 'npm i -g {0}',
     'global_uninstall': 'npm uninstall -g {0}',
   },
-  'pnpm': {
-    'agent': 'pnpm {0}',
-    'run': npmRun('pnpm'),
-    'install': 'pnpm i {0}',
-    'frozen': 'pnpm i --frozen-lockfile',
-    'global': 'pnpm add -g {0}',
-    'add': 'pnpm add {0}',
-    'upgrade': 'pnpm update {0}',
-    'upgrade-interactive': 'pnpm update -i {0}',
-    'execute': 'pnpm dlx {0}',
-    'uninstall': 'pnpm remove {0}',
-    'global_uninstall': 'pnpm remove --global {0}',
+  'pnpm': pnpm,
+  // pnpm v6.x or below
+  'pnpm@6': {
+    ...pnpm,
+    run: npmRun('pnpm'),
   },
 }
 
@@ -73,6 +76,7 @@ export const LOCKS: Record<string, Agent> = {
 
 export const INSTALL_PAGE: Record<Agent, string> = {
   'pnpm': 'https://pnpm.js.org/en/installation',
+  'pnpm@6': 'https://pnpm.js.org/en/installation',
   'yarn': 'https://classic.yarnpkg.com/en/docs/install',
   'yarn@berry': 'https://yarnpkg.com/getting-started/install',
   'npm': 'https://www.npmjs.com/get-npm',

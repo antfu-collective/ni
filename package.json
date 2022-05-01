@@ -3,6 +3,7 @@
   "version": "0.15.0",
   "description": "Use the right package manager",
   "license": "MIT",
+  "packageManager": "pnpm@7.0.0",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
     "prepublishOnly": "npm run build",
     "dev": "esno src/commands/ni.ts",
     "build": "unbuild",
+    "stub": "unbuild --stub",
     "release": "npx bumpp --commit --push --tag",
     "lint": "eslint .",
     "test": "vitest"
