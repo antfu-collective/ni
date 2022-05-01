@@ -1,9 +1,9 @@
 {
   "name": "@antfu/ni",
   "version": "0.16.0",
+  "packageManager": "pnpm@7.0.0",
   "description": "Use the right package manager",
   "license": "MIT",
-  "packageManager": "pnpm@7.0.0",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "repository": {
     "type": "git",
@@ -12,16 +12,16 @@
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "bin"
-  ],
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
     }
   },
+  "files": [
+    "dist",
+    "bin"
+  ],
   "bin": {
     "ni": "bin/ni.mjs",
     "nci": "bin/nci.mjs",
