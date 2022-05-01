@@ -5,7 +5,7 @@ import { parseNr } from '../parse'
 import { getPackageJSON } from '../fs'
 import { runCli } from '../runner'
 
-runCli(async(agent, args, ctx) => {
+runCli(async (agent, args, ctx) => {
   const storage = await load()
 
   if (args[0] === '-') {
