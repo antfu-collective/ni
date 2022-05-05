@@ -1,9 +1,11 @@
-import fs from 'fs'
+import fs, { type PathLike } from 'fs'
 import path from 'path'
 import ini from 'ini'
 import { findUp } from 'find-up'
 import type { Agent } from './agents'
 import { LOCKS } from './agents'
+
+const CONFIG_FILE_NAME = '.nirc'
 
 const customRcPath = process.env.NI_CONFIG_FILE
 
@@ -11,13 +13,19 @@ const home = process.platform === 'win32'
   ? process.env.USERPROFILE
   : process.env.HOME
 
-const defaultRcPath = path.join(home || '~/', '.nirc')
-
-const rcPath = customRcPath || defaultRcPath
+const rootRcPath = path.join(home || '~/', CONFIG_FILE_NAME)
 
 interface Config {
   defaultAgent: Agent | 'prompt'
   globalAgent: Agent
+}
+
+interface Options {
+  cwd?: string
+}
+
+interface ConfigOptions {
+  rcPath: PathLike
 }
 
 const defaultConfig: Config = {
@@ -27,7 +35,7 @@ const defaultConfig: Config = {
 
 let config: Config | undefined
 
-export async function getConfig(): Promise<Config> {
+export async function getConfig({ rcPath }: ConfigOptions): Promise<Config> {
   if (!config) {
     const result = await findUp('package.json') || ''
     let packageManager = ''
@@ -44,14 +52,16 @@ export async function getConfig(): Promise<Config> {
   return config
 }
 
-export async function getDefaultAgent() {
-  const { defaultAgent } = await getConfig()
+export async function getDefaultAgent({ cwd }: Options) {
+  const defaultRcPath = await findUp(CONFIG_FILE_NAME, { cwd, stopAt: rootRcPath }) || ''
+
+  const { defaultAgent } = await getConfig({ rcPath: customRcPath || defaultRcPath })
   if (defaultAgent === 'prompt' && process.env.CI)
     return 'npm'
   return defaultAgent
 }
 
 export async function getGlobalAgent() {
-  const { globalAgent } = await getConfig()
+  const { globalAgent } = await getConfig({ rcPath: customRcPath || rootRcPath })
   return globalAgent
 }
