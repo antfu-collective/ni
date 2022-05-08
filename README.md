@@ -218,3 +218,30 @@ export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 **ni** assumes that you work with lockfiles (and you should)
 
 Before it runs, it will detect your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` to know current package manager (or `packageManager` field in your packages.json), and runs the corresponding commands.
+
+### Trouble shooting
+
+#### Conflicts with PowerShell on Windows
+
+PowerShell come with a built-in alias `ni` for `New Item`. To remove the alias in favor of this package:
+
+<details>
+<summary> PowerShell <code>5.x</code></summary>
+
+Create or edit file `C:\Windows\System32\WindowsPowerShell\v1.0\Microsoft.PowerShell_profile.ps1`, adding following line:
+
+```ps
+Del alias:ni -Force
+```
+
+</details>
+<details>
+<summary> PowerShell <code>7.x</code></summary>
+
+Create or edit file `C:\Program Files\PowerShell\7\Microsoft.PowerShell_profile.ps1`, adding following line:
+
+```ps
+Remove-Alias -Name ni -Force
+```
+
+</details>
