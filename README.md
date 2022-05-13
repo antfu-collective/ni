@@ -1,3 +1,12 @@
+@wuxh/ni
+
+Forked from [antfu/ni](https://github.com/antfu/ni);
+
+**The change of this fork mainly meets the needs of the minority**; [see issues #74](https://github.com/antfu/ni/issues/74#issue-1226470177)
+
+<details>
+<summary>Original README <a href="https://github.com/antfu/ni#readme">Latest document addresses</a></summary>
+
 # ni
 
 ~~*`npm i` in a yarn project, again? F\*\*k!*~~
@@ -218,3 +227,5 @@ export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 **ni** assumes that you work with lockfiles (and you should)
 
 Before it runs, it will detect your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` to know current package manager (or `packageManager` field in your packages.json), and runs the corresponding commands.
+
+</details>
