@@ -231,7 +231,7 @@ PowerShell come with a built-in alias `ni` for `New Item`. To remove the alias i
 Create or edit file `C:\Windows\System32\WindowsPowerShell\v1.0\Microsoft.PowerShell_profile.ps1`, adding following line:
 
 ```ps
-Del alias:ni -Force
+Remove-Item Alias:ni -Force -ErrorAction Ignore
 ```
 
 </details>
