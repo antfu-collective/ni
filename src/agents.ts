@@ -72,6 +72,7 @@ export const LOCKS: Record<string, Agent> = {
   'pnpm-lock.yaml': 'pnpm',
   'yarn.lock': 'yarn',
   'package-lock.json': 'npm',
+  'npm-shrinkwrap.json': 'npm',
 }
 
 export const INSTALL_PAGE: Record<Agent, string> = {
