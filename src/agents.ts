@@ -16,6 +16,7 @@ const yarn = {
   'execute': 'yarn dlx {0}',
   'uninstall': 'yarn remove {0}',
   'global_uninstall': 'yarn global remove {0}',
+  'clear': 'npx npkill'
 }
 const pnpm = {
   'agent': 'pnpm {0}',
@@ -29,6 +30,7 @@ const pnpm = {
   'execute': 'pnpm dlx {0}',
   'uninstall': 'pnpm remove {0}',
   'global_uninstall': 'pnpm remove --global {0}',
+  'clear': 'npx npkill'
 }
 
 export const AGENTS = {
@@ -44,6 +46,7 @@ export const AGENTS = {
     'execute': 'npx {0}',
     'uninstall': 'npm uninstall {0}',
     'global_uninstall': 'npm uninstall -g {0}',
+    'clear': 'npx npkill'
   },
   'yarn': yarn,
   'yarn@berry': {
@@ -54,6 +57,7 @@ export const AGENTS = {
     // yarn3 removed 'global', see https://github.com/yarnpkg/berry/issues/821
     'global': 'npm i -g {0}',
     'global_uninstall': 'npm uninstall -g {0}',
+    'clear': 'npx npkill'
   },
   'pnpm': pnpm,
   // pnpm v6.x or below

@@ -29,7 +29,8 @@
     "nu": "bin/nu.mjs",
     "nx": "bin/nx.mjs",
     "na": "bin/na.mjs",
-    "nun": "bin/nun.mjs"
+    "nun": "bin/nun.mjs",
+    "nk": "bin/nk.mjs"
   },
   "files": [
     "dist",

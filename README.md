@@ -163,6 +163,16 @@ if the corresponding node manager is not present, this command will install it g
 
 <br>
 
+### `nk` - clean node_modules
+
+```bash
+nk
+
+# npx npkill
+```
+
+<br>
+
 ### `na` - agent alias
 
 ```bash
