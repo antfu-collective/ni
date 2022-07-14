@@ -53,6 +53,7 @@ ni --frozen
 # npm ci
 # yarn install --frozen-lockfile
 # pnpm install --frozen-lockfile
+# bun install --no-save
 ```
 
 ```bash
