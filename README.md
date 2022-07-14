@@ -12,7 +12,7 @@ npm i -g <b>@antfu/ni</b>
 <b>ni</b>
 </pre>
 
-<a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.js.org/en/'>pnpm</a>
+<a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.js.org/en/'>pnpm</a> · <a href='https://bun.sh/'>bun</a>
 
 
 <br>
@@ -26,14 +26,18 @@ ni
 # npm install
 # yarn install
 # pnpm install
+# bun install
 ```
 
 ```bash
-ni axios
+ni vite
 
-# npm i axios
-# yarn add axios
-# pnpm add axios
+# npm i vite
+# yarn add vite
+# pnpm add vite
+# bun add vite
+```
+
 ```
 
 ```bash
@@ -42,6 +46,7 @@ ni @types/node -D
 # npm i @types/node -D
 # yarn add @types/node -D
 # pnpm add -D @types/node
+# bun add -D @types/node
 ```
 
 ```bash
@@ -53,11 +58,12 @@ ni --frozen
 ```
 
 ```bash
-ni -g iroiro
+ni -g eslint
 
-# npm i -g iroiro
-# yarn global add iroiro
-# pnpm add -g iroiro
+# npm i -g eslint
+# yarn global add eslint
+# pnpm add -g eslint
+# bun add -g eslint
 
 # this uses default agent, regardless your current working directory
 ```
@@ -72,6 +78,7 @@ nr dev --port=3000
 # npm run dev -- --port=3000
 # yarn run dev --port=3000
 # pnpm run dev -- --port=3000
+# bun run dev --port=3000
 ```
 
 ```bash
@@ -92,11 +99,11 @@ nr -
 ### `nx` - execute
 
 ```bash
-nx jest
+nx vitest
 
-# npx jest
-# yarn dlx jest
-# pnpm dlx jest
+# npx vitest
+# yarn dlx vitest
+# pnpm dlx vitest
 ```
 
 <br>
@@ -124,19 +131,12 @@ nu -i
 ### `nun` - uninstall
 
 ```bash
-nun axios
+nun webpack
 
-# npm uninstall axios
-# yarn remove axios
-# pnpm remove axios
-```
-
-```bash
-nun @types/node -D
-
-# npm uninstall @types/node -D
-# yarn remove @types/node -D
-# pnpm remove -D @types/node
+# npm uninstall webpack
+# yarn remove webpack
+# pnpm remove webpack
+# bun remove webpack
 ```
 
 ```bash
@@ -145,6 +145,7 @@ nun -g eslint
 # npm uninstall -g eslint
 # yarn global remove eslint
 # pnpm remove -g eslint
+# bun remove -g eslint
 ```
 
 <br>
@@ -217,7 +218,7 @@ export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 
 **ni** assumes that you work with lockfiles (and you should)
 
-Before it runs, it will detect your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` to know current package manager (or `packageManager` field in your packages.json), and runs the corresponding commands.
+Before it runs, it will detect your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` / `bun.lockb` to know current package manager (or `packageManager` field in your packages.json if specified), and runs the [corresponding commands](https://github.com/antfu/ni/blob/main/src/agents.ts).
 
 ### Trouble shooting
 

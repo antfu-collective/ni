@@ -83,7 +83,9 @@ export type Command = keyof typeof AGENTS.npm
 
 export const agents = Object.keys(AGENTS) as Agent[]
 
+// the order here matters, more specific one comes first
 export const LOCKS: Record<string, Agent> = {
+  'bun.lockb': 'bun',
   'pnpm-lock.yaml': 'pnpm',
   'yarn.lock': 'yarn',
   'package-lock.json': 'npm',
@@ -92,6 +94,7 @@ export const LOCKS: Record<string, Agent> = {
 }
 
 export const INSTALL_PAGE: Record<Agent, string> = {
+  'bun': 'https://bun.sh',
   'pnpm': 'https://pnpm.js.org/en/installation',
   'pnpm@6': 'https://pnpm.js.org/en/installation',
   'yarn': 'https://classic.yarnpkg.com/en/docs/install',
