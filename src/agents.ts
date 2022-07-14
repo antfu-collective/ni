@@ -30,6 +30,20 @@ const pnpm = {
   'uninstall': 'pnpm remove {0}',
   'global_uninstall': 'pnpm remove --global {0}',
 }
+const bun = {
+  'agent': 'bun {0}',
+  'run': 'bun run {0}',
+  'install': 'bun install {0}',
+  'frozen': 'bun install --no-save',
+  'global': 'bun add -g {0}',
+  'add': 'bun add {0}',
+  // bun doesn't include an upgrade and execute command as of now
+  'upgrade': 'bun add {0}',
+  'upgrade-interactive': 'bun add {0}',
+  'execute': 'echo Bun does not support execute command, yet.',
+  'uninstall': 'bun remove {0}',
+  'global_uninstall': 'bun remove -g {0}',
+}
 
 export const AGENTS = {
   'npm': {
@@ -61,6 +75,7 @@ export const AGENTS = {
     ...pnpm,
     run: npmRun('pnpm'),
   },
+  'bun': bun,
 }
 
 export type Agent = keyof typeof AGENTS
@@ -73,6 +88,7 @@ export const LOCKS: Record<string, Agent> = {
   'yarn.lock': 'yarn',
   'package-lock.json': 'npm',
   'npm-shrinkwrap.json': 'npm',
+  'bun.lockb': 'bun',
 }
 
 export const INSTALL_PAGE: Record<Agent, string> = {
@@ -81,4 +97,5 @@ export const INSTALL_PAGE: Record<Agent, string> = {
   'yarn': 'https://classic.yarnpkg.com/en/docs/install',
   'yarn@berry': 'https://yarnpkg.com/getting-started/install',
   'npm': 'https://www.npmjs.com/get-npm',
+  'bun': 'https://bun.sh',
 }

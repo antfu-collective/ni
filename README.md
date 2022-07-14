@@ -12,7 +12,7 @@ npm i -g <b>@antfu/ni</b>
 <b>ni</b>
 </pre>
 
-<a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.js.org/en/'>pnpm</a>
+<a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.js.org/en/'>pnpm</a> · <a href='https://bun.sh/'>bun</a>
 
 
 <br>
@@ -26,6 +26,7 @@ ni
 # npm install
 # yarn install
 # pnpm install
+# bun install
 ```
 
 ```bash
@@ -34,6 +35,9 @@ ni axios
 # npm i axios
 # yarn add axios
 # pnpm add axios
+# bun add axios
+```
+
 ```
 
 ```bash
@@ -42,6 +46,7 @@ ni @types/node -D
 # npm i @types/node -D
 # yarn add @types/node -D
 # pnpm add -D @types/node
+# bun add -D @types/node
 ```
 
 ```bash
@@ -58,6 +63,7 @@ ni -g iroiro
 # npm i -g iroiro
 # yarn global add iroiro
 # pnpm add -g iroiro
+# bun add -g iroiro
 
 # this uses default agent, regardless your current working directory
 ```
@@ -72,6 +78,7 @@ nr dev --port=3000
 # npm run dev -- --port=3000
 # yarn run dev --port=3000
 # pnpm run dev -- --port=3000
+# bun run dev --port=3000
 ```
 
 ```bash
@@ -129,6 +136,7 @@ nun axios
 # npm uninstall axios
 # yarn remove axios
 # pnpm remove axios
+# bun remove axios
 ```
 
 ```bash
@@ -145,6 +153,7 @@ nun -g eslint
 # npm uninstall -g eslint
 # yarn global remove eslint
 # pnpm remove -g eslint
+# bun remove -g eslint
 ```
 
 <br>
