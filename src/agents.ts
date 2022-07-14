@@ -37,10 +37,9 @@ const bun = {
   'frozen': 'bun install --no-save',
   'global': 'bun add -g {0}',
   'add': 'bun add {0}',
-  // bun doesn't include an upgrade and execute command as of now
-  'upgrade': 'bun add {0}',
-  'upgrade-interactive': 'bun add {0}',
-  'execute': 'echo Bun does not support execute command, yet.',
+  'upgrade': null,
+  'upgrade-interactive': null,
+  'execute': null,
   'uninstall': 'bun remove {0}',
   'global_uninstall': 'bun remove -g {0}',
 }
