@@ -29,6 +29,9 @@ export const parseNi = <Runner>((agent, args, ctx) => {
     process.exit(0)
   }
 
+  if (args.includes('-D') && agent === 'bun')
+    return getCommand(agent, 'add', args.join(' ').replace('-D', '-d').split(' '))
+
   if (args.includes('-g'))
     return getCommand(agent, 'global', exclude(args, '-g'))
 
