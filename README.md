@@ -218,7 +218,7 @@ export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 
 **ni** assumes that you work with lockfiles (and you should)
 
-Before it runs, it will detect your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` to know current package manager (or `packageManager` field in your packages.json), and runs the corresponding commands.
+Before it runs, it will detect your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` / `bun.lockb` to know current package manager (or `packageManager` field in your packages.json if specified), and runs the [corresponding commands](https://github.com/antfu/ni/blob/main/src/agents.ts).
 
 ### Trouble shooting
 
