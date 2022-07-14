@@ -38,8 +38,6 @@ ni vite
 # bun add vite
 ```
 
-```
-
 ```bash
 ni @types/node -D
 
