@@ -90,7 +90,6 @@ export const LOCKS: Record<string, Agent> = {
   'yarn.lock': 'yarn',
   'package-lock.json': 'npm',
   'npm-shrinkwrap.json': 'npm',
-  'bun.lockb': 'bun',
 }
 
 export const INSTALL_PAGE: Record<Agent, string> = {
@@ -100,5 +99,4 @@ export const INSTALL_PAGE: Record<Agent, string> = {
   'yarn': 'https://classic.yarnpkg.com/en/docs/install',
   'yarn@berry': 'https://yarnpkg.com/getting-started/install',
   'npm': 'https://www.npmjs.com/get-npm',
-  'bun': 'https://bun.sh',
 }
