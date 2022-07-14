@@ -30,12 +30,12 @@ ni
 ```
 
 ```bash
-ni axios
+ni vite
 
-# npm i axios
-# yarn add axios
-# pnpm add axios
-# bun add axios
+# npm i vite
+# yarn add vite
+# pnpm add vite
+# bun add vite
 ```
 
 ```
@@ -58,12 +58,12 @@ ni --frozen
 ```
 
 ```bash
-ni -g iroiro
+ni -g eslint
 
-# npm i -g iroiro
-# yarn global add iroiro
-# pnpm add -g iroiro
-# bun add -g iroiro
+# npm i -g eslint
+# yarn global add eslint
+# pnpm add -g eslint
+# bun add -g eslint
 
 # this uses default agent, regardless your current working directory
 ```
@@ -99,11 +99,11 @@ nr -
 ### `nx` - execute
 
 ```bash
-nx jest
+nx vitest
 
-# npx jest
-# yarn dlx jest
-# pnpm dlx jest
+# npx vitest
+# yarn dlx vitest
+# pnpm dlx vitest
 ```
 
 <br>
@@ -131,20 +131,12 @@ nu -i
 ### `nun` - uninstall
 
 ```bash
-nun axios
+nun webpack
 
-# npm uninstall axios
-# yarn remove axios
-# pnpm remove axios
-# bun remove axios
-```
-
-```bash
-nun @types/node -D
-
-# npm uninstall @types/node -D
-# yarn remove @types/node -D
-# pnpm remove -D @types/node
+# npm uninstall webpack
+# yarn remove webpack
+# pnpm remove webpack
+# bun remove webpack
 ```
 
 ```bash
