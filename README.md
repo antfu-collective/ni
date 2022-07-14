@@ -44,7 +44,7 @@ ni @types/node -D
 # npm i @types/node -D
 # yarn add @types/node -D
 # pnpm add -D @types/node
-# bun add -D @types/node
+# bun add -d @types/node
 ```
 
 ```bash
