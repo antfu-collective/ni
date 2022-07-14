@@ -120,7 +120,7 @@ nu
 ```bash
 nu -i
 
-# (not available for npm)
+# (not available for npm & bun)
 # yarn upgrade-interactive
 # pnpm update -i
 ```
