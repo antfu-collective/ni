@@ -2,7 +2,7 @@ import { expect, test } from 'vitest'
 import { parseNu } from '../../src/commands'
 
 const agent = 'bun'
-const _ = (arg: string, expected: string) => () => {
+const _ = (arg: string, expected: string | null) => () => {
   expect(
     parseNu(agent, arg.split(' ').filter(Boolean)),
   ).toBe(
@@ -10,6 +10,6 @@ const _ = (arg: string, expected: string) => () => {
   )
 }
 
-test('empty', _('', 'bun add'))
-
-test('interactive', _('-i', 'bun add'))
+test.fails('empty', _('', null))
+test.fails('interactive', _('-i', null))
+test.fails('interactive latest', _('-i --latest', null))

@@ -38,15 +38,13 @@ ni vite
 # bun add vite
 ```
 
-```
-
 ```bash
 ni @types/node -D
 
 # npm i @types/node -D
 # yarn add @types/node -D
 # pnpm add -D @types/node
-# bun add -D @types/node
+# bun add -d @types/node
 ```
 
 ```bash
@@ -55,6 +53,7 @@ ni --frozen
 # npm ci
 # yarn install --frozen-lockfile
 # pnpm install --frozen-lockfile
+# bun install --no-save
 ```
 
 ```bash
@@ -101,6 +100,7 @@ nr -
 ```bash
 nx vitest
 
+# (not available for bun)
 # npx vitest
 # yarn dlx vitest
 # pnpm dlx vitest
@@ -113,6 +113,7 @@ nx vitest
 ```bash
 nu
 
+# (not available for bun)
 # npm upgrade
 # yarn upgrade
 # pnpm update
@@ -121,7 +122,7 @@ nu
 ```bash
 nu -i
 
-# (not available for npm)
+# (not available for npm & bun)
 # yarn upgrade-interactive
 # pnpm update -i
 ```
@@ -158,6 +159,7 @@ nci
 # npm ci
 # yarn install --frozen-lockfile
 # pnpm install --frozen-lockfile
+# bun install --no-save
 ```
 
 if the corresponding node manager is not present, this command will install it globally along the way.
@@ -172,6 +174,7 @@ na
 # npm
 # yarn
 # pnpm
+# bun
 ```
 
 ```bash
@@ -180,6 +183,7 @@ na run foo
 # npm run foo
 # yarn run foo
 # pnpm run foo
+# bun run foo
 ```
 
 <br>
