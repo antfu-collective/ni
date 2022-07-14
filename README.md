@@ -100,6 +100,7 @@ nr -
 ```bash
 nx vitest
 
+# (not available for bun)
 # npx vitest
 # yarn dlx vitest
 # pnpm dlx vitest
@@ -112,6 +113,7 @@ nx vitest
 ```bash
 nu
 
+# (not available for bun)
 # npm upgrade
 # yarn upgrade
 # pnpm update
@@ -157,6 +159,7 @@ nci
 # npm ci
 # yarn install --frozen-lockfile
 # pnpm install --frozen-lockfile
+# bun install --no-save
 ```
 
 if the corresponding node manager is not present, this command will install it globally along the way.
@@ -171,6 +174,7 @@ na
 # npm
 # yarn
 # pnpm
+# bun
 ```
 
 ```bash
@@ -179,6 +183,7 @@ na run foo
 # npm run foo
 # yarn run foo
 # pnpm run foo
+# bun run foo
 ```
 
 <br>
