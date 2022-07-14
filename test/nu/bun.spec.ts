@@ -10,8 +10,6 @@ const _ = (arg: string, expected: string | null) => () => {
   )
 }
 
-test('empty', _('', null))
-
-test('interactive', _('-i', null))
-
-test('interactive latest', _('-i --latest', null))
+test.fails('empty', _('', null))
+test.fails('interactive', _('-i', null))
+test.fails('interactive latest', _('-i --latest', null))
