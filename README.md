@@ -52,7 +52,7 @@ ni --frozen
 
 # npm ci
 # yarn install --frozen-lockfile (Yarn 1)
-# yarn install --immutable (Yarn 2+)
+# yarn install --immutable (Yarn Berry)
 # pnpm install --frozen-lockfile
 # bun install --no-save
 ```
@@ -117,7 +117,7 @@ nu
 # (not available for bun)
 # npm upgrade
 # yarn upgrade (Yarn 1)
-# yarn up (Yarn 2+)
+# yarn up (Yarn Berry)
 # pnpm update
 ```
 
@@ -126,7 +126,7 @@ nu -i
 
 # (not available for npm & bun)
 # yarn upgrade-interactive (Yarn 1)
-# yarn up -i (Yarn 2+)
+# yarn up -i (Yarn Berry)
 # pnpm update -i
 ```
 
