@@ -64,7 +64,7 @@ export const AGENTS = {
     'frozen': 'yarn install --immutable',
     'upgrade': 'yarn up {0}',
     'upgrade-interactive': 'yarn up -i {0}',
-    // yarn3 removed 'global', see https://github.com/yarnpkg/berry/issues/821
+    // Yarn 2+ removed 'global', see https://github.com/yarnpkg/berry/issues/821
     'global': 'npm i -g {0}',
     'global_uninstall': 'npm uninstall -g {0}',
   },

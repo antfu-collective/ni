@@ -51,7 +51,8 @@ ni @types/node -D
 ni --frozen
 
 # npm ci
-# yarn install --frozen-lockfile
+# yarn install --frozen-lockfile (Yarn 1)
+# yarn install --immutable (Yarn Berry)
 # pnpm install --frozen-lockfile
 # bun install --no-save
 ```
@@ -60,7 +61,7 @@ ni --frozen
 ni -g eslint
 
 # npm i -g eslint
-# yarn global add eslint
+# yarn global add eslint (Yarn 1)
 # pnpm add -g eslint
 # bun add -g eslint
 
@@ -115,7 +116,8 @@ nu
 
 # (not available for bun)
 # npm upgrade
-# yarn upgrade
+# yarn upgrade (Yarn 1)
+# yarn up (Yarn Berry)
 # pnpm update
 ```
 
@@ -123,7 +125,8 @@ nu
 nu -i
 
 # (not available for npm & bun)
-# yarn upgrade-interactive
+# yarn upgrade-interactive (Yarn 1)
+# yarn up -i (Yarn Berry)
 # pnpm update -i
 ```
 
