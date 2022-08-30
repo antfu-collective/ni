@@ -1,5 +1,6 @@
 import type { Choice } from 'prompts'
 import prompts from 'prompts'
+import { dim } from 'kleur'
 import { dump, load } from '../storage'
 import { parseNr } from '../parse'
 import { getPackageJSON } from '../fs'
@@ -27,12 +28,20 @@ runCli(async (agent, args, ctx) => {
     if (!names.length)
       return
 
+    const terminalColumns = process.stdout?.columns || 80
+
+    function limitText(text: string, maxWidth: number) {
+      if (text.length <= maxWidth)
+        return text
+      return `${text.slice(0, maxWidth)}${dim('…')}`
+    }
+
     const choices: Choice[] = names
       .filter(i => !i[0].startsWith('?'))
       .map(([value, cmd]) => ({
         title: value,
         value,
-        description: scriptsInfo[value] || scripts[`?${value}`] || cmd,
+        description: limitText(scriptsInfo[value] || scripts[`?${value}`] || cmd, terminalColumns - 15),
       }))
 
     if (storage.lastRunCommand) {
