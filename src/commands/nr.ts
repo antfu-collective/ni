@@ -1,6 +1,6 @@
 import type { Choice } from 'prompts'
 import prompts from 'prompts'
-import { dim } from 'kleur'
+import c from 'kleur'
 import { dump, load } from '../storage'
 import { parseNr } from '../parse'
 import { getPackageJSON } from '../fs'
@@ -33,7 +33,7 @@ runCli(async (agent, args, ctx) => {
     function limitText(text: string, maxWidth: number) {
       if (text.length <= maxWidth)
         return text
-      return `${text.slice(0, maxWidth)}${dim('…')}`
+      return `${text.slice(0, maxWidth)}${c.dim('…')}`
     }
 
     const choices: Choice[] = names
