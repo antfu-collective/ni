@@ -12,9 +12,11 @@ const storagePath = resolve(fileURLToPath(import.meta.url), '../_storage.json')
 
 export async function load(fn?: (storage: Storage) => Promise<boolean> | boolean) {
   if (!storage) {
-    storage = existsSync(storagePath)
-      ? JSON.parse(await fs.readFile(storagePath, 'utf-8')) || {}
-      : {}
+    storage = {}
+    if (existsSync(storagePath)) {
+      const data = await fs.readFile(storagePath, 'utf-8')
+      storage = data && JSON.parse(data)
+    }
   }
 
   if (fn) {
