@@ -93,9 +93,9 @@ export const LOCKS: Record<string, Agent> = {
 
 export const INSTALL_PAGE: Record<Agent, string> = {
   'bun': 'https://bun.sh',
-  'pnpm': 'https://pnpm.js.org/en/installation',
-  'pnpm@6': 'https://pnpm.js.org/en/installation',
+  'pnpm': 'https://pnpm.io/installation',
+  'pnpm@6': 'https://pnpm.io/6.x/installation',
   'yarn': 'https://classic.yarnpkg.com/en/docs/install',
   'yarn@berry': 'https://yarnpkg.com/getting-started/install',
-  'npm': 'https://www.npmjs.com/get-npm',
+  'npm': 'https://docs.npmjs.com/cli/v8/configuring-npm/install',
 }
