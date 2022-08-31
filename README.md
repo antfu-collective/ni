@@ -227,27 +227,30 @@ Before it runs, it will detect your `yarn.lock` / `pnpm-lock.yaml` / `package-lo
 
 ### Trouble shooting
 
-#### Conflicts with PowerShell on Windows
+#### Conflicts with PowerShell
 
-PowerShell come with a built-in alias `ni` for `New Item`. To remove the alias in favor of this package:
+PowerShell comes with a built-in alias `ni` for the `New-Item` cmdlet. To remove the alias in your current PowerShell session in favor of this package, use the following command:
 
-<details>
-<summary> PowerShell <code>5.x</code></summary>
-
-Create or edit file `C:\Windows\System32\WindowsPowerShell\v1.0\Microsoft.PowerShell_profile.ps1`, adding following line:
-
-```ps
-Remove-Item Alias:ni -Force -ErrorAction Ignore
+```PowerShell
+'Remove-Item Alias:ni -Force -ErrorAction Ignore'
 ```
 
-</details>
-<details>
-<summary> PowerShell <code>7.x</code></summary>
+If you want to persist the changes, you can add them to your PowerShell profile. The profile path is accessible within the `$profile` variable. The ps1 profile file can normally be found at
 
-Create or edit file `C:\Program Files\PowerShell\7\Microsoft.PowerShell_profile.ps1`, adding following line:
+- PowerShell 5 (Windows PowerShell): `C:\Users\USERNAME\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1`
+- PowerShell 7: `C:\Users\USERNAME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`
+- VSCode: `C:\Users\USERNAME\Documents\PowerShell\Microsoft.VSCode_profile.ps1`
 
-```ps
-Remove-Alias -Name ni -Force
+You can use the following script to remove the alias at shell start by adding the above command to your profile:
+
+```PowerShell
+if (-not (Test-Path $profile)) {
+  New-Item -ItemType File -Path (Split-Path $profile) -Force -Name (Split-Path $profile -Leaf)
+}
+
+$profileEntry = 'Remove-Item Alias:ni -Force -ErrorAction Ignore'
+$profileContent = Get-Content $profile
+if ($profileContent -notcontains $profileEntry) {
+  $profileEntry | Out-File $profile -Append -Force
+}
 ```
-
-</details>
