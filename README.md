@@ -227,7 +227,7 @@ Before it runs, it will detect your `yarn.lock` / `pnpm-lock.yaml` / `package-lo
 
 ### Trouble shooting
 
-#### Conflicts with PowerShell on Windows
+#### Conflicts with PowerShell
 
 PowerShell comes with a built-in alias `ni` for the `New-Item` cmdlet. To remove the alias in your current PowerShell session in favor of this package, use the following command:
 
