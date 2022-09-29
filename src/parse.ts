@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { bold, dim, green, yellow } from 'kleur'
+import c from 'kleur'
 import { version } from '../package.json'
 import type { Agent, Command } from './agents'
 import { AGENTS } from './agents'
@@ -31,8 +31,8 @@ export const parseNi = <Runner>((agent, args, ctx) => {
   }
 
   if (args.length === 1 && (args[0] === '--help' || args[0] === '-h')) {
-    const dash = dim('-')
-    console.log(green(bold('ni')) + dim(' use the right package manager\n'))
+    const dash = c.dim('-')
+    console.log(c.green(c.bold('ni')) + c.dim(' use the right package manager\n'))
     console.log(`ni   ${dash}  install`)
     console.log(`nr   ${dash}  run`)
     console.log(`nx   ${dash}  execute`)
@@ -40,7 +40,7 @@ export const parseNi = <Runner>((agent, args, ctx) => {
     console.log(`nun  ${dash}  uninstall`)
     console.log(`nci  ${dash}  clean install`)
     console.log(`na   ${dash}  agent alias`)
-    console.log(yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
+    console.log(c.yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
     process.exit(0)
   }
 
