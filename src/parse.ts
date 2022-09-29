@@ -28,6 +28,27 @@ export const parseNi = <Runner>((agent, args, ctx) => {
     console.log(`@antfu/ni v${version}`)
     process.exit(0)
   }
+  if (args.length === 1 && args[0] === '-hello') {
+    // eslint-disable-next-line no-console
+    console.log('Intro: use the right package manager')
+    // eslint-disable-next-line no-console
+    console.log('ni - install')
+    // eslint-disable-next-line no-console
+    console.log('nr - run')
+    // eslint-disable-next-line no-console
+    console.log('nx - execute')
+    // eslint-disable-next-line no-console
+    console.log('nu - upgrade')
+    // eslint-disable-next-line no-console
+    console.log('nun - uninstall')
+    // eslint-disable-next-line no-console
+    console.log('nci - clean install')
+    // eslint-disable-next-line no-console
+    console.log('na - agent alias')
+    // eslint-disable-next-line no-console
+    console.log('Visit https://github.com/antfu/ni for documentation about this command.\n')
+    process.exit(0)
+  }
 
   // bun use `-d` instead of `-D`, #90
   if (agent === 'bun')
