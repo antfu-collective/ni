@@ -1,6 +1,6 @@
 {
   "name": "@antfu/ni",
-  "version": "0.18.0",
+  "version": "0.18.1",
   "packageManager": "pnpm@7.4.0",
   "description": "Use the right package manager",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
