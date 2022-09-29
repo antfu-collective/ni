@@ -28,7 +28,7 @@ export const parseNi = <Runner>((agent, args, ctx) => {
     console.log(`@antfu/ni v${version}`)
     process.exit(0)
   }
-  if (args.length === 1 && args[0] === '-hello') {
+  if (args.length === 1 && args[0] === '-help') {
     // eslint-disable-next-line no-console
     console.log('Intro: use the right package manager')
     // eslint-disable-next-line no-console
