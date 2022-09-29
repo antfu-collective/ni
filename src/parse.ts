@@ -82,23 +82,3 @@ export const parseNx = <Runner>((agent, args) => {
 export const parseNa = <Runner>((agent, args) => {
   return getCommand(agent, 'agent', args)
 })
-
-export const parseNiHao = <Runner>(() => {
-  // eslint-disable-next-line no-console
-  console.log('Intro: use the right package manager')
-  // eslint-disable-next-line no-console
-  console.log('ni - install')
-  // eslint-disable-next-line no-console
-  console.log('nr - run')
-  // eslint-disable-next-line no-console
-  console.log('nx - execute')
-  // eslint-disable-next-line no-console
-  console.log('nu - upgrade')
-  // eslint-disable-next-line no-console
-  console.log('nun - uninstall')
-  // eslint-disable-next-line no-console
-  console.log('nci - clean install')
-  // eslint-disable-next-line no-console
-  console.log('na - agent alias')
-  process.exit(0)
-})
