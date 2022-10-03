@@ -1,14 +1,9 @@
-import { expect, test } from 'vitest'
-import { parseNa } from '../../src/commands'
+import { test } from 'vitest'
+import { parseNa } from '../../src'
+import { assertFactory } from '../assert'
 
 const agent = 'pnpm'
-const _ = (arg: string, expected: string) => () => {
-  expect(
-    parseNa(agent, arg.split(' ').filter(Boolean)),
-  ).toBe(
-    expected,
-  )
-}
+const _ = assertFactory(parseNa, agent)
 
 test('empty', _('', 'pnpm'))
 test('foo', _('foo', 'pnpm foo'))

@@ -1,14 +1,9 @@
-import { expect, test } from 'vitest'
-import { parseNun } from '../../src/commands'
+import { test } from 'vitest'
+import { parseNun } from '../../src'
+import { assertFactory } from '../assert'
 
 const agent = 'bun'
-const _ = (arg: string, expected: string) => () => {
-  expect(
-    parseNun(agent, arg.split(' ').filter(Boolean)),
-  ).toBe(
-    expected,
-  )
-}
+const _ = assertFactory(parseNun, agent)
 
 test('single uninstall', _('axios', 'bun remove axios'))
 

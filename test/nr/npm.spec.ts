@@ -1,14 +1,9 @@
-import { expect, test } from 'vitest'
-import { parseNr } from '../../src/commands'
+import { test } from 'vitest'
+import { parseNr } from '../../src'
+import { assertFactory } from '../assert'
 
 const agent = 'npm'
-const _ = (arg: string, expected: string) => () => {
-  expect(
-    parseNr(agent, arg.split(' ').filter(Boolean)),
-  ).toBe(
-    expected,
-  )
-}
+const _ = assertFactory(parseNr, agent)
 
 test('empty', _('', 'npm run start'))
 

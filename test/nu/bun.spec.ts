@@ -1,14 +1,9 @@
-import { expect, test } from 'vitest'
-import { parseNu } from '../../src/commands'
+import { test } from 'vitest'
+import { parseNu } from '../../src'
+import { assertFactory } from '../assert'
 
 const agent = 'bun'
-const _ = (arg: string, expected: string | null) => () => {
-  expect(
-    parseNu(agent, arg.split(' ').filter(Boolean)),
-  ).toBe(
-    expected,
-  )
-}
+const _ = assertFactory(parseNu, agent)
 
 test.fails('empty', _('', null))
 test.fails('interactive', _('-i', null))
