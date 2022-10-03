@@ -43,6 +43,19 @@ const bun = {
   'uninstall': 'bun remove {0}',
   'global_uninstall': 'bun remove -g {0}',
 }
+const cotton = {
+  'agent': 'cotton {0}',
+  'run': 'cotton run {0}',
+  'install': 'cotton install',
+  'frozen': null,
+  'global': null,
+  'add': null,
+  'upgrade': null,
+  'upgrade-interactive': null,
+  'execute': null,
+  'uninstall': null,
+  'global_uninstall': null,
+}
 
 export const AGENTS = {
   'npm': {
@@ -75,6 +88,7 @@ export const AGENTS = {
     run: npmRun('pnpm'),
   },
   'bun': bun,
+  'cotton': cotton,
 }
 
 export type Agent = keyof typeof AGENTS
@@ -86,6 +100,7 @@ export const agents = Object.keys(AGENTS) as Agent[]
 export const LOCKS: Record<string, Agent> = {
   'bun.lockb': 'bun',
   'pnpm-lock.yaml': 'pnpm',
+  'cotton.lock': 'cotton',
   'yarn.lock': 'yarn',
   'package-lock.json': 'npm',
   'npm-shrinkwrap.json': 'npm',
@@ -98,4 +113,5 @@ export const INSTALL_PAGE: Record<Agent, string> = {
   'yarn': 'https://classic.yarnpkg.com/en/docs/install',
   'yarn@berry': 'https://yarnpkg.com/getting-started/install',
   'npm': 'https://docs.npmjs.com/cli/v8/configuring-npm/install',
+  'cotton': 'https://github.com/danielhuang/cotton',
 }

@@ -10,7 +10,7 @@
 npm i -g <b>@antfu/ni</b>
 </pre>
 
-<a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.js.org/en/'>pnpm</a> · <a href='https://bun.sh/'>bun</a>
+<a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.js.org/en/'>pnpm</a> · <a href='https://bun.sh/'>bun</a> · <a href='https://github.com/danielhuang/cotton'>cotton</a> 
 
 
 <br>
@@ -25,6 +25,7 @@ ni
 # yarn install
 # pnpm install
 # bun install
+# cotton install
 ```
 
 ```bash
@@ -77,6 +78,7 @@ nr dev --port=3000
 # yarn run dev --port=3000
 # pnpm run dev -- --port=3000
 # bun run dev --port=3000
+# cotton run dev --port=3000
 ```
 
 ```bash
