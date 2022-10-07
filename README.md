@@ -68,6 +68,19 @@ ni -g eslint
 
 <br>
 
+### `nid` - install as dev dependency
+
+```bash
+nid vite
+
+# npm i vite -D
+# yarn add vite -D
+# pnpm add vite -D
+# bun add vite -d
+```
+
+<br>
+
 ### `nr` - run
 
 ```bash

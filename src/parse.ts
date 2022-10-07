@@ -34,6 +34,7 @@ export const parseNi = <Runner>((agent, args, ctx) => {
     const dash = c.dim('-')
     console.log(c.green(c.bold('ni')) + c.dim(' use the right package manager\n'))
     console.log(`ni   ${dash}  install`)
+    console.log(`nid   ${dash}  install dev dependency (--save-dev)`)
     console.log(`nr   ${dash}  run`)
     console.log(`nx   ${dash}  execute`)
     console.log(`nu   ${dash}  upgrade`)
@@ -43,6 +44,31 @@ export const parseNi = <Runner>((agent, args, ctx) => {
     console.log(c.yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
     process.exit(0)
   }
+
+  // bun use `-d` instead of `-D`, #90
+  if (agent === 'bun')
+    args = args.map(i => i === '-D' ? '-d' : i)
+
+  if (args.includes('-g'))
+    return getCommand(agent, 'global', exclude(args, '-g'))
+
+  if (args.includes('--frozen-if-present')) {
+    args = exclude(args, '--frozen-if-present')
+    return getCommand(agent, ctx?.hasLock ? 'frozen' : 'install', args)
+  }
+
+  if (args.includes('--frozen'))
+    return getCommand(agent, 'frozen', exclude(args, '--frozen'))
+
+  if (args.length === 0 || args.every(i => i.startsWith('-')))
+    return getCommand(agent, 'install', args)
+
+  return getCommand(agent, 'add', args)
+})
+
+export const parseNid = <Runner>((agent, args, ctx) => {
+  if (!args.includes('-d') && !args.includes('-D') && !args.includes('--dev') && !args.includes('--save-dev'))
+    args.push('-D')
 
   // bun use `-d` instead of `-D`, #90
   if (agent === 'bun')
