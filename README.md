@@ -142,12 +142,12 @@ nun webpack
 ```
 
 ```bash
-nun -g eslint
+nun -g silent
 
-# npm uninstall -g eslint
-# yarn global remove eslint
-# pnpm remove -g eslint
-# bun remove -g eslint
+# npm uninstall -g silent
+# yarn global remove silent
+# pnpm remove -g silent
+# bun remove -g silent
 ```
 
 <br>
