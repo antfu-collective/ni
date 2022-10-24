@@ -46,7 +46,8 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   }
   else {
     let agent = await detect({ ...options, cwd }) || await getDefaultAgent()
-    if (agent === 'prompt') {
+    const isHelp = args.includes('-h') || args.includes('--help')
+    if (agent === 'prompt' && !isHelp) {
       agent = (await prompts({
         name: 'agent',
         type: 'select',
