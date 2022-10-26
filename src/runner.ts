@@ -1,6 +1,9 @@
+/* eslint-disable no-console */
 import { resolve } from 'path'
 import prompts from 'prompts'
 import { execaCommand } from 'execa'
+import c from 'kleur'
+import { version } from '../package.json'
 import type { Agent } from './agents'
 import { agents } from './agents'
 import { getDefaultAgent, getGlobalAgent } from './config'
@@ -34,6 +37,25 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
 
   let cwd = process.cwd()
   let command
+
+  if (args.length === 1 && (args[0] === '--version' || args[0] === '-v')) {
+    console.log(`@antfu/ni v${version}`)
+    return
+  }
+
+  if (args.length === 1 && ['-h', '--help'].includes(args[0])) {
+    const dash = c.dim('-')
+    console.log(c.green(c.bold('@antfu/ni')) + c.dim(` use the right package manager v${version}\n`))
+    console.log(`ni   ${dash}  install`)
+    console.log(`nr   ${dash}  run`)
+    console.log(`nx   ${dash}  execute`)
+    console.log(`nu   ${dash}  upgrade`)
+    console.log(`nun  ${dash}  uninstall`)
+    console.log(`nci  ${dash}  clean install`)
+    console.log(`na   ${dash}  agent alias`)
+    console.log(c.yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
+    return
+  }
 
   if (args[0] === '-C') {
     cwd = resolve(cwd, args[1])
@@ -70,7 +92,6 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     command = voltaPrefix.concat(' ').concat(command)
 
   if (debug) {
-    // eslint-disable-next-line no-console
     console.log(command)
     return
   }
