@@ -1,6 +1,3 @@
-/* eslint-disable no-console */
-import c from 'kleur'
-import { version } from '../package.json'
 import type { Agent, Command } from './agents'
 import { AGENTS } from './agents'
 import { exclude } from './utils'
@@ -25,25 +22,6 @@ export function getCommand(
 }
 
 export const parseNi = <Runner>((agent, args, ctx) => {
-  if (args.length === 1 && (args[0] === '--version' || args[0] === '-v')) {
-    console.log(`@antfu/ni v${version}`)
-    process.exit(0)
-  }
-
-  if (args.length === 1 && (args[0] === '--help' || args[0] === '-h')) {
-    const dash = c.dim('-')
-    console.log(c.green(c.bold('ni')) + c.dim(' use the right package manager\n'))
-    console.log(`ni   ${dash}  install`)
-    console.log(`nr   ${dash}  run`)
-    console.log(`nx   ${dash}  execute`)
-    console.log(`nu   ${dash}  upgrade`)
-    console.log(`nun  ${dash}  uninstall`)
-    console.log(`nci  ${dash}  clean install`)
-    console.log(`na   ${dash}  agent alias`)
-    console.log(c.yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
-    process.exit(0)
-  }
-
   // bun use `-d` instead of `-D`, #90
   if (agent === 'bun')
     args = args.map(i => i === '-D' ? '-d' : i)
