@@ -51,7 +51,10 @@ runCli(async (agent, args, ctx) => {
         description: limitText(description, terminalColumns - 15),
       }))
 
-    const fzf = new Fzf(raw, { selector: item => item.key + item.description })
+    const fzf = new Fzf(raw, {
+      selector: item => `${item.key} ${item.description}`,
+      casing: 'case-insensitive',
+    })
 
     if (storage.lastRunCommand) {
       const last = choices.find(i => i.value === storage.lastRunCommand)
