@@ -1,6 +1,7 @@
 import type { Choice } from 'prompts'
 import prompts from 'prompts'
 import c from 'kleur'
+import { Fzf } from 'fzf'
 import { dump, load } from '../storage'
 import { parseNr } from '../parse'
 import { getPackageJSON } from '../fs'
@@ -28,6 +29,14 @@ runCli(async (agent, args, ctx) => {
     if (!names.length)
       return
 
+    const raw = names
+      .filter(i => !i[0].startsWith('?'))
+      .map(([key, cmd]) => ({
+        key,
+        cmd,
+        description: scriptsInfo[key] || scripts[`?${key}`] || cmd,
+      }))
+
     const terminalColumns = process.stdout?.columns || 80
 
     function limitText(text: string, maxWidth: number) {
@@ -35,14 +44,17 @@ runCli(async (agent, args, ctx) => {
         return text
       return `${text.slice(0, maxWidth)}${c.dim('…')}`
     }
-
-    const choices: Choice[] = names
-      .filter(i => !i[0].startsWith('?'))
-      .map(([value, cmd]) => ({
-        title: value,
-        value,
-        description: limitText(scriptsInfo[value] || scripts[`?${value}`] || cmd, terminalColumns - 15),
+    const choices: Choice[] = raw
+      .map(({ key, description }) => ({
+        title: key,
+        value: key,
+        description: limitText(description, terminalColumns - 15),
       }))
+
+    const fzf = new Fzf(raw, {
+      selector: item => `${item.key} ${item.description}`,
+      casing: 'case-insensitive',
+    })
 
     if (storage.lastRunCommand) {
       const last = choices.find(i => i.value === storage.lastRunCommand)
@@ -56,6 +68,12 @@ runCli(async (agent, args, ctx) => {
         message: 'script to run',
         type: 'autocomplete',
         choices,
+        suggest(input: string, choices: Choice[]) {
+          const results = fzf.find(input)
+          return choices.filter(({ value }) =>
+            results.some(result => result.item.key === value),
+          )
+        },
       })
       if (!fn)
         return
