@@ -69,5 +69,8 @@
   },
   "eslintConfig": {
     "extends": "@antfu"
+  },
+  "dependencies": {
+    "fzf": "^0.5.1"
   }
 }
