@@ -16,7 +16,7 @@ export interface DetectOptions {
 export async function detect({ autoInstall, cwd }: DetectOptions) {
   let agent: Agent | null = null
 
-  const lockPath = await findUp(Object.keys(LOCKS), { cwd })
+  const lockPath = await findUp(Object.keys(LOCKS), { cwd, stopAt: cwd })
   let packageJsonPath: string | undefined
 
   if (lockPath)
@@ -40,7 +40,7 @@ export async function detect({ autoInstall, cwd }: DetectOptions) {
           console.warn('[ni] Unknown packageManager:', pkg.packageManager)
       }
     }
-    catch {}
+    catch { }
   }
 
   // detect based on lock
