@@ -1,3 +1,31 @@
+# @wuxh/ni
+
+Forked from [antfu/ni](https://github.com/antfu/ni);
+
+**The change of this fork mainly meets the needs of the minority**; [see issues #74](https://github.com/antfu/ni/issues/74#issue-1226470177)
+
+### Config
+
+```ini
+https://github.com/antfu/ni#config
+; ~/.nirc
+
+; fallback when no lock found
+defaultAgent=pnpm # default "prompt"
+
+; for global installs
+globalAgent=npm
+
+; configuration of a specific item (case sensitive)
+; https://github.com/antfu/ni/issues/74
+[projectAgent]
+{HOME}/Code/Company=yarn
+{HOME}/Code/OSS=pnpm
+```
+
+<details>
+<summary>Original README <a href="https://github.com/antfu/ni#readme">Latest document addresses</a></summary>
+
 # ni
 
 ~~*`npm i` in a yarn project, again? F\*\*k!*~~
@@ -262,3 +290,5 @@ We renamed `nx` to `nix` to avoid conflicts with the other existing tool - [nx](
 ```bash
 alias nx="nix"
 ```
+
+</details>
