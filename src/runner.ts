@@ -68,7 +68,22 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   }
   else {
     let agent = await detect({ ...options, cwd }) || await getDefaultAgent()
-    if (agent === 'prompt') {
+
+    // `more question need to ask` from this issue https://github.com/antfu/ni/issues/122
+    if (agent === 'noPackageManager') {
+      const { startNew } = await prompts({
+        name: 'startNew',
+        type: 'toggle',
+        initial: false,
+        active: 'yes',
+        inactive: 'no',
+        message: 'There is not project detected in this directory. Do you want to start a new one?',
+      })
+      if (!startNew)
+        return
+    }
+
+    if (agent === 'prompt' || agent === 'noPackageManager') {
       agent = (await prompts({
         name: 'agent',
         type: 'select',
@@ -82,6 +97,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
       hasLock: Boolean(agent),
       cwd,
     })
+    console.log('command: ', command)
   }
 
   if (!command)

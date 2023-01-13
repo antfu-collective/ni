@@ -47,6 +47,12 @@ export async function detect({ autoInstall, cwd }: DetectOptions) {
   if (!agent && lockPath)
     agent = LOCKS[path.basename(lockPath)]
 
+  // not found manager
+  if (!agent) {
+    console.warn('[ni] not found packageManager')
+    return 'noPackageManager'
+  }
+
   // auto install
   if (agent && !cmdExists(agent.split('@')[0])) {
     if (!autoInstall) {
