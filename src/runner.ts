@@ -97,7 +97,6 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
       hasLock: Boolean(agent),
       cwd,
     })
-    console.log('command: ', command)
   }
 
   if (!command)
