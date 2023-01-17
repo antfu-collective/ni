@@ -10,6 +10,7 @@ import { getDefaultAgent, getGlobalAgent } from './config'
 import type { DetectOptions } from './detect'
 import { detect } from './detect'
 import { getVoltaPrefix, remove } from './utils'
+import { UnsupportedCommand } from './parse'
 
 const DEBUG_SIGN = '?'
 
@@ -26,6 +27,9 @@ export async function runCli(fn: Runner, options: DetectOptions = {}) {
     await run(fn, args, options)
   }
   catch (error) {
+    if (error instanceof UnsupportedCommand)
+      console.log(c.red(`\u2717 ${error.message}`))
+
     process.exit(1)
   }
 }
