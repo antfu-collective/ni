@@ -30,19 +30,6 @@ const pnpm = {
   'uninstall': 'pnpm remove {0}',
   'global_uninstall': 'pnpm remove --global {0}',
 }
-const bun = {
-  'agent': 'bun {0}',
-  'run': 'bun run {0}',
-  'install': 'bun install {0}',
-  'frozen': 'bun install --no-save',
-  'global': 'bun add -g {0}',
-  'add': 'bun add {0}',
-  'upgrade': null,
-  'upgrade-interactive': null,
-  'execute': null,
-  'uninstall': 'bun remove {0}',
-  'global_uninstall': 'bun remove -g {0}',
-}
 
 export const AGENTS = {
   'npm': {
@@ -75,7 +62,32 @@ export const AGENTS = {
     ...pnpm,
     run: npmRun('pnpm'),
   },
-  'bun': bun,
+  'bun': {
+    'agent': 'bun {0}',
+    'run': 'bun run {0}',
+    'install': 'bun install {0}',
+    'frozen': 'bun install --no-save',
+    'global': 'bun add -g {0}',
+    'add': 'bun add {0}',
+    'upgrade': null,
+    'upgrade-interactive': null,
+    'execute': null,
+    'uninstall': 'bun remove {0}',
+    'global_uninstall': 'bun remove -g {0}',
+  },
+  'deno': {
+    'agent': 'deno {0}',
+    'run': 'deno task {0}',
+    'install': null,
+    'frozen': null,
+    'global': null,
+    'add': null,
+    'upgrade': null,
+    'upgrade-interactive': null,
+    'execute': 'deno run npm:{0}',
+    'uninstall': null,
+    'global_uninstall': null,
+  },
 }
 
 export type Agent = keyof typeof AGENTS
@@ -99,4 +111,5 @@ export const INSTALL_PAGE: Record<Agent, string> = {
   'yarn': 'https://classic.yarnpkg.com/en/docs/install',
   'yarn@berry': 'https://yarnpkg.com/getting-started/install',
   'npm': 'https://docs.npmjs.com/cli/v8/configuring-npm/install',
+  'deno': 'https://deno.land/manual/getting_started/installation',
 }
