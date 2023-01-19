@@ -4,6 +4,20 @@ const npmRun = (agent: string) => (args: string[]) => {
   else return `${agent} run ${args[0]}`
 }
 
+const npm = {
+  'agent': 'npm {0}',
+  'run': npmRun('npm'),
+  'install': 'npm i {0}',
+  'frozen': 'npm ci',
+  'global': 'npm i -g {0}',
+  'add': 'npm i {0}',
+  'upgrade': 'npm update {0}',
+  'upgrade-interactive': null,
+  'execute': 'npx {0}',
+  'uninstall': 'npm uninstall {0}',
+  'global_uninstall': 'npm uninstall -g {0}',
+}
+
 const yarn = {
   'agent': 'yarn {0}',
   'run': 'yarn run {0}',
@@ -30,21 +44,36 @@ const pnpm = {
   'uninstall': 'pnpm remove {0}',
   'global_uninstall': 'pnpm remove --global {0}',
 }
+const bun = {
+  'agent': 'bun {0}',
+  'run': 'bun run {0}',
+  'install': 'bun install {0}',
+  'frozen': 'bun install --no-save',
+  'global': 'bun add -g {0}',
+  'add': 'bun add {0}',
+  'upgrade': null,
+  'upgrade-interactive': null,
+  'execute': null,
+  'uninstall': 'bun remove {0}',
+  'global_uninstall': 'bun remove -g {0}',
+}
+
+const deno = {
+  'agent': 'deno {0}',
+  'run': 'deno task {0}',
+  'install': null,
+  'frozen': null,
+  'global': null,
+  'add': null,
+  'upgrade': null,
+  'upgrade-interactive': null,
+  'execute': 'deno run npm:{0}',
+  'uninstall': null,
+  'global_uninstall': null,
+}
 
 export const AGENTS = {
-  'npm': {
-    'agent': 'npm {0}',
-    'run': npmRun('npm'),
-    'install': 'npm i {0}',
-    'frozen': 'npm ci',
-    'global': 'npm i -g {0}',
-    'add': 'npm i {0}',
-    'upgrade': 'npm update {0}',
-    'upgrade-interactive': null,
-    'execute': 'npx {0}',
-    'uninstall': 'npm uninstall {0}',
-    'global_uninstall': 'npm uninstall -g {0}',
-  },
+  'npm': npm,
   'yarn': yarn,
   'yarn@berry': {
     ...yarn,
@@ -62,32 +91,8 @@ export const AGENTS = {
     ...pnpm,
     run: npmRun('pnpm'),
   },
-  'bun': {
-    'agent': 'bun {0}',
-    'run': 'bun run {0}',
-    'install': 'bun install {0}',
-    'frozen': 'bun install --no-save',
-    'global': 'bun add -g {0}',
-    'add': 'bun add {0}',
-    'upgrade': null,
-    'upgrade-interactive': null,
-    'execute': null,
-    'uninstall': 'bun remove {0}',
-    'global_uninstall': 'bun remove -g {0}',
-  },
-  'deno': {
-    'agent': 'deno {0}',
-    'run': 'deno task {0}',
-    'install': null,
-    'frozen': null,
-    'global': null,
-    'add': null,
-    'upgrade': null,
-    'upgrade-interactive': null,
-    'execute': 'deno run npm:{0}',
-    'uninstall': null,
-    'global_uninstall': null,
-  },
+  'bun': bun,
+  'deno': deno,
 }
 
 export type Agent = keyof typeof AGENTS
