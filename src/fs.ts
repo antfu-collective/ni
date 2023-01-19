@@ -1,18 +1,35 @@
-import { resolve } from 'path'
-import fs from 'fs'
+import fs from 'node:fs'
+import { resolve } from 'node:path'
+import type { Agent } from './agents'
 
-export function getPackageJSON(cwd = process.cwd()): any {
-  const path = resolve(cwd, 'package.json')
+const getJSONConfigFile = (cwd: string, filename: string) => {
+  const path = resolve(cwd, filename)
 
   if (fs.existsSync(path)) {
     try {
       const raw = fs.readFileSync(path, 'utf-8')
-      const data = JSON.parse(raw)
+      const data = JSON.parse(raw) as Record<string, any>
       return data
     }
     catch (e) {
-      console.warn('Failed to parse package.json')
+      console.warn(`Failed to parse ${filename}`)
       process.exit(0)
     }
   }
+
+  return {}
+}
+
+export function getPackageJSON(cwd = process.cwd()) {
+  return getJSONConfigFile(cwd, 'package.json')
+}
+
+export function getDenoJSON(cwd = process.cwd()) {
+  return getJSONConfigFile(cwd, 'deno.json')
+}
+
+export function getConfig(agent: Agent, cwd = process.cwd()) {
+  if (agent === 'deno')
+    return getDenoJSON(cwd)
+  return getPackageJSON(cwd)
 }
