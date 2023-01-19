@@ -16,16 +16,14 @@ const getJSONConfigFile = (cwd: string, filename: string) => {
       process.exit(0)
     }
   }
-
-  return {}
 }
 
 export function getPackageJSON(cwd = process.cwd()) {
-  return getJSONConfigFile(cwd, 'package.json')
+  return getJSONConfigFile(cwd, 'package.json') || {}
 }
 
 export function getDenoJSON(cwd = process.cwd()) {
-  return getJSONConfigFile(cwd, 'deno.json')
+  return getJSONConfigFile(cwd, 'deno.json') || getJSONConfigFile(cwd, 'deno.jsonc') || {}
 }
 
 export function getConfig(agent: Agent, cwd = process.cwd()) {
