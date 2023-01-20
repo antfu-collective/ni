@@ -13,7 +13,7 @@ export interface DetectOptions {
   cwd?: string
 }
 
-export async function detect({ autoInstall, cwd }: DetectOptions) {
+export async function detect({ autoInstall, cwd }: DetectOptions = {}) {
   let agent: Agent | null = null
 
   const lockPath = await findUp(Object.keys(LOCKS), { cwd })
