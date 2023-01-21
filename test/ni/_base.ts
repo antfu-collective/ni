@@ -12,4 +12,8 @@ export const parseNaTest = (agent: Agent) => {
 }
 
 const platformRmDir = process.platform === 'win32' ? 'rmdir /s /q' : 'rm -rf'
-export const promptRemoveOfNodeModules = { prompt: 'Remove ./node_modules folder?', command: `${platformRmDir} ./node_modules` }
+export const promptRemoveOfNodeModules = {
+  prompt: 'Remove ./node_modules folder?',
+  command: `${platformRmDir} ./node_modules`,
+  tag: 'clean_node_modules',
+}
