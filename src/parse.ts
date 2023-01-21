@@ -44,7 +44,7 @@ export const parseNi = <Runner>((agent, args, ctx) => {
     if (before_actions.some(action => action.tag === 'clean_node_modules'))
       console.warn('`--reinstall` / `-R` is not supported with `-g`')
 
-    return getCommand(agent, 'global', exclude(args, '-g'))
+    return [getCommand(agent, 'global', exclude(args, '-g'))]
   }
 
   if (args.includes('--frozen-if-present')) {
