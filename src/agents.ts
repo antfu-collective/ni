@@ -39,7 +39,7 @@ const bun = {
   'add': 'bun add {0}',
   'upgrade': null,
   'upgrade-interactive': null,
-  'execute': null,
+  'execute': 'bunx {0}',
   'uninstall': 'bun remove {0}',
   'global_uninstall': 'bun remove -g {0}',
 }
