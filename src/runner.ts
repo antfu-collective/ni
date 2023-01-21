@@ -18,7 +18,14 @@ export interface RunnerContext {
   cwd?: string
 }
 
-export type Runner = (agent: Agent, args: string[], ctx?: RunnerContext) => Promise<string | undefined> | string | undefined
+export interface CommandWithPrompt { command: string; tag?: string; prompt?: string }
+export type RunnerReturn = string | string[] | (string | CommandWithPrompt)[] | undefined
+
+function isObjCommand(cmd: string | CommandWithPrompt): cmd is CommandWithPrompt {
+  return typeof cmd === 'object'
+}
+
+export type Runner = (agent: Agent, args: string[], ctx?: RunnerContext) => Promise<RunnerReturn> | RunnerReturn
 
 export async function runCli(fn: Runner, options: DetectOptions = {}) {
   const args = process.argv.slice(2).filter(Boolean)
@@ -36,7 +43,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     remove(args, DEBUG_SIGN)
 
   let cwd = process.cwd()
-  let command
+  let commands: Awaited<RunnerReturn>
 
   if (args.length === 1 && (args[0] === '--version' || args[0] === '-v')) {
     console.log(`@antfu/ni v${version}`)
@@ -64,7 +71,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
 
   const isGlobal = args.includes('-g')
   if (isGlobal) {
-    command = await fn(await getGlobalAgent(), args)
+    commands = await fn(await getGlobalAgent(), args)
   }
   else {
     let agent = await detect({ ...options, cwd }) || await getDefaultAgent()
@@ -78,23 +85,34 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
       if (!agent)
         return
     }
-    command = await fn(agent as Agent, args, {
+    commands = await fn(agent as Agent, args, {
       hasLock: Boolean(agent),
       cwd,
     })
   }
 
-  if (!command)
+  if (!commands)
     return
 
   const voltaPrefix = getVoltaPrefix()
-  if (voltaPrefix)
-    command = voltaPrefix.concat(' ').concat(command)
+  const mappedCommands = (
+    Array.isArray(commands)
+      ? commands.map(c => (isObjCommand(c) ? c : { command: c }))
+      : ([{ command: commands }] as CommandWithPrompt[])
+  ).map(c => (voltaPrefix ? { ...c, command: voltaPrefix.concat(' ').concat(c.command) } : c))
 
   if (debug) {
-    console.log(command)
+    console.log(commands)
     return
   }
 
-  await execaCommand(command, { stdio: 'inherit', encoding: 'utf-8', cwd })
+  for (const { command, prompt } of mappedCommands) {
+    if (prompt) {
+      const { confirm } = await prompts({ name: 'confirm', type: 'confirm', message: prompt })
+      if (!confirm)
+        return
+    }
+
+    await execaCommand(command, { stdio: 'inherit', encoding: 'utf-8', cwd })
+  }
 }
