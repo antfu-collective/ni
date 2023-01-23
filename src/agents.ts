@@ -17,7 +17,6 @@ const npm = {
   'uninstall': 'npm uninstall {0}',
   'global_uninstall': 'npm uninstall -g {0}',
 }
-
 const yarn = {
   'agent': 'yarn {0}',
   'run': 'yarn run {0}',
@@ -57,7 +56,6 @@ const bun = {
   'uninstall': 'bun remove {0}',
   'global_uninstall': 'bun remove -g {0}',
 }
-
 const deno = {
   'agent': 'deno {0}',
   'run': 'deno task {0}',
