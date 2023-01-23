@@ -99,7 +99,7 @@ nr -
 ```bash
 nx vitest
 
-# (not available for bun)
+# bunx vitest
 # npx vitest
 # yarn dlx vitest
 # pnpm dlx vitest
@@ -112,7 +112,7 @@ nx vitest
 ```bash
 nu
 
-# (not available for bun)
+# bun upgrade
 # npm upgrade
 # yarn upgrade (Yarn 1)
 # yarn up (Yarn Berry)
