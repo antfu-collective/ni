@@ -20,7 +20,7 @@ runCli(async (agent, args, ctx) => {
 
   if (args.length === 0) {
     const pkg = getConfig(agent, ctx?.cwd)
-    const scripts = pkg.scripts || {}
+    const scripts = (agent === 'deno' ? pkg.tasks : pkg.scripts) || {}
 
     // support https://www.npmjs.com/package/npm-scripts-info conventions
     const scriptsInfo = pkg['scripts-info'] || {}
