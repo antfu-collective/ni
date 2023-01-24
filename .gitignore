@@ -83,3 +83,5 @@ _storage.json
 
 # System files
 .DS_Store
+
+.vscode
