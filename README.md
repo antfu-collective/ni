@@ -99,10 +99,10 @@ nr -
 ```bash
 nx vitest
 
-# (not available for bun)
 # npx vitest
 # yarn dlx vitest
 # pnpm dlx vitest
+# bunx vitest
 ```
 
 <br>
