@@ -94,7 +94,7 @@ nr -
 
 <br>
 
-### `nix` - execute (previously `nx`)
+### `nix` - execute
 
 ```bash
 nix vitest
