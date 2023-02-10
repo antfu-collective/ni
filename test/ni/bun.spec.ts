@@ -18,7 +18,7 @@ test('-D', _('vite -D', 'bun add vite -d'))
 
 test('multiple', _('eslint @types/node', 'bun add eslint @types/node'))
 
-test('add types', _('--types node react', 'bun add -d @types/node @types/react'))
+test('add types', _('--types node react @foo/bar', 'bun add -d @types/node @types/react @types/foo__bar'))
 
 test('global', _('eslint -g', 'bun add -g eslint'))
 

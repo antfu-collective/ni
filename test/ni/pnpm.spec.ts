@@ -18,7 +18,7 @@ test('multiple', _('eslint @types/node', 'pnpm add eslint @types/node'))
 
 test('-D', _('-D eslint @types/node', 'pnpm add -D eslint @types/node'))
 
-test('add types', _('--types node react', 'pnpm add -D @types/node @types/react'))
+test('add types', _('--types node react @foo/bar', 'pnpm add -D @types/node @types/react @types/foo__bar'))
 
 test('global', _('eslint -g', 'pnpm add -g eslint'))
 
