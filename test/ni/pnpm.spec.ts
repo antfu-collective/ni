@@ -18,6 +18,8 @@ test('multiple', _('eslint @types/node', 'pnpm add eslint @types/node'))
 
 test('-D', _('-D eslint @types/node', 'pnpm add -D eslint @types/node'))
 
+test('add types', _('--types node react', 'pnpm add -D @types/node @types/react'))
+
 test('global', _('eslint -g', 'pnpm add -g eslint'))
 
 test('frozen', _('--frozen', 'pnpm i --frozen-lockfile'))
