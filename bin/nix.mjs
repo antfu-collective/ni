@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 'use strict'
-import '../dist/nx.mjs'
+import '../dist/nix.mjs'
