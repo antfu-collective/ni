@@ -13,6 +13,8 @@ test('multiple', _('eslint @types/node', ['npm i eslint @types/node']))
 
 test('-D', _('eslint @types/node -D', ['npm i eslint @types/node -D']))
 
+test('add types', _('--types node react @foo/bar', 'npm i -D @types/node @types/react @types/foo__bar'))
+
 test('global', _('eslint -g', ['npm i -g eslint']))
 
 test('frozen', _('--frozen', ['npm ci']))

@@ -4,6 +4,12 @@ import { AGENTS } from './agents'
 import { exclude } from './utils'
 import type { CommandWithPrompt, Runner } from './runner'
 
+export class UnsupportedCommand extends Error {
+  constructor({ agent, command }: { agent: Agent; command: Command }) {
+    super(`Command "${command}" is not support by agent "${agent}"`)
+  }
+}
+
 export function getCommand(
   agent: Agent,
   command: Command,
@@ -18,11 +24,26 @@ export function getCommand(
     return c(args)
 
   if (!c)
-    throw new Error(`Command "${command}" is not support by agent "${agent}"`)
+    throw new UnsupportedCommand({ agent, command })
+
   return c.replace('{0}', args.join(' ')).trim()
 }
 
 export const parseNi = <Runner>((agent, args, ctx) => {
+  if (args.includes('--types')) {
+    args = exclude(args, '--types')
+    args = args.map((i) => {
+      if (i.startsWith('-'))
+        return i
+      if (i.startsWith('@'))
+        i = i.slice(1).replace('/', '__')
+
+      return `@types/${i}`
+    },
+    )
+    args.unshift('-D')
+  }
+
   // bun use `-d` instead of `-D`, #90
   if (agent === 'bun')
     args = args.map(i => i === '-D' ? '-d' : i)
@@ -86,7 +107,7 @@ export const parseNun = <Runner>((agent, args) => {
   return getCommand(agent, 'uninstall', args)
 })
 
-export const parseNx = <Runner>((agent, args) => {
+export const parseNix = <Runner>((agent, args) => {
   return getCommand(agent, 'execute', args)
 })
 
