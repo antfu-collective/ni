@@ -89,7 +89,7 @@ export const parseNun = <Runner>((agent, args) => {
   return getCommand(agent, 'uninstall', args)
 })
 
-export const parseNx = <Runner>((agent, args) => {
+export const parseNix = <Runner>((agent, args) => {
   return getCommand(agent, 'execute', args)
 })
 

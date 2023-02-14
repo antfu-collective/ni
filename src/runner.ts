@@ -52,7 +52,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     console.log(c.green(c.bold('@antfu/ni')) + c.dim(` use the right package manager v${version}\n`))
     console.log(`ni   ${dash}  install`)
     console.log(`nr   ${dash}  run`)
-    console.log(`nx   ${dash}  execute`)
+    console.log(`nix  ${dash}  execute`)
     console.log(`nu   ${dash}  upgrade`)
     console.log(`nun  ${dash}  uninstall`)
     console.log(`nci  ${dash}  clean install`)

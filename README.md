@@ -94,15 +94,15 @@ nr -
 
 <br>
 
-### `nx` - execute
+### `nix` - execute
 
 ```bash
-nx vitest
+nix vitest
 
-# (not available for bun)
 # npx vitest
 # yarn dlx vitest
 # pnpm dlx vitest
+# bunx vitest
 ```
 
 <br>
@@ -253,4 +253,12 @@ $profileContent = Get-Content $profile
 if ($profileContent -notcontains $profileEntry) {
   $profileEntry | Out-File $profile -Append -Force
 }
+```
+
+#### `nx` is no longer available
+
+We renamed `nx` to `nix` to avoid conflicts with the other existing tool - [nx](https://nx.dev/). If you don't use [nx](https://nx.dev/) and still want the old `nx` behavior you can create an alias on your shell configuration file (`.zshrc`, `.bashrc`, etc).
+
+```bash
+alias nx="nix"
 ```
