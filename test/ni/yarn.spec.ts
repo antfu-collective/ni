@@ -18,6 +18,8 @@ test('multiple', _('eslint @types/node', 'yarn add eslint @types/node'))
 
 test('-D', _('eslint @types/node -D', 'yarn add eslint @types/node -D'))
 
+test('add types', _('--types node react @foo/bar', 'yarn add -D @types/node @types/react @types/foo__bar'))
+
 test('global', _('eslint ni -g', 'yarn global add eslint ni'))
 
 test('frozen', _('--frozen', 'yarn install --frozen-lockfile'))

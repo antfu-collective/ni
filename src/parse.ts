@@ -29,6 +29,20 @@ export function getCommand(
 }
 
 export const parseNi = <Runner>((agent, args, ctx) => {
+  if (args.includes('--types')) {
+    args = exclude(args, '--types')
+    args = args.map((i) => {
+      if (i.startsWith('-'))
+        return i
+      if (i.startsWith('@'))
+        i = i.slice(1).replace('/', '__')
+
+      return `@types/${i}`
+    },
+    )
+    args.unshift('-D')
+  }
+
   // bun use `-d` instead of `-D`, #90
   if (agent === 'bun')
     args = args.map(i => i === '-D' ? '-d' : i)
