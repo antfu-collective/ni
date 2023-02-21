@@ -18,7 +18,7 @@ export function cmdExists(cmd: string) {
   try {
     // #8
     execSync(
-      os.platform() === 'win32'
+      os.platform().toLowerCase() === 'win32'
         ? `cmd /c "(help ${cmd} > nul || exit 0) && where ${cmd} > nul 2> nul"`
         : `command -v ${cmd}`,
     )
