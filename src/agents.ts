@@ -19,7 +19,7 @@ const yarn = {
 }
 const pnpm = {
   'agent': 'pnpm {0}',
-  'run': 'pnpm run {0}',
+  'run': 'pnpm {0}',
   'install': 'pnpm i {0}',
   'frozen': 'pnpm i --frozen-lockfile',
   'global': 'pnpm add -g {0}',
