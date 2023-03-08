@@ -1,7 +1,8 @@
+import os from 'node:os'
 import type { Agent, Command } from './agents'
 import { AGENTS } from './agents'
 import { exclude } from './utils'
-import type { Runner } from './runner'
+import type { CommandWithPrompt, Runner } from './runner'
 
 export class UnsupportedCommand extends Error {
   constructor({ agent, command }: { agent: Agent; command: Command }) {
@@ -29,25 +30,56 @@ export function getCommand(
 }
 
 export const parseNi = <Runner>((agent, args, ctx) => {
+  if (args.includes('--types')) {
+    args = exclude(args, '--types')
+    args = args.map((i) => {
+      if (i.startsWith('-'))
+        return i
+      if (i.startsWith('@'))
+        i = i.slice(1).replace('/', '__')
+
+      return `@types/${i}`
+    },
+    )
+    args.unshift('-D')
+  }
+
   // bun use `-d` instead of `-D`, #90
   if (agent === 'bun')
     args = args.map(i => i === '-D' ? '-d' : i)
 
-  if (args.includes('-g'))
-    return getCommand(agent, 'global', exclude(args, '-g'))
+  let before_actions: (CommandWithPrompt & { tag: 'clean_node_modules' })[] = []
+  if (args.includes('--reinstall') || args.includes('-R')) {
+    args = exclude(args, '--reinstall')
+    args = exclude(args, '-R')
+
+    const node_modules = `${ctx?.cwd || '.'}/node_modules`
+    const command = os.platform() === 'win32' ? `rmdir /s /q ${node_modules}` : `rm -rf ${node_modules}`
+
+    before_actions = [
+      { command, tag: 'clean_node_modules', prompt: `Remove ${node_modules} folder?` },
+    ]
+  }
+
+  if (args.includes('-g')) {
+    if (before_actions.some(action => action.tag === 'clean_node_modules'))
+      console.warn('`--reinstall` / `-R` is not supported with `-g`')
+
+    return [getCommand(agent, 'global', exclude(args, '-g'))]
+  }
 
   if (args.includes('--frozen-if-present')) {
     args = exclude(args, '--frozen-if-present')
-    return getCommand(agent, ctx?.hasLock ? 'frozen' : 'install', args)
+    return [...before_actions, getCommand(agent, ctx?.hasLock ? 'frozen' : 'install', args)]
   }
 
   if (args.includes('--frozen'))
-    return getCommand(agent, 'frozen', exclude(args, '--frozen'))
+    return [...before_actions, getCommand(agent, 'frozen', exclude(args, '--frozen'))]
 
   if (args.length === 0 || args.every(i => i.startsWith('-')))
-    return getCommand(agent, 'install', args)
+    return [...before_actions, getCommand(agent, 'install', args)]
 
-  return getCommand(agent, 'add', args)
+  return [...before_actions, getCommand(agent, 'add', args)]
 })
 
 export const parseNr = <Runner>((agent, args) => {
@@ -75,7 +107,7 @@ export const parseNun = <Runner>((agent, args) => {
   return getCommand(agent, 'uninstall', args)
 })
 
-export const parseNx = <Runner>((agent, args) => {
+export const parseNix = <Runner>((agent, args) => {
   return getCommand(agent, 'execute', args)
 })
 
