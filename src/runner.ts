@@ -71,7 +71,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     command = await fn(await getGlobalAgent(), args)
   }
   else {
-    let agent = await detect({ ...options, cwd }) || await getDefaultAgent()
+    let agent = await detect({ ...options, cwd }) || await getDefaultAgent({ projectPath: cwd })
     if (agent === 'prompt') {
       agent = (await prompts({
         name: 'agent',

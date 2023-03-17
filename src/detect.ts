@@ -7,6 +7,7 @@ import prompts from 'prompts'
 import type { Agent } from './agents'
 import { AGENTS, INSTALL_PAGE, LOCKS } from './agents'
 import { cmdExists } from './utils'
+import { getAgentByProject } from './config'
 
 export interface DetectOptions {
   autoInstall?: boolean
@@ -40,7 +41,16 @@ export async function detect({ autoInstall, cwd }: DetectOptions = {}) {
           console.warn('[ni] Unknown packageManager:', pkg.packageManager)
       }
     }
-    catch {}
+    catch { }
+  }
+
+  // detect based on project
+  // see: https://github.com/antfu/ni/issues/74
+  if (!agent) {
+    const projectPath = packageJsonPath ? path.dirname(packageJsonPath) : cwd
+    const mayBeAgent = await getAgentByProject(projectPath, { isFullMatch: true })
+    if (mayBeAgent in AGENTS && mayBeAgent !== 'prompt')
+      agent = mayBeAgent
   }
 
   // detect based on lock

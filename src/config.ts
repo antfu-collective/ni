@@ -18,11 +18,13 @@ const rcPath = customRcPath || defaultRcPath
 interface Config {
   defaultAgent: Agent | 'prompt'
   globalAgent: Agent
+  projectAgent?: Record<string, Agent | 'prompt'>
 }
 
 const defaultConfig: Config = {
   defaultAgent: 'prompt',
   globalAgent: 'npm',
+  projectAgent: {},
 }
 
 let config: Config | undefined
@@ -44,14 +46,56 @@ export async function getConfig(): Promise<Config> {
   return config
 }
 
-export async function getDefaultAgent() {
-  const { defaultAgent } = await getConfig()
-  if (defaultAgent === 'prompt' && process.env.CI)
+export async function getDefaultAgent({ projectPath } = { projectPath: process.cwd() }) {
+  const agent = await getAgentByProject(projectPath, { isFullMatch: false })
+  if (agent === 'prompt' && process.env.CI)
     return 'npm'
-  return defaultAgent
+  return agent
 }
 
 export async function getGlobalAgent() {
   const { globalAgent } = await getConfig()
   return globalAgent
+}
+
+export async function getAgentByProject(
+  projectPath = process.cwd(),
+  options?: { isFullMatch?: boolean },
+): Promise<Agent | 'prompt'> {
+  const {
+    projectAgent,
+    defaultAgent,
+  } = await getConfig()
+
+  const variableMap: Record<string, string> = {
+    '{HOME}': home || '~/',
+  }
+
+  const finallyProjectAgent: Record<string, Agent | 'prompt'> = {}
+  // replace the variable
+  for (const key in projectAgent) {
+    let cloneKey = key
+    for (const variable in variableMap)
+      cloneKey = cloneKey.replace(variable, variableMap[variable])
+
+    finallyProjectAgent[cloneKey] = projectAgent[key]
+  }
+
+  // find the full match
+  if (options?.isFullMatch)
+    return finallyProjectAgent[projectPath]
+
+  // find the longest match
+  let maxMatch = -1
+  for (const key in finallyProjectAgent) {
+    if (projectPath.startsWith(key))
+      maxMatch = Math.max(maxMatch, key.length)
+  }
+
+  for (const key in finallyProjectAgent) {
+    if (key.length === maxMatch)
+      return finallyProjectAgent[key]
+  }
+
+  return defaultAgent
 }
