@@ -1,5 +1,3 @@
-import os from 'os'
-import { execSync } from 'child_process'
 import which from 'which'
 
 export function remove<T>(arr: T[], v: T) {
@@ -11,27 +9,16 @@ export function remove<T>(arr: T[], v: T) {
 }
 
 export function exclude<T>(arr: T[], v: T) {
-  return remove(arr.slice(), v)
+  return arr.slice().filter(item => item !== v)
 }
 
 export function cmdExists(cmd: string) {
-  try {
-    // #8
-    execSync(
-      os.platform() === 'win32'
-        ? `where ${cmd} > nul 2> nul"`
-        : `command -v ${cmd}`,
-    )
-    return true
-  }
-  catch {
-    return false
-  }
+  return which.sync(cmd, { nothrow: true }) !== null
 }
 
 export function getVoltaPrefix(): string {
   // https://blog.volta.sh/2020/11/25/command-spotlight-volta-run/
   const VOLTA_PREFIX = 'volta run'
-  const hasVoltaCommand = which.sync('volta', { nothrow: true }) !== null
+  const hasVoltaCommand = cmdExists('volta')
   return hasVoltaCommand ? VOLTA_PREFIX : ''
 }
