@@ -1,23 +1,22 @@
-import { expect, test } from 'vitest'
-import { parseNi } from '../../src/commands'
+import { test } from 'vitest'
+import { parseNaTest, promptRemoveOfNodeModules } from './_base'
 
-const agent = 'bun'
-const _ = (arg: string, expected: string) => () => {
-  expect(
-    parseNi(agent, arg.split(' ').filter(Boolean)),
-  ).toBe(
-    expected,
-  )
-}
+const _ = parseNaTest('bun')
 
-test('empty', _('', 'bun install'))
+test('empty', _('', ['bun install']))
 
-test('single add', _('axios', 'bun add axios'))
+test('empty reinstall', _('--reinstall', [promptRemoveOfNodeModules, 'bun install']))
 
-test('add dev', _('vite -D', 'bun add vite -d'))
+test('single add', _('axios', ['bun add axios']))
 
-test('multiple', _('eslint @types/node', 'bun add eslint @types/node'))
+test('-D', _('vite -D', 'bun add vite -d'))
 
-test('global', _('eslint -g', 'bun add -g eslint'))
+test('add dev', _('vite -D', ['bun add vite -d']))
 
-test('frozen', _('--frozen', 'bun install --no-save'))
+test('multiple', _('eslint @types/node', ['bun add eslint @types/node']))
+
+test('add types', _('--types node react @foo/bar', 'bun add -d @types/node @types/react @types/foo__bar'))
+
+test('global', _('eslint -g', ['bun add -g eslint']))
+
+test('frozen', _('--frozen', ['bun install --no-save']))

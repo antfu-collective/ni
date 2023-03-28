@@ -40,7 +40,7 @@ export async function detect({ autoInstall, cwd }: DetectOptions = {}) {
           console.warn('[ni] Unknown packageManager:', pkg.packageManager)
       }
     }
-    catch {}
+    catch { }
   }
 
   // detect based on lock
