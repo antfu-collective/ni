@@ -1,6 +1,6 @@
 import { existsSync, promises as fs } from 'fs'
 import { resolve } from 'path'
-import { CLI_TEMP_DIR, writeFile } from './utils'
+import { CLI_TEMP_DIR, writeFileSafe } from './utils'
 
 export interface Storage {
   lastRunCommand?: string
@@ -27,5 +27,5 @@ export async function load(fn?: (storage: Storage) => Promise<boolean> | boolean
 
 export async function dump() {
   if (storage)
-    await writeFile(storagePath, JSON.stringify(storage))
+    await writeFileSafe(storagePath, JSON.stringify(storage))
 }
