@@ -28,7 +28,7 @@
     "nci": "bin/nci.mjs",
     "nr": "bin/nr.mjs",
     "nu": "bin/nu.mjs",
-    "nix": "bin/nix.mjs",
+    "nlx": "bin/nlx.mjs",
     "na": "bin/na.mjs",
     "nun": "bin/nun.mjs"
   },

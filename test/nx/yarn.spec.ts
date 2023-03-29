@@ -1,10 +1,10 @@
 import { expect, test } from 'vitest'
-import { parseNix } from '../../src/commands'
+import { parseNlx } from '../../src/commands'
 
 const agent = 'yarn'
 const _ = (arg: string, expected: string) => () => {
   expect(
-    parseNix(agent, arg.split(' ').filter(Boolean)),
+    parseNlx(agent, arg.split(' ').filter(Boolean)),
   ).toBe(
     expected,
   )
