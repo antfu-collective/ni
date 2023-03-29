@@ -15,6 +15,7 @@ export interface DetectOptions {
 
 export async function detect({ autoInstall, cwd }: DetectOptions = {}) {
   let agent: Agent | null = null
+  let version: string | null = null
 
   const lockPath = await findUp(Object.keys(LOCKS), { cwd })
   let packageJsonPath: string | undefined
@@ -29,10 +30,11 @@ export async function detect({ autoInstall, cwd }: DetectOptions = {}) {
     try {
       const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
       if (typeof pkg.packageManager === 'string') {
-        const [name, version] = pkg.packageManager.split('@')
-        if (name === 'yarn' && parseInt(version) > 1)
+        const [name, ver] = pkg.packageManager.split('@')
+        version = ver
+        if (name === 'yarn' && parseInt(ver) > 1)
           agent = 'yarn@berry'
-        else if (name === 'pnpm' && parseInt(version) < 7)
+        else if (name === 'pnpm' && parseInt(ver) < 7)
           agent = 'pnpm@6'
         else if (name in AGENTS)
           agent = name
@@ -65,7 +67,7 @@ export async function detect({ autoInstall, cwd }: DetectOptions = {}) {
         process.exit(1)
     }
 
-    await execaCommand(`npm i -g ${agent}`, { stdio: 'inherit', cwd })
+    await execaCommand(`npm i -g ${agent}${version ? `@${version}` : ''}`, { stdio: 'inherit', cwd })
   }
 
   return agent
