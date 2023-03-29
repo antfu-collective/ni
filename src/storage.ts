@@ -1,5 +1,5 @@
-import { existsSync, promises as fs } from 'fs'
-import { resolve } from 'path'
+import { existsSync, promises as fs } from 'node:fs'
+import { resolve } from 'node:path'
 import { CLI_TEMP_DIR, writeFileSafe } from './utils'
 
 export interface Storage {
@@ -13,7 +13,7 @@ const storagePath = resolve(CLI_TEMP_DIR, '_storage.json')
 export async function load(fn?: (storage: Storage) => Promise<boolean> | boolean) {
   if (!storage) {
     storage = existsSync(storagePath)
-      ? JSON.parse(await fs.readFile(storagePath, 'utf-8') || '{}') || {}
+      ? (JSON.parse(await fs.readFile(storagePath, 'utf-8') || '{}') || {})
       : {}
   }
 

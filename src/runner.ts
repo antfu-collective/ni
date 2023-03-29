@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 import prompts from 'prompts'
 import { execaCommand } from 'execa'
 import c from 'kleur'

@@ -1,5 +1,5 @@
-import { resolve } from 'path'
-import fs from 'fs'
+import { resolve } from 'node:path'
+import fs from 'node:fs'
 
 export function getPackageJSON(cwd = process.cwd()): any {
   const path = resolve(cwd, 'package.json')
