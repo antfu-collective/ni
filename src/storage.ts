@@ -1,6 +1,6 @@
 import { existsSync, promises as fs } from 'fs'
 import { resolve } from 'path'
-import { tmpdir } from 'os'
+import { CLI_TEMP_DIR, writeFileSafe } from './utils'
 
 export interface Storage {
   lastRunCommand?: string
@@ -8,8 +8,7 @@ export interface Storage {
 
 let storage: Storage | undefined
 
-const storageDir = resolve(tmpdir(), 'antfu-ni')
-const storagePath = resolve(storageDir, '_storage.json')
+const storagePath = resolve(CLI_TEMP_DIR, '_storage.json')
 
 export async function load(fn?: (storage: Storage) => Promise<boolean> | boolean) {
   if (!storage) {
@@ -27,9 +26,6 @@ export async function load(fn?: (storage: Storage) => Promise<boolean> | boolean
 }
 
 export async function dump() {
-  if (storage) {
-    if (!existsSync(storageDir))
-      await fs.mkdir(storageDir, { recursive: true })
-    await fs.writeFile(storagePath, JSON.stringify(storage), 'utf-8')
-  }
+  if (storage)
+    await writeFileSafe(storagePath, JSON.stringify(storage))
 }
