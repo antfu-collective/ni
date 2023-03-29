@@ -94,10 +94,10 @@ nr -
 
 <br>
 
-### `nix` - execute
+### `nlx` - download & execute
 
 ```bash
-nix vitest
+nlx vitest
 
 # npx vitest
 # yarn dlx vitest
@@ -255,10 +255,12 @@ if ($profileContent -notcontains $profileEntry) {
 }
 ```
 
-#### `nx` is no longer available
+#### `nx` and `nix` is no longer available
 
-We renamed `nx` to `nix` to avoid conflicts with the other existing tool - [nx](https://nx.dev/). If you don't use [nx](https://nx.dev/) and still want the old `nx` behavior you can create an alias on your shell configuration file (`.zshrc`, `.bashrc`, etc).
+We renamed `nx`/`nix` to `nlx` to avoid conflicts with the other existing tools - [nx](https://nx.dev/) and [nix](https://nixos.org/). You can always alias them back on your shell configuration file (`.zshrc`, `.bashrc`, etc).
 
 ```bash
-alias nx="nix"
+alias nx="nlx"
+# or
+alias nix="nlx"
 ```
