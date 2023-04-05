@@ -16,6 +16,7 @@ const DEBUG_SIGN = '?'
 
 export interface RunnerContext {
   hasLock?: boolean
+  silent?: boolean
   cwd?: string
 }
 
@@ -28,7 +29,7 @@ export async function runCli(fn: Runner, options: DetectOptions = {}) {
   }
   catch (error) {
     if (error instanceof UnsupportedCommand)
-      console.log(c.red(`\u2717 ${error.message}`))
+    !options.silent ? console.log(c.red(`\u2717 ${error.message}`)) : 0
 
     process.exit(1)
   }
@@ -71,7 +72,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     command = await fn(await getGlobalAgent(), args)
   }
   else {
-    let agent = await detect({ ...options, cwd }) || await getDefaultAgent()
+    let agent = await detect({ ...options, cwd }) || await getDefaultAgent(options.silent)
     if (agent === 'prompt') {
       agent = (await prompts({
         name: 'agent',
@@ -84,6 +85,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     }
     command = await fn(agent as Agent, args, {
       hasLock: Boolean(agent),
+      silent: options.silent,
       cwd,
     })
   }
@@ -96,7 +98,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     command = voltaPrefix.concat(' ').concat(command)
 
   if (debug) {
-    console.log(command)
+    !options.silent ? console.log(command) : 0
     return
   }
 

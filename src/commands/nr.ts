@@ -12,7 +12,7 @@ runCli(async (agent, args, ctx) => {
 
   if (args[0] === '-') {
     if (!storage.lastRunCommand) {
-      console.error('No last command found')
+      !ctx.silent ? console.error('No last command found') : 0
       process.exit(1)
     }
     args[0] = storage.lastRunCommand
@@ -20,7 +20,7 @@ runCli(async (agent, args, ctx) => {
 
   if (args.length === 0) {
     // support https://www.npmjs.com/package/npm-scripts-info conventions
-    const pkg = getPackageJSON(ctx?.cwd)
+    const pkg = getPackageJSON(ctx)
     const scripts = pkg.scripts || {}
     const scriptsInfo = pkg['scripts-info'] || {}
 

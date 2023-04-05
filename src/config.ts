@@ -44,9 +44,9 @@ export async function getConfig(): Promise<Config> {
   return config
 }
 
-export async function getDefaultAgent() {
+export async function getDefaultAgent(silent?: boolean) {
   const { defaultAgent } = await getConfig()
-  if (defaultAgent === 'prompt' && process.env.CI)
+  if (defaultAgent === 'prompt' && (process.env.CI || Boolean(silent)))
     return 'npm'
   return defaultAgent
 }

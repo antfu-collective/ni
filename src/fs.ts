@@ -1,7 +1,8 @@
 import { resolve } from 'node:path'
+import type { RunnerContext } from './runner'
 import fs from 'node:fs'
 
-export function getPackageJSON(cwd = process.cwd()): any {
+export function getPackageJSON({ cwd = process.cwd(), silent }: RunnerContext): any {
   const path = resolve(cwd, 'package.json')
 
   if (fs.existsSync(path)) {
@@ -11,7 +12,7 @@ export function getPackageJSON(cwd = process.cwd()): any {
       return data
     }
     catch (e) {
-      console.warn('Failed to parse package.json')
+      !options.silent ? console.warn('Failed to parse package.json') : 0
       process.exit(0)
     }
   }
