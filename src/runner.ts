@@ -28,11 +28,13 @@ export async function runCli(fn: Runner, options: DetectOptions = {}) {
     await run(fn, args, options)
   }
   catch (error) {
-    if (error instanceof UnsupportedCommand)
-      !options.programmatic ? console.log(c.red(`\u2717 ${error.message}`)) : 0
+    if (error instanceof UnsupportedCommand && !options.programmatic)
+      console.log(c.red(`\u2717 ${error.message}`))
 
-    !options.programmatic ? process.exit(1) : 0
-    throw e
+    if (!options.programmatic)
+      process.exit(1)
+
+    throw error
   }
 }
 

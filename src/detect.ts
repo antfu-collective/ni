@@ -39,8 +39,8 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
           agent = 'pnpm@6'
         else if (name in AGENTS)
           agent = name
-        else
-          !programmatic ? console.warn('[ni] Unknown packageManager:', pkg.packageManager) : 0
+        else if (!programmatic)
+          console.warn('[ni] Unknown packageManager:', pkg.packageManager)
       }
     }
     catch {}
@@ -51,7 +51,7 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
     agent = LOCKS[path.basename(lockPath)]
 
   // auto install
-  if (agent && !cmdExists(agent.split('@')[0]) && !options.programmatic) {
+  if (agent && !cmdExists(agent.split('@')[0]) && !programmatic) {
     if (!autoInstall) {
       console.warn(`[ni] Detected ${agent} but it doesn't seem to be installed.\n`)
 
