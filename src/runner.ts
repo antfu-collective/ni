@@ -43,7 +43,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   if (debug)
     remove(args, DEBUG_SIGN)
 
-  let cwd = process.cwd()
+  let cwd = options.cwd ?? process.cwd()
   let command
 
   if (args.length === 1 && (args[0] === '--version' || args[0] === '-v')) {
