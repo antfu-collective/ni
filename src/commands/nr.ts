@@ -12,7 +12,7 @@ runCli(async (agent, args, ctx) => {
 
   if (args[0] === '-') {
     if (!storage.lastRunCommand) {
-      !ctx.silent ? console.error('No last command found') : 0
+      !ctx.programmatic ? console.error('No last command found') : 0
       process.exit(1)
     }
     args[0] = storage.lastRunCommand
