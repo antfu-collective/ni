@@ -13,7 +13,8 @@ export function getPackageJSON({ cwd = process.cwd(), programmatic }: RunnerCont
     }
     catch (e) {
       !programmatic ? console.warn('Failed to parse package.json') : 0
-      process.exit(0)
+      !programmatic ? process.exit(0) : 0
+      throw e
     }
   }
 }
