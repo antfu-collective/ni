@@ -1,5 +1,5 @@
-import type { Choice } from 'prompts'
-import prompts from 'prompts'
+import type { Choice } from '@posva/prompts'
+import prompts from '@posva/prompts'
 import c from 'kleur'
 import { Fzf } from 'fzf'
 import { dump, load } from '../storage'
