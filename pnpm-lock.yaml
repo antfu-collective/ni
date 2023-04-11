@@ -4,6 +4,9 @@ devDependencies:
   '@antfu/eslint-config':
     specifier: ^0.37.0
     version: 0.37.0(eslint@8.37.0)(typescript@5.0.2)
+  '@posva/prompts':
+    specifier: ^2.4.4
+    version: 2.4.4
   '@types/fs-extra':
     specifier: ^11.0.1
     version: 11.0.1
@@ -13,9 +16,6 @@ devDependencies:
   '@types/node':
     specifier: ^18.15.11
     version: 18.15.11
-  '@types/prompts':
-    specifier: ^2.4.3
-    version: 2.4.3
   '@types/which':
     specifier: ^3.0.0
     version: 3.0.0
@@ -49,9 +49,6 @@ devDependencies:
   kleur:
     specifier: ^4.1.5
     version: 4.1.5
-  prompts:
-    specifier: ^2.4.2
-    version: 2.4.2
   rimraf:
     specifier: ^4.4.1
     version: 4.4.1
@@ -739,6 +736,14 @@ packages:
       fastq: 1.12.0
     dev: true
 
+  /@posva/prompts@2.4.4:
+    resolution: {integrity: sha512-8aPwklhbSV2VN/NQMBNFkuo8+hlJVdcFRXp4NCIfdcahh3qNEcaSoD8qXjru0OlN1sONJ7le7p6+YUbALaG6Mg==}
+    engines: {node: '>= 14'}
+    dependencies:
+      kleur: 4.1.5
+      sisteransi: 1.0.5
+    dev: true
+
   /@rollup/plugin-alias@4.0.3(rollup@3.20.2):
     resolution: {integrity: sha512-ZuDWE1q4PQDhvm/zc5Prun8sBpLJy41DMptYrS6MhAy9s9kL/doN1613BWfEchGVfKxzliJ3BjbOPizXX38DbQ==}
     engines: {node: '>=14.0.0'}
@@ -881,13 +886,6 @@ packages:
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
-    dev: true
-
-  /@types/prompts@2.4.3:
-    resolution: {integrity: sha512-qpzXlxoPv67TCtTCS+SwYmz1M+G5ARTrE5YVlrZPy/xBD36dzLqiJLDzOzsMXkcJYq6+6UkWqFwtLAOjsfec5Q==}
-    dependencies:
-      '@types/node': 18.15.11
-      kleur: 3.0.3
     dev: true
 
   /@types/resolve@1.20.2:
