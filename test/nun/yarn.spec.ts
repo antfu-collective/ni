@@ -2,12 +2,14 @@ import { expect, test } from 'vitest'
 import { parseNun } from '../../src/commands'
 
 const agent = 'yarn'
-const _ = (arg: string, expected: string) => () => {
-  expect(
-    parseNun(agent, arg.split(' ').filter(Boolean)),
-  ).toBe(
-    expected,
-  )
+function _(arg: string, expected: string) {
+  return () => {
+    expect(
+      parseNun(agent, arg.split(' ').filter(Boolean)),
+    ).toBe(
+      expected,
+    )
+  }
 }
 
 test('single uninstall', _('axios', 'yarn remove axios'))

@@ -2,12 +2,14 @@ import { expect, test } from 'vitest'
 import { parseNu } from '../../src/commands'
 
 const agent = 'bun'
-const _ = (arg: string, expected: string | null) => () => {
-  expect(
-    parseNu(agent, arg.split(' ').filter(Boolean)),
-  ).toBe(
-    expected,
-  )
+function _(arg: string, expected: string | null) {
+  return () => {
+    expect(
+      parseNu(agent, arg.split(' ').filter(Boolean)),
+    ).toBe(
+      expected,
+    )
+  }
 }
 
 test.fails('empty', _('', null))

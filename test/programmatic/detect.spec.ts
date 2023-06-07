@@ -7,12 +7,14 @@ import { AGENTS, detect } from '../../src'
 
 let basicLog: SpyInstance, errorLog: SpyInstance, warnLog: SpyInstance, infoLog: SpyInstance
 
-const detectTest = (agent: string) => async () => {
-  const cwd = await fs.mkdtemp(path.join(tmpdir(), 'ni-'))
-  const fixture = path.join(__dirname, '..', 'fixtures', 'lockfile', agent)
-  await fs.copy(fixture, cwd)
+function detectTest(agent: string) {
+  return async () => {
+    const cwd = await fs.mkdtemp(path.join(tmpdir(), 'ni-'))
+    const fixture = path.join(__dirname, '..', 'fixtures', 'lockfile', agent)
+    await fs.copy(fixture, cwd)
 
-  expect(await detect({ programmatic: true, cwd })).toMatchSnapshot()
+    expect(await detect({ programmatic: true, cwd })).toMatchSnapshot()
+  }
 }
 
 beforeAll(() => {

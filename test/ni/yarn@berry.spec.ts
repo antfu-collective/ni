@@ -2,12 +2,14 @@ import { expect, test } from 'vitest'
 import { parseNi } from '../../src/commands'
 
 const agent = 'yarn@berry'
-const _ = (arg: string, expected: string) => () => {
-  expect(
-    parseNi(agent, arg.split(' ').filter(Boolean)),
-  ).toBe(
-    expected,
-  )
+function _(arg: string, expected: string) {
+  return () => {
+    expect(
+      parseNi(agent, arg.split(' ').filter(Boolean)),
+    ).toBe(
+      expected,
+    )
+  }
 }
 
 test('empty', _('', 'yarn install'))

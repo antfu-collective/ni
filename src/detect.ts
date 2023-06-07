@@ -33,9 +33,9 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
       if (typeof pkg.packageManager === 'string') {
         const [name, ver] = pkg.packageManager.split('@')
         version = ver
-        if (name === 'yarn' && parseInt(ver) > 1)
+        if (name === 'yarn' && Number.parseInt(ver) > 1)
           agent = 'yarn@berry'
-        else if (name === 'pnpm' && parseInt(ver) < 7)
+        else if (name === 'pnpm' && Number.parseInt(ver) < 7)
           agent = 'pnpm@6'
         else if (name in AGENTS)
           agent = name

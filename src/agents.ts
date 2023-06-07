@@ -1,7 +1,9 @@
-const npmRun = (agent: string) => (args: string[]) => {
-  if (args.length > 1)
-    return `${agent} run ${args[0]} -- ${args.slice(1).join(' ')}`
-  else return `${agent} run ${args[0]}`
+function npmRun(agent: string) {
+  return (args: string[]) => {
+    if (args.length > 1)
+      return `${agent} run ${args[0]} -- ${args.slice(1).join(' ')}`
+    else return `${agent} run ${args[0]}`
+  }
 }
 
 const yarn = {

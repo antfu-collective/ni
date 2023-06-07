@@ -9,25 +9,27 @@ import type { Runner } from '../../src'
 
 let basicLog: SpyInstance, errorLog: SpyInstance, warnLog: SpyInstance, infoLog: SpyInstance
 
-const runCliTest = (fixtureName: string, agent: string, runner: Runner, args: string[]) => async () => {
-  const cwd = await fs.mkdtemp(path.join(tmpdir(), 'ni-'))
-  const fixture = path.join(__dirname, '..', 'fixtures', fixtureName, agent)
-  await fs.copy(fixture, cwd)
+function runCliTest(fixtureName: string, agent: string, runner: Runner, args: string[]) {
+  return async () => {
+    const cwd = await fs.mkdtemp(path.join(tmpdir(), 'ni-'))
+    const fixture = path.join(__dirname, '..', 'fixtures', fixtureName, agent)
+    await fs.copy(fixture, cwd)
 
-  await runCli(async (agent, _, ctx) => {
+    await runCli(async (agent, _, ctx) => {
     // we override the args to be test specific
-    return runner(agent, args, ctx)
-  }, {
-    programmatic: true,
-    cwd,
-  }).catch((e) => {
+      return runner(agent, args, ctx)
+    }, {
+      programmatic: true,
+      cwd,
+    }).catch((e) => {
     // it will always throw if execa is mocked
-    if (e.command)
-      expect(e.command).toMatchSnapshot()
+      if (e.command)
+        expect(e.command).toMatchSnapshot()
 
-    else
-      expect(e.message).toMatchSnapshot()
-  })
+      else
+        expect(e.message).toMatchSnapshot()
+    })
+  }
 }
 
 beforeAll(() => {

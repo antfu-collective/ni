@@ -2,12 +2,14 @@ import { expect, test } from 'vitest'
 import { parseNlx } from '../../src/commands'
 
 const agent = 'yarn@berry'
-const _ = (arg: string, expected: string) => () => {
-  expect(
-    parseNlx(agent, arg.split(' ').filter(Boolean)),
-  ).toBe(
-    expected,
-  )
+function _(arg: string, expected: string) {
+  return () => {
+    expect(
+      parseNlx(agent, arg.split(' ').filter(Boolean)),
+    ).toBe(
+      expected,
+    )
+  }
 }
 
 test('single uninstall', _('esbuild', 'yarn dlx esbuild'))
