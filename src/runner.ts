@@ -15,6 +15,7 @@ import { UnsupportedCommand } from './parse'
 const DEBUG_SIGN = '?'
 
 export interface RunnerContext {
+  programmatic?: boolean
   hasLock?: boolean
   cwd?: string
 }
@@ -27,10 +28,13 @@ export async function runCli(fn: Runner, options: DetectOptions = {}) {
     await run(fn, args, options)
   }
   catch (error) {
-    if (error instanceof UnsupportedCommand)
+    if (error instanceof UnsupportedCommand && !options.programmatic)
       console.log(c.red(`\u2717 ${error.message}`))
 
-    process.exit(1)
+    if (!options.programmatic)
+      process.exit(1)
+
+    throw error
   }
 }
 
@@ -39,7 +43,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   if (debug)
     remove(args, DEBUG_SIGN)
 
-  let cwd = process.cwd()
+  let cwd = options.cwd ?? process.cwd()
   let command
 
   if (args.length === 1 && (args[0] === '--version' || args[0] === '-v')) {
@@ -71,7 +75,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     command = await fn(await getGlobalAgent(), args)
   }
   else {
-    let agent = await detect({ ...options, cwd }) || await getDefaultAgent()
+    let agent = await detect({ ...options, cwd }) || await getDefaultAgent(options.programmatic)
     if (agent === 'prompt') {
       agent = (await prompts({
         name: 'agent',
@@ -83,6 +87,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
         return
     }
     command = await fn(agent as Agent, args, {
+      programmatic: options.programmatic,
       hasLock: Boolean(agent),
       cwd,
     })

@@ -10,10 +10,11 @@ import { cmdExists } from './utils'
 
 export interface DetectOptions {
   autoInstall?: boolean
+  programmatic?: boolean
   cwd?: string
 }
 
-export async function detect({ autoInstall, cwd }: DetectOptions = {}) {
+export async function detect({ autoInstall, programmatic, cwd }: DetectOptions = {}) {
   let agent: Agent | null = null
   let version: string | null = null
 
@@ -38,7 +39,7 @@ export async function detect({ autoInstall, cwd }: DetectOptions = {}) {
           agent = 'pnpm@6'
         else if (name in AGENTS)
           agent = name
-        else
+        else if (!programmatic)
           console.warn('[ni] Unknown packageManager:', pkg.packageManager)
       }
     }
@@ -50,7 +51,7 @@ export async function detect({ autoInstall, cwd }: DetectOptions = {}) {
     agent = LOCKS[path.basename(lockPath)]
 
   // auto install
-  if (agent && !cmdExists(agent.split('@')[0])) {
+  if (agent && !cmdExists(agent.split('@')[0]) && !programmatic) {
     if (!autoInstall) {
       console.warn(`[ni] Detected ${agent} but it doesn't seem to be installed.\n`)
 

@@ -1,0 +1,337 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`lockfile > bun > na 1`] = `"bun"`;
+
+exports[`lockfile > bun > na run foo 1`] = `"bun run foo"`;
+
+exports[`lockfile > bun > ni --frozen 1`] = `"bun install --no-save"`;
+
+exports[`lockfile > bun > ni -g foo 1`] = `"bun add -g foo"`;
+
+exports[`lockfile > bun > ni 1`] = `"bun install"`;
+
+exports[`lockfile > bun > ni foo -D 1`] = `"bun add foo -d"`;
+
+exports[`lockfile > bun > ni foo 1`] = `"bun add foo"`;
+
+exports[`lockfile > bun > nlx 1`] = `"bunx foo"`;
+
+exports[`lockfile > bun > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not support by agent \\"bun\\""`;
+
+exports[`lockfile > bun > nu 1`] = `"Command \\"upgrade\\" is not support by agent \\"bun\\""`;
+
+exports[`lockfile > bun > nun -g foo 1`] = `"bun remove -g foo"`;
+
+exports[`lockfile > bun > nun foo 1`] = `"bun remove foo"`;
+
+exports[`lockfile > npm > na 1`] = `"npm"`;
+
+exports[`lockfile > npm > na run foo 1`] = `"npm run foo"`;
+
+exports[`lockfile > npm > ni --frozen 1`] = `"npm ci"`;
+
+exports[`lockfile > npm > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`lockfile > npm > ni 1`] = `"npm i"`;
+
+exports[`lockfile > npm > ni foo -D 1`] = `"npm i foo -D"`;
+
+exports[`lockfile > npm > ni foo 1`] = `"npm i foo"`;
+
+exports[`lockfile > npm > nlx 1`] = `"npx foo"`;
+
+exports[`lockfile > npm > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not support by agent \\"npm\\""`;
+
+exports[`lockfile > npm > nu 1`] = `"npm update"`;
+
+exports[`lockfile > npm > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`lockfile > npm > nun foo 1`] = `"npm uninstall foo"`;
+
+exports[`lockfile > pnpm > na 1`] = `"pnpm"`;
+
+exports[`lockfile > pnpm > na run foo 1`] = `"pnpm run foo"`;
+
+exports[`lockfile > pnpm > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
+
+exports[`lockfile > pnpm > ni -g foo 1`] = `"pnpm add -g foo"`;
+
+exports[`lockfile > pnpm > ni 1`] = `"pnpm i"`;
+
+exports[`lockfile > pnpm > ni foo -D 1`] = `"pnpm add foo -D"`;
+
+exports[`lockfile > pnpm > ni foo 1`] = `"pnpm add foo"`;
+
+exports[`lockfile > pnpm > nlx 1`] = `"pnpm dlx foo"`;
+
+exports[`lockfile > pnpm > nu -i 1`] = `"pnpm update -i"`;
+
+exports[`lockfile > pnpm > nu 1`] = `"pnpm update"`;
+
+exports[`lockfile > pnpm > nun -g foo 1`] = `"pnpm remove --global foo"`;
+
+exports[`lockfile > pnpm > nun foo 1`] = `"pnpm remove foo"`;
+
+exports[`lockfile > pnpm@6 > na 1`] = `"pnpm"`;
+
+exports[`lockfile > pnpm@6 > na run foo 1`] = `"pnpm run foo"`;
+
+exports[`lockfile > pnpm@6 > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
+
+exports[`lockfile > pnpm@6 > ni -g foo 1`] = `"pnpm add -g foo"`;
+
+exports[`lockfile > pnpm@6 > ni 1`] = `"pnpm i"`;
+
+exports[`lockfile > pnpm@6 > ni foo -D 1`] = `"pnpm add foo -D"`;
+
+exports[`lockfile > pnpm@6 > ni foo 1`] = `"pnpm add foo"`;
+
+exports[`lockfile > pnpm@6 > nlx 1`] = `"pnpm dlx foo"`;
+
+exports[`lockfile > pnpm@6 > nu -i 1`] = `"pnpm update -i"`;
+
+exports[`lockfile > pnpm@6 > nu 1`] = `"pnpm update"`;
+
+exports[`lockfile > pnpm@6 > nun -g foo 1`] = `"pnpm remove --global foo"`;
+
+exports[`lockfile > pnpm@6 > nun foo 1`] = `"pnpm remove foo"`;
+
+exports[`lockfile > unknown > na 1`] = `"npm"`;
+
+exports[`lockfile > unknown > na run foo 1`] = `"npm run foo"`;
+
+exports[`lockfile > unknown > ni --frozen 1`] = `"npm ci"`;
+
+exports[`lockfile > unknown > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`lockfile > unknown > ni 1`] = `"npm i"`;
+
+exports[`lockfile > unknown > ni foo -D 1`] = `"npm i foo -D"`;
+
+exports[`lockfile > unknown > ni foo 1`] = `"npm i foo"`;
+
+exports[`lockfile > unknown > nlx 1`] = `"npx foo"`;
+
+exports[`lockfile > unknown > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not support by agent \\"npm\\""`;
+
+exports[`lockfile > unknown > nu 1`] = `"npm update"`;
+
+exports[`lockfile > unknown > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`lockfile > unknown > nun foo 1`] = `"npm uninstall foo"`;
+
+exports[`lockfile > yarn > na 1`] = `"yarn"`;
+
+exports[`lockfile > yarn > na run foo 1`] = `"yarn run foo"`;
+
+exports[`lockfile > yarn > ni --frozen 1`] = `"yarn install --frozen-lockfile"`;
+
+exports[`lockfile > yarn > ni -g foo 1`] = `"yarn global add foo"`;
+
+exports[`lockfile > yarn > ni 1`] = `"yarn install"`;
+
+exports[`lockfile > yarn > ni foo -D 1`] = `"yarn add foo -D"`;
+
+exports[`lockfile > yarn > ni foo 1`] = `"yarn add foo"`;
+
+exports[`lockfile > yarn > nlx 1`] = `"npx foo"`;
+
+exports[`lockfile > yarn > nu -i 1`] = `"yarn upgrade-interactive"`;
+
+exports[`lockfile > yarn > nu 1`] = `"yarn upgrade"`;
+
+exports[`lockfile > yarn > nun -g foo 1`] = `"yarn global remove foo"`;
+
+exports[`lockfile > yarn > nun foo 1`] = `"yarn remove foo"`;
+
+exports[`lockfile > yarn@berry > na 1`] = `"yarn"`;
+
+exports[`lockfile > yarn@berry > na run foo 1`] = `"yarn run foo"`;
+
+exports[`lockfile > yarn@berry > ni --frozen 1`] = `"yarn install --frozen-lockfile"`;
+
+exports[`lockfile > yarn@berry > ni -g foo 1`] = `"yarn global add foo"`;
+
+exports[`lockfile > yarn@berry > ni 1`] = `"yarn install"`;
+
+exports[`lockfile > yarn@berry > ni foo -D 1`] = `"yarn add foo -D"`;
+
+exports[`lockfile > yarn@berry > ni foo 1`] = `"yarn add foo"`;
+
+exports[`lockfile > yarn@berry > nlx 1`] = `"npx foo"`;
+
+exports[`lockfile > yarn@berry > nu -i 1`] = `"yarn upgrade-interactive"`;
+
+exports[`lockfile > yarn@berry > nu 1`] = `"yarn upgrade"`;
+
+exports[`lockfile > yarn@berry > nun -g foo 1`] = `"yarn global remove foo"`;
+
+exports[`lockfile > yarn@berry > nun foo 1`] = `"yarn remove foo"`;
+
+exports[`packager > bun > na 1`] = `"bun"`;
+
+exports[`packager > bun > na run foo 1`] = `"bun run foo"`;
+
+exports[`packager > bun > ni --frozen 1`] = `"bun install --no-save"`;
+
+exports[`packager > bun > ni -g foo 1`] = `"bun add -g foo"`;
+
+exports[`packager > bun > ni 1`] = `"bun install"`;
+
+exports[`packager > bun > ni foo -D 1`] = `"bun add foo -d"`;
+
+exports[`packager > bun > ni foo 1`] = `"bun add foo"`;
+
+exports[`packager > bun > nlx 1`] = `"bunx foo"`;
+
+exports[`packager > bun > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not support by agent \\"bun\\""`;
+
+exports[`packager > bun > nu 1`] = `"Command \\"upgrade\\" is not support by agent \\"bun\\""`;
+
+exports[`packager > bun > nun -g foo 1`] = `"bun remove -g foo"`;
+
+exports[`packager > bun > nun foo 1`] = `"bun remove foo"`;
+
+exports[`packager > npm > na 1`] = `"npm"`;
+
+exports[`packager > npm > na run foo 1`] = `"npm run foo"`;
+
+exports[`packager > npm > ni --frozen 1`] = `"npm ci"`;
+
+exports[`packager > npm > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`packager > npm > ni 1`] = `"npm i"`;
+
+exports[`packager > npm > ni foo -D 1`] = `"npm i foo -D"`;
+
+exports[`packager > npm > ni foo 1`] = `"npm i foo"`;
+
+exports[`packager > npm > nlx 1`] = `"npx foo"`;
+
+exports[`packager > npm > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not support by agent \\"npm\\""`;
+
+exports[`packager > npm > nu 1`] = `"npm update"`;
+
+exports[`packager > npm > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`packager > npm > nun foo 1`] = `"npm uninstall foo"`;
+
+exports[`packager > pnpm > na 1`] = `"pnpm"`;
+
+exports[`packager > pnpm > na run foo 1`] = `"pnpm run foo"`;
+
+exports[`packager > pnpm > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
+
+exports[`packager > pnpm > ni -g foo 1`] = `"pnpm add -g foo"`;
+
+exports[`packager > pnpm > ni 1`] = `"pnpm i"`;
+
+exports[`packager > pnpm > ni foo -D 1`] = `"pnpm add foo -D"`;
+
+exports[`packager > pnpm > ni foo 1`] = `"pnpm add foo"`;
+
+exports[`packager > pnpm > nlx 1`] = `"pnpm dlx foo"`;
+
+exports[`packager > pnpm > nu -i 1`] = `"pnpm update -i"`;
+
+exports[`packager > pnpm > nu 1`] = `"pnpm update"`;
+
+exports[`packager > pnpm > nun -g foo 1`] = `"pnpm remove --global foo"`;
+
+exports[`packager > pnpm > nun foo 1`] = `"pnpm remove foo"`;
+
+exports[`packager > pnpm@6 > na 1`] = `"pnpm"`;
+
+exports[`packager > pnpm@6 > na run foo 1`] = `"pnpm run foo"`;
+
+exports[`packager > pnpm@6 > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
+
+exports[`packager > pnpm@6 > ni -g foo 1`] = `"pnpm add -g foo"`;
+
+exports[`packager > pnpm@6 > ni 1`] = `"pnpm i"`;
+
+exports[`packager > pnpm@6 > ni foo -D 1`] = `"pnpm add foo -D"`;
+
+exports[`packager > pnpm@6 > ni foo 1`] = `"pnpm add foo"`;
+
+exports[`packager > pnpm@6 > nlx 1`] = `"pnpm dlx foo"`;
+
+exports[`packager > pnpm@6 > nu -i 1`] = `"pnpm update -i"`;
+
+exports[`packager > pnpm@6 > nu 1`] = `"pnpm update"`;
+
+exports[`packager > pnpm@6 > nun -g foo 1`] = `"pnpm remove --global foo"`;
+
+exports[`packager > pnpm@6 > nun foo 1`] = `"pnpm remove foo"`;
+
+exports[`packager > unknown > na 1`] = `"npm"`;
+
+exports[`packager > unknown > na run foo 1`] = `"npm run foo"`;
+
+exports[`packager > unknown > ni --frozen 1`] = `"npm ci"`;
+
+exports[`packager > unknown > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`packager > unknown > ni 1`] = `"npm i"`;
+
+exports[`packager > unknown > ni foo -D 1`] = `"npm i foo -D"`;
+
+exports[`packager > unknown > ni foo 1`] = `"npm i foo"`;
+
+exports[`packager > unknown > nlx 1`] = `"npx foo"`;
+
+exports[`packager > unknown > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not support by agent \\"npm\\""`;
+
+exports[`packager > unknown > nu 1`] = `"npm update"`;
+
+exports[`packager > unknown > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`packager > unknown > nun foo 1`] = `"npm uninstall foo"`;
+
+exports[`packager > yarn > na 1`] = `"yarn"`;
+
+exports[`packager > yarn > na run foo 1`] = `"yarn run foo"`;
+
+exports[`packager > yarn > ni --frozen 1`] = `"yarn install --frozen-lockfile"`;
+
+exports[`packager > yarn > ni -g foo 1`] = `"yarn global add foo"`;
+
+exports[`packager > yarn > ni 1`] = `"yarn install"`;
+
+exports[`packager > yarn > ni foo -D 1`] = `"yarn add foo -D"`;
+
+exports[`packager > yarn > ni foo 1`] = `"yarn add foo"`;
+
+exports[`packager > yarn > nlx 1`] = `"npx foo"`;
+
+exports[`packager > yarn > nu -i 1`] = `"yarn upgrade-interactive"`;
+
+exports[`packager > yarn > nu 1`] = `"yarn upgrade"`;
+
+exports[`packager > yarn > nun -g foo 1`] = `"yarn global remove foo"`;
+
+exports[`packager > yarn > nun foo 1`] = `"yarn remove foo"`;
+
+exports[`packager > yarn@berry > na 1`] = `"yarn"`;
+
+exports[`packager > yarn@berry > na run foo 1`] = `"yarn run foo"`;
+
+exports[`packager > yarn@berry > ni --frozen 1`] = `"yarn install --immutable"`;
+
+exports[`packager > yarn@berry > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`packager > yarn@berry > ni 1`] = `"yarn install"`;
+
+exports[`packager > yarn@berry > ni foo -D 1`] = `"yarn add foo -D"`;
+
+exports[`packager > yarn@berry > ni foo 1`] = `"yarn add foo"`;
+
+exports[`packager > yarn@berry > nlx 1`] = `"yarn dlx foo"`;
+
+exports[`packager > yarn@berry > nu -i 1`] = `"yarn up -i"`;
+
+exports[`packager > yarn@berry > nu 1`] = `"yarn up"`;
+
+exports[`packager > yarn@berry > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`packager > yarn@berry > nun foo 1`] = `"yarn remove foo"`;

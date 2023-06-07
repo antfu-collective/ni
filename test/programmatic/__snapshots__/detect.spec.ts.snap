@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`lockfile > bun 1`] = `"bun"`;
+
+exports[`lockfile > npm 1`] = `"npm"`;
+
+exports[`lockfile > pnpm 1`] = `"pnpm"`;
+
+exports[`lockfile > pnpm@6 1`] = `"pnpm"`;
+
+exports[`lockfile > unknown 1`] = `null`;
+
+exports[`lockfile > yarn 1`] = `"yarn"`;
+
+exports[`lockfile > yarn@berry 1`] = `"yarn"`;
+
+exports[`packager > bun 1`] = `"bun"`;
+
+exports[`packager > npm 1`] = `"npm"`;
+
+exports[`packager > pnpm 1`] = `"pnpm"`;
+
+exports[`packager > pnpm@6 1`] = `"pnpm"`;
+
+exports[`packager > unknown 1`] = `null`;
+
+exports[`packager > yarn 1`] = `"yarn"`;
+
+exports[`packager > yarn@berry 1`] = `"yarn"`;
