@@ -11,6 +11,7 @@ import type { DetectOptions } from './detect'
 import { detect } from './detect'
 import { getVoltaPrefix, remove } from './utils'
 import { UnsupportedCommand } from './parse'
+import { isExistsPackageJSON } from './fs'
 
 const DEBUG_SIGN = '?'
 
@@ -23,6 +24,9 @@ export interface RunnerContext {
 export type Runner = (agent: Agent, args: string[], ctx?: RunnerContext) => Promise<string | undefined> | string | undefined
 
 export async function runCli(fn: Runner, options: DetectOptions = {}) {
+  if (!isExistsPackageJSON())
+    return
+
   const args = process.argv.slice(2).filter(Boolean)
   try {
     await run(fn, args, options)

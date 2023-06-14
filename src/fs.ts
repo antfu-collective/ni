@@ -1,10 +1,10 @@
 import { resolve } from 'node:path'
 import fs from 'node:fs'
+import c from 'kleur'
 import type { RunnerContext } from './runner'
 
 export function getPackageJSON(ctx?: RunnerContext): any {
-  const cwd = ctx?.cwd ?? process.cwd()
-  const path = resolve(cwd, 'package.json')
+  const path = getPath(ctx)
 
   if (fs.existsSync(path)) {
     try {
@@ -17,8 +17,24 @@ export function getPackageJSON(ctx?: RunnerContext): any {
         console.warn('Failed to parse package.json')
         process.exit(1)
       }
-
       throw e
     }
   }
+}
+
+function getPath(ctx?: RunnerContext): string {
+  const cwd = ctx?.cwd ?? process.cwd()
+  const path = resolve(cwd, 'package.json')
+  return path
+}
+
+export function isExistsPackageJSON(): boolean {
+  const path = getPath()
+
+  if (!fs.existsSync(path)) {
+    /* eslint-disable no-console */
+    console.log(c.red('The package.json file does not exist'))
+    process.exit(1)
+  }
+  return true
 }
