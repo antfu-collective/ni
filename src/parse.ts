@@ -25,7 +25,20 @@ export function getCommand(
   if (!c)
     throw new UnsupportedCommand({ agent, command })
 
-  return c.replace('{0}', args.join(' ')).trim()
+  const quote = (arg: string) => {
+    const hasIfPresent = arg.startsWith('--if-present ')
+    const prefix = hasIfPresent ? '--if-present ' : ''
+    if (hasIfPresent)
+      arg = arg.slice('--if-present '.length)
+
+    return prefix + (arg.includes(' ')
+      ? arg.indexOf('"')
+        ? `'${arg}'`
+        : `"${arg}"`
+      : arg)
+  }
+
+  return c.replace('{0}', args.map(quote).join(' ')).trim()
 }
 
 export const parseNi = <Runner>((agent, args, ctx) => {
