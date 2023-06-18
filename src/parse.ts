@@ -32,9 +32,7 @@ export function getCommand(
       arg = arg.slice('--if-present '.length)
 
     return prefix + (arg.includes(' ')
-      ? arg.indexOf('"')
-        ? `'${arg}'`
-        : `"${arg}"`
+      ? JSON.stringify(arg)
       : arg)
   }
 
