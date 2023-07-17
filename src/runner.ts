@@ -42,7 +42,7 @@ export async function getRunCommand(
   fn: Runner,
   args: string[],
   options: DetectOptions = {},
-  cwd: string,
+  cwd: string = options.cwd ?? process.cwd(),
 ) {
   const isGlobal = args.includes('-g')
   if (isGlobal)
