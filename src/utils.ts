@@ -2,6 +2,7 @@ import os from 'node:os'
 import { dirname, join } from 'node:path'
 import { existsSync, promises as fs } from 'node:fs'
 import type { Buffer } from 'node:buffer'
+import process from 'node:process'
 import which from 'which'
 
 export const CLI_TEMP_DIR = join(os.tmpdir(), 'antfu-ni')
