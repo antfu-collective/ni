@@ -38,7 +38,7 @@ export async function runCli(fn: Runner, options: DetectOptions = {}) {
   }
 }
 
-export async function getRunCommand(
+export async function getCliCommand(
   fn: Runner,
   args: string[],
   options: DetectOptions = {},
@@ -100,7 +100,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     args.splice(0, 2)
   }
 
-  let command = await getRunCommand(fn, args, options, cwd)
+  let command = await getCliCommand(fn, args, options, cwd)
 
   if (!command)
     return
