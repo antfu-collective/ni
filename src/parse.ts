@@ -25,16 +25,9 @@ export function getCommand(
   if (!c)
     throw new UnsupportedCommand({ agent, command })
 
-  const quote = (arg: string) => {
-    const hasIfPresent = arg.startsWith('--if-present ')
-    const prefix = hasIfPresent ? '--if-present ' : ''
-    if (hasIfPresent)
-      arg = arg.slice('--if-present '.length)
-
-    return prefix + (arg.includes(' ')
-      ? JSON.stringify(arg)
-      : arg)
-  }
+  const quote = (arg: string) => (!arg.startsWith('--') && arg.includes(' '))
+    ? JSON.stringify(arg)
+    : arg
 
   return c.replace('{0}', args.map(quote).join(' ')).trim()
 }
