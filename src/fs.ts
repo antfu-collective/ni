@@ -1,5 +1,6 @@
 import { resolve } from 'node:path'
 import fs from 'node:fs'
+import process from 'node:process'
 import type { RunnerContext } from './runner'
 
 export function getPackageJSON(ctx?: RunnerContext): any {
