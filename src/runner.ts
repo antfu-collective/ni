@@ -39,13 +39,41 @@ export async function runCli(fn: Runner, options: DetectOptions = {}) {
   }
 }
 
+export async function getCliCommand(
+  fn: Runner,
+  args: string[],
+  options: DetectOptions = {},
+  cwd: string = options.cwd ?? process.cwd(),
+) {
+  const isGlobal = args.includes('-g')
+  if (isGlobal)
+    return await fn(await getGlobalAgent(), args)
+
+  let agent = (await detect({ ...options, cwd })) || (await getDefaultAgent(options.programmatic))
+  if (agent === 'prompt') {
+    agent = (
+      await prompts({
+        name: 'agent',
+        type: 'select',
+        message: 'Choose the agent',
+        choices: agents.filter(i => !i.includes('@')).map(value => ({ title: value, value })),
+      })
+    ).agent
+    if (!agent)
+      return
+  }
+
+  return await fn(agent as Agent, args, {
+    programmatic: options.programmatic,
+    hasLock: Boolean(agent),
+    cwd,
+  })
+}
+
 export async function run(fn: Runner, args: string[], options: DetectOptions = {}) {
   const debug = args.includes(DEBUG_SIGN)
   if (debug)
     remove(args, DEBUG_SIGN)
-
-  let cwd = options.cwd ?? process.cwd()
-  let command
 
   if (args.length === 1 && (args[0] === '--version' || args[0] === '-v')) {
     console.log(`@antfu/ni v${version}`)
@@ -66,33 +94,14 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     return
   }
 
+  let cwd = options.cwd ?? process.cwd()
+
   if (args[0] === '-C') {
     cwd = resolve(cwd, args[1])
     args.splice(0, 2)
   }
 
-  const isGlobal = args.includes('-g')
-  if (isGlobal) {
-    command = await fn(await getGlobalAgent(), args)
-  }
-  else {
-    let agent = await detect({ ...options, cwd }) || await getDefaultAgent(options.programmatic)
-    if (agent === 'prompt') {
-      agent = (await prompts({
-        name: 'agent',
-        type: 'select',
-        message: 'Choose the agent',
-        choices: agents.filter(i => !i.includes('@')).map(value => ({ title: value, value })),
-      })).agent
-      if (!agent)
-        return
-    }
-    command = await fn(agent as Agent, args, {
-      programmatic: options.programmatic,
-      hasLock: Boolean(agent),
-      cwd,
-    })
-  }
+  let command = await getCliCommand(fn, args, options, cwd)
 
   if (!command)
     return
