@@ -25,7 +25,11 @@ export function getCommand(
   if (!c)
     throw new UnsupportedCommand({ agent, command })
 
-  return c.replace('{0}', args.join(' ')).trim()
+  const quote = (arg: string) => (!arg.startsWith('--') && arg.includes(' '))
+    ? JSON.stringify(arg)
+    : arg
+
+  return c.replace('{0}', args.map(quote).join(' ')).trim()
 }
 
 export const parseNi = <Runner>((agent, args, ctx) => {
