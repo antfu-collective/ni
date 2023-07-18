@@ -1,3 +1,4 @@
+import process from 'node:process'
 import type { Choice } from '@posva/prompts'
 import prompts from '@posva/prompts'
 import c from 'kleur'
