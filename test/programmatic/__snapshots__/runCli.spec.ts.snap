@@ -16,9 +16,9 @@ exports[`lockfile > bun > ni foo 1`] = `"bun add foo"`;
 
 exports[`lockfile > bun > nlx 1`] = `"bunx foo"`;
 
-exports[`lockfile > bun > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not support by agent \\"bun\\""`;
+exports[`lockfile > bun > nu -i 1`] = `"bun update"`;
 
-exports[`lockfile > bun > nu 1`] = `"Command \\"upgrade\\" is not support by agent \\"bun\\""`;
+exports[`lockfile > bun > nu 1`] = `"bun update"`;
 
 exports[`lockfile > bun > nun -g foo 1`] = `"bun remove -g foo"`;
 
@@ -184,9 +184,9 @@ exports[`packager > bun > ni foo 1`] = `"bun add foo"`;
 
 exports[`packager > bun > nlx 1`] = `"bunx foo"`;
 
-exports[`packager > bun > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not support by agent \\"bun\\""`;
+exports[`packager > bun > nu -i 1`] = `"bun update"`;
 
-exports[`packager > bun > nu 1`] = `"Command \\"upgrade\\" is not support by agent \\"bun\\""`;
+exports[`packager > bun > nu 1`] = `"bun update"`;
 
 exports[`packager > bun > nun -g foo 1`] = `"bun remove -g foo"`;
 
