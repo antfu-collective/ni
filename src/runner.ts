@@ -2,6 +2,7 @@
 import { resolve } from 'node:path'
 import process from 'node:process'
 import prompts from '@posva/prompts'
+import type { Options as ExecaOptions } from 'execa'
 import { execaCommand } from 'execa'
 import c from 'kleur'
 import { version } from '../package.json'
@@ -75,6 +76,31 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   if (debug)
     remove(args, DEBUG_SIGN)
 
+  let cwd = options.cwd ?? process.cwd()
+  if (args[0] === '-C') {
+    cwd = resolve(cwd, args[1])
+    args.splice(0, 2)
+  }
+
+  if (args.length === 1 && (args[0] === '-V')) {
+    const getV = (a: string, o?: ExecaOptions) => execaCommand(`${a} -v`, o).then(e => e.stdout).then(e => e.startsWith('v') ? e : `v${e}`)
+    const globalAgentPromise = getGlobalAgent()
+    const globalAgentVersionPromise = globalAgentPromise.then(getV)
+    const agentPromise = detect({ ...options, cwd }).then(a => a || '')
+    const agentVersionPromise = agentPromise.then(a => a && getV(a, { cwd }))
+    const nodeVersionPromise = getV('node', { cwd })
+
+    console.log(`@antfu/ni v${version}`)
+    console.log(`node      ${await nodeVersionPromise}`)
+    const [agent, agentVersion] = await Promise.all([agentPromise, agentVersionPromise])
+    if (agent)
+      console.log(`${agent.padEnd(9)} ${agentVersion}`)
+    else console.log('agent     no lock file')
+    const [globalAgent, globalAgentVersion] = await Promise.all([globalAgentPromise, globalAgentVersionPromise])
+    console.log(`${(`${globalAgent} -g`).padEnd(9)} ${globalAgentVersion}`)
+    return
+  }
+
   if (args.length === 1 && (args[0] === '--version' || args[0] === '-v')) {
     console.log(`@antfu/ni v${version}`)
     return
@@ -92,13 +118,6 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     console.log(`na   ${dash}  agent alias`)
     console.log(c.yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
     return
-  }
-
-  let cwd = options.cwd ?? process.cwd()
-
-  if (args[0] === '-C') {
-    cwd = resolve(cwd, args[1])
-    args.splice(0, 2)
   }
 
   let command = await getCliCommand(fn, args, options, cwd)
