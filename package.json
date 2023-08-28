@@ -30,6 +30,7 @@
     "nr": "bin/nr.mjs",
     "nu": "bin/nu.mjs",
     "nlx": "bin/nlx.mjs",
+    "nrx": "bin/nrx.mjs",
     "na": "bin/na.mjs",
     "nun": "bin/nun.mjs"
   },

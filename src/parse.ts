@@ -18,18 +18,26 @@ export function getCommand(
     throw new Error(`Unsupported agent "${agent}"`)
 
   const c = AGENTS[agent][command]
-
-  if (typeof c === 'function')
-    return c(args)
-
   if (!c)
     throw new UnsupportedCommand({ agent, command })
 
-  const quote = (arg: string) => (!arg.startsWith('--') && arg.includes(' '))
-    ? JSON.stringify(arg)
-    : arg
+  let cmd = ''
 
-  return c.replace('{0}', args.map(quote).join(' ')).trim()
+  if (typeof c === 'function') {
+    cmd = c(args)
+  }
+  else {
+    const quote = (arg: string) => (!arg.startsWith('--') && arg.includes(' '))
+      ? JSON.stringify(arg)
+      : arg
+    cmd = c.replace('{0}', args.map(quote).join(' ')).trim()
+  }
+
+  // DEBUG: remove for build
+  // eslint-disable-next-line no-console
+  console.log('>', cmd)
+
+  return cmd
 }
 
 export const parseNi = <Runner>((agent, args, ctx) => {
@@ -81,6 +89,10 @@ export const parseNun = <Runner>((agent, args) => {
 
 export const parseNlx = <Runner>((agent, args) => {
   return getCommand(agent, 'execute', args)
+})
+
+export const parseNrx = <Runner>((agent, args) => {
+  return getCommand(agent, 'bin', args)
 })
 
 export const parseNa = <Runner>((agent, args) => {
