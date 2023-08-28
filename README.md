@@ -251,7 +251,7 @@ if (-not (Test-Path $profile)) {
 $profileEntry = 'Remove-Item Alias:ni -Force -ErrorAction Ignore'
 $profileContent = Get-Content $profile
 if ($profileContent -notcontains $profileEntry) {
-  $profileEntry | Out-File $profile -Append -Force
+  ("`n" + $profileEntry) | Out-File $profile -Append -Force -Encoding UTF8
 }
 ```
 
