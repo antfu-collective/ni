@@ -112,11 +112,11 @@ nlx vitest
 ```bash
 nu
 
-# (not available for bun)
 # npm upgrade
 # yarn upgrade (Yarn 1)
 # yarn up (Yarn Berry)
 # pnpm update
+# bun update
 ```
 
 ```bash
