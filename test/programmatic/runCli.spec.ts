@@ -15,17 +15,19 @@ function runCliTest(fixtureName: string, agent: string, runner: Runner, args: st
     const fixture = path.join(__dirname, '..', 'fixtures', fixtureName, agent)
     await fs.copy(fixture, cwd)
 
-    await runCli(async (agent, _, ctx) => {
-    // we override the args to be test specific
-      return runner(agent, args, ctx)
-    }, {
-      programmatic: true,
-      cwd,
-    }).catch((e) => {
-    // it will always throw if execa is mocked
+    await runCli(
+      async (agent, _, ctx) => {
+        // we override the args to be test specific
+        return runner(agent, args, ctx)
+      }, {
+        programmatic: true,
+        cwd,
+        args,
+      },
+    ).catch((e) => {
+      // it will always throw if execa is mocked
       if (e.command)
         expect(e.command).toMatchSnapshot()
-
       else
         expect(e.message).toMatchSnapshot()
     })

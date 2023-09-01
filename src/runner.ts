@@ -24,8 +24,10 @@ export interface RunnerContext {
 
 export type Runner = (agent: Agent, args: string[], ctx?: RunnerContext) => Promise<string | undefined> | string | undefined
 
-export async function runCli(fn: Runner, options: DetectOptions = {}) {
-  const args = process.argv.slice(2).filter(Boolean)
+export async function runCli(fn: Runner, options: DetectOptions & { args?: string[] } = {}) {
+  const {
+    args = process.argv.slice(2).filter(Boolean),
+  } = options
   try {
     await run(fn, args, options)
   }
