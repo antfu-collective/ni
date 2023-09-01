@@ -82,7 +82,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     args.splice(0, 2)
   }
 
-  if (args.length === 1 && (args[0] === '-V')) {
+  if (args.length === 1 && (args[0]?.toLowerCase() === '-v')) {
     const getV = (a: string, o?: ExecaOptions) => execaCommand(`${a} -v`, o).then(e => e.stdout).then(e => e.startsWith('v') ? e : `v${e}`)
     const globalAgentPromise = getGlobalAgent()
     const globalAgentVersionPromise = globalAgentPromise.then(getV)
@@ -90,14 +90,15 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     const agentVersionPromise = agentPromise.then(a => a && getV(a, { cwd }))
     const nodeVersionPromise = getV('node', { cwd })
 
-    console.log(`@antfu/ni v${version}`)
-    console.log(`node      ${await nodeVersionPromise}`)
+    console.log(`@antfu/ni  ${c.cyan(`v${version}`)}`)
+    console.log(`node       ${c.green(await nodeVersionPromise)}`)
     const [agent, agentVersion] = await Promise.all([agentPromise, agentVersionPromise])
     if (agent)
-      console.log(`${agent.padEnd(9)} ${agentVersion}`)
-    else console.log('agent     no lock file')
+      console.log(`${agent.padEnd(10)} ${c.blue(agentVersion)}`)
+    else
+      console.log('agent      no lock file')
     const [globalAgent, globalAgentVersion] = await Promise.all([globalAgentPromise, globalAgentVersionPromise])
-    console.log(`${(`${globalAgent} -g`).padEnd(9)} ${globalAgentVersion}`)
+    console.log(`${(`${globalAgent} -g`).padEnd(10)} ${c.blue(globalAgentVersion)}`)
     return
   }
 
