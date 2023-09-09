@@ -189,11 +189,21 @@ na run foo
 
 <br>
 
-### Change Directory
+### Global Flags
 
 ```bash
-ni -C packages/foo vite
-nr -C playground dev
+# ?  | Debug the command execution depends on the agent
+ni vite ? # output: npm i vite. (if npm is the agent)
+
+# -C  | Change directory before running the command
+ni -C packages/foo vite # cd packages/foo && npm i vite
+nr -C playground dev # cd playground && npm run dev
+
+# -v, --version  | Show version number
+ni -v
+
+# -h, --help  | Show help
+ni -h
 ```
 
 <br>
