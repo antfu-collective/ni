@@ -12,7 +12,7 @@ import { getDefaultAgent, getGlobalAgent } from './config'
 import type { DetectOptions } from './detect'
 import { detect } from './detect'
 import { getVoltaPrefix, remove } from './utils'
-import { UnsupportedCommand } from './parse'
+import { UnsupportedCommand, getCommand } from './parse'
 
 const DEBUG_SIGN = '?'
 
@@ -85,7 +85,8 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   }
 
   if (args.length === 1 && (args[0]?.toLowerCase() === '-v')) {
-    const getV = (a: string, o?: ExecaOptions) => execaCommand(`${a} -v`, o).then(e => e.stdout).then(e => e.startsWith('v') ? e : `v${e}`)
+    const getCmd = (a: Agent) => agents.includes(a) ? getCommand(a, 'agent', ['-v']) : `${a} -v`
+    const getV = (a: string, o?: ExecaOptions) => execaCommand(getCmd(a as Agent), o).then(e => e.stdout).then(e => e.startsWith('v') ? e : `v${e}`)
     const globalAgentPromise = getGlobalAgent()
     const globalAgentVersionPromise = globalAgentPromise.then(getV)
     const agentPromise = detect({ ...options, cwd }).then(a => a || '')
