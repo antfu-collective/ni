@@ -113,13 +113,14 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   if (args.length === 1 && ['-h', '--help'].includes(args[0])) {
     const dash = c.dim('-')
     console.log(c.green(c.bold('@antfu/ni')) + c.dim(` use the right package manager v${version}\n`))
-    console.log(`ni   ${dash}  install`)
-    console.log(`nr   ${dash}  run`)
-    console.log(`nlx  ${dash}  execute`)
-    console.log(`nu   ${dash}  upgrade`)
-    console.log(`nun  ${dash}  uninstall`)
-    console.log(`nci  ${dash}  clean install`)
-    console.log(`na   ${dash}  agent alias`)
+    console.log(`ni    ${dash}  install`)
+    console.log(`nr    ${dash}  run`)
+    console.log(`nlx   ${dash}  execute`)
+    console.log(`nu    ${dash}  upgrade`)
+    console.log(`nun   ${dash}  uninstall`)
+    console.log(`nci   ${dash}  clean install`)
+    console.log(`na    ${dash}  agent alias`)
+    console.log(`ni -v ${dash}  show used agent`)
     console.log(c.yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
     return
   }
