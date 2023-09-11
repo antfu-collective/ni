@@ -84,7 +84,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     args.splice(0, 2)
   }
 
-  if (args.length === 1 && (args[0]?.toLowerCase() === '-v')) {
+  if (args.length === 1 && (args[0]?.toLowerCase() === '-v' || args[0] === '--version')) {
     const getCmd = (a: Agent) => agents.includes(a) ? getCommand(a, 'agent', ['-v']) : `${a} -v`
     const getV = (a: string, o?: ExecaOptions) => execaCommand(getCmd(a as Agent), o).then(e => e.stdout).then(e => e.startsWith('v') ? e : `v${e}`)
     const globalAgentPromise = getGlobalAgent()
