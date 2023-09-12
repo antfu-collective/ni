@@ -189,11 +189,21 @@ na run foo
 
 <br>
 
-### Change Directory
+### Global Flags
 
 ```bash
+# ?               | Print the command execution depends on the agent
+ni vite ?
+
+# -C              | Change directory before running the command
 ni -C packages/foo vite
 nr -C playground dev
+
+# -v, --version   | Show version number
+ni -v
+
+# -h, --help      | Show help
+ni -h
 ```
 
 <br>
