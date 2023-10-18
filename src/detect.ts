@@ -32,7 +32,7 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
     try {
       const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
       if (typeof pkg.packageManager === 'string') {
-        const [name, ver] = pkg.packageManager.split('@')
+        const [name, ver] = pkg.packageManager.replace(/^\^/, '').split('@')
         version = ver
         if (name === 'yarn' && Number.parseInt(ver) > 1)
           agent = 'yarn@berry'
