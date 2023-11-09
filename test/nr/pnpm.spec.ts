@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, it } from 'vitest'
 import { parseNr } from '../../src/commands'
 
 const agent = 'pnpm'
@@ -12,12 +12,12 @@ function _(arg: string, expected: string) {
   }
 }
 
-test('empty', _('', 'pnpm run start'))
+it('empty', _('', 'pnpm run start'))
 
-test('if-present', _('test --if-present', 'pnpm run --if-present test'))
+it('if-present', _('test --if-present', 'pnpm run --if-present test'))
 
-test('script', _('dev', 'pnpm run dev'))
+it('script', _('dev', 'pnpm run dev'))
 
-test('script with arguments', _('build --watch -o', 'pnpm run build --watch -o'))
+it('script with arguments', _('build --watch -o', 'pnpm run build --watch -o'))
 
-test('colon', _('build:dev', 'pnpm run build:dev'))
+it('colon', _('build:dev', 'pnpm run build:dev'))

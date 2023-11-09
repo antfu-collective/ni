@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, it } from 'vitest'
 import { parseNi } from '../../src/commands'
 
 const agent = 'pnpm'
@@ -12,17 +12,17 @@ function _(arg: string, expected: string) {
   }
 }
 
-test('empty', _('', 'pnpm i'))
+it('empty', _('', 'pnpm i'))
 
-test('single add', _('axios', 'pnpm add axios'))
+it('single add', _('axios', 'pnpm add axios'))
 
-test('multiple', _('eslint @types/node', 'pnpm add eslint @types/node'))
+it('multiple', _('eslint @types/node', 'pnpm add eslint @types/node'))
 
-test('-D', _('-D eslint @types/node', 'pnpm add -D eslint @types/node'))
+it('-D', _('-D eslint @types/node', 'pnpm add -D eslint @types/node'))
 
-test('global', _('eslint -g', 'pnpm add -g eslint'))
+it('global', _('eslint -g', 'pnpm add -g eslint'))
 
-test('frozen', _('--frozen', 'pnpm i --frozen-lockfile'))
+it('frozen', _('--frozen', 'pnpm i --frozen-lockfile'))
 
-test('forward1', _('--anything', 'pnpm i --anything'))
-test('forward2', _('-a', 'pnpm i -a'))
+it('forward1', _('--anything', 'pnpm i --anything'))
+it('forward2', _('-a', 'pnpm i -a'))

@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, it } from 'vitest'
 import { parseNu } from '../../src/commands'
 
 const agent = 'pnpm'
@@ -12,8 +12,8 @@ function _(arg: string, expected: string) {
   }
 }
 
-test('empty', _('', 'pnpm update'))
+it('empty', _('', 'pnpm update'))
 
-test('interactive', _('-i', 'pnpm update -i'))
+it('interactive', _('-i', 'pnpm update -i'))
 
-test('interactive latest', _('-i --latest', 'pnpm update -i --latest'))
+it('interactive latest', _('-i --latest', 'pnpm update -i --latest'))

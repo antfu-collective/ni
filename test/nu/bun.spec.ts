@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, it } from 'vitest'
 import { parseNu } from '../../src/commands'
 
 const agent = 'bun'
@@ -12,6 +12,6 @@ function _(arg: string, expected: string | null) {
   }
 }
 
-test.fails('empty', _('', null))
-test.fails('interactive', _('-i', null))
-test.fails('interactive latest', _('-i --latest', null))
+it.fails('empty', _('', null))
+it.fails('interactive', _('-i', null))
+it.fails('interactive latest', _('-i --latest', null))

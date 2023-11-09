@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, it } from 'vitest'
 import { parseNi } from '../../src/commands'
 
 const agent = 'yarn@berry'
@@ -12,14 +12,14 @@ function _(arg: string, expected: string) {
   }
 }
 
-test('empty', _('', 'yarn install'))
+it('empty', _('', 'yarn install'))
 
-test('single add', _('axios', 'yarn add axios'))
+it('single add', _('axios', 'yarn add axios'))
 
-test('multiple', _('eslint @types/node', 'yarn add eslint @types/node'))
+it('multiple', _('eslint @types/node', 'yarn add eslint @types/node'))
 
-test('-D', _('eslint @types/node -D', 'yarn add eslint @types/node -D'))
+it('-D', _('eslint @types/node -D', 'yarn add eslint @types/node -D'))
 
-test('global', _('eslint ni -g', 'npm i -g eslint ni'))
+it('global', _('eslint ni -g', 'npm i -g eslint ni'))
 
-test('frozen', _('--frozen', 'yarn install --immutable'))
+it('frozen', _('--frozen', 'yarn install --immutable'))

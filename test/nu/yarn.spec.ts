@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, it } from 'vitest'
 import { parseNu } from '../../src/commands'
 
 const agent = 'yarn'
@@ -12,8 +12,8 @@ function _(arg: string, expected: string) {
   }
 }
 
-test('empty', _('', 'yarn upgrade'))
+it('empty', _('', 'yarn upgrade'))
 
-test('interactive', _('-i', 'yarn upgrade-interactive'))
+it('interactive', _('-i', 'yarn upgrade-interactive'))
 
-test('interactive latest', _('-i --latest', 'yarn upgrade-interactive --latest'))
+it('interactive latest', _('-i --latest', 'yarn upgrade-interactive --latest'))

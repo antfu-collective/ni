@@ -139,5 +139,5 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     return
   }
 
-  await execaCommand(command, { stdio: 'inherit', encoding: 'utf-8', cwd })
+  await execaCommand(command, { stdio: 'inherit', cwd })
 }

@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, it } from 'vitest'
 import { parseNun } from '../../src/commands'
 
 const agent = 'bun'
@@ -12,8 +12,8 @@ function _(arg: string, expected: string) {
   }
 }
 
-test('single uninstall', _('axios', 'bun remove axios'))
+it('single uninstall', _('axios', 'bun remove axios'))
 
-test('multiple', _('eslint @types/node', 'bun remove eslint @types/node'))
+it('multiple', _('eslint @types/node', 'bun remove eslint @types/node'))
 
-test('global', _('eslint ni -g', 'bun remove -g eslint ni'))
+it('global', _('eslint ni -g', 'bun remove -g eslint ni'))

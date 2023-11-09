@@ -2,7 +2,7 @@ import path from 'node:path'
 import { tmpdir } from 'node:os'
 import fs from 'fs-extra'
 import type { SpyInstance } from 'vitest'
-import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { AGENTS, parseNa, parseNi, parseNlx, parseNu, parseNun, runCli } from '../../src'
 
 import type { Runner } from '../../src'
@@ -19,7 +19,8 @@ function runCliTest(fixtureName: string, agent: string, runner: Runner, args: st
       async (agent, _, ctx) => {
         // we override the args to be test specific
         return runner(agent, args, ctx)
-      }, {
+      },
+      {
         programmatic: true,
         cwd,
         args,
@@ -63,28 +64,28 @@ const fixtures = ['lockfile', 'packager']
 // matrix testing of: fixtures x agents x commands
 fixtures.forEach(fixture => describe(fixture, () => agents.forEach(agent => describe(agent, () => {
   /** na */
-  test('na', runCliTest(fixture, agent, parseNa, []))
-  test('na run foo', runCliTest(fixture, agent, parseNa, ['run', 'foo']))
+  it('na', runCliTest(fixture, agent, parseNa, []))
+  it('na run foo', runCliTest(fixture, agent, parseNa, ['run', 'foo']))
 
   /** ni */
-  test('ni', runCliTest(fixture, agent, parseNi, []))
-  test('ni foo', runCliTest(fixture, agent, parseNi, ['foo']))
-  test('ni foo -D', runCliTest(fixture, agent, parseNi, ['foo', '-D']))
-  test('ni --frozen', runCliTest(fixture, agent, parseNi, ['--frozen']))
-  test('ni -g foo', runCliTest(fixture, agent, parseNi, ['-g', 'foo']))
+  it('ni', runCliTest(fixture, agent, parseNi, []))
+  it('ni foo', runCliTest(fixture, agent, parseNi, ['foo']))
+  it('ni foo -D', runCliTest(fixture, agent, parseNi, ['foo', '-D']))
+  it('ni --frozen', runCliTest(fixture, agent, parseNi, ['--frozen']))
+  it('ni -g foo', runCliTest(fixture, agent, parseNi, ['-g', 'foo']))
 
   /** nlx */
-  test('nlx', runCliTest(fixture, agent, parseNlx, ['foo']))
+  it('nlx', runCliTest(fixture, agent, parseNlx, ['foo']))
 
   /** nu */
-  test('nu', runCliTest(fixture, agent, parseNu, []))
-  test('nu -i', runCliTest(fixture, agent, parseNu, ['-i']))
+  it('nu', runCliTest(fixture, agent, parseNu, []))
+  it('nu -i', runCliTest(fixture, agent, parseNu, ['-i']))
 
   /** nun */
-  test('nun foo', runCliTest(fixture, agent, parseNun, ['foo']))
-  test('nun -g foo', runCliTest(fixture, agent, parseNun, ['-g', 'foo']))
+  it('nun foo', runCliTest(fixture, agent, parseNun, ['foo']))
+  it('nun -g foo', runCliTest(fixture, agent, parseNun, ['-g', 'foo']))
 
-  test('no logs', () => {
+  it('no logs', () => {
     expect(basicLog).not.toHaveBeenCalled()
     expect(warnLog).not.toHaveBeenCalled()
     expect(errorLog).not.toHaveBeenCalled()

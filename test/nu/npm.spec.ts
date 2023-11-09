@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, it } from 'vitest'
 import { parseNu } from '../../src/commands'
 
 const agent = 'npm'
@@ -12,4 +12,4 @@ function _(arg: string, expected: string) {
   }
 }
 
-test('empty', _('', 'npm update'))
+it('empty', _('', 'npm update'))

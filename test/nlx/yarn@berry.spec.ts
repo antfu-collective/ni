@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, it } from 'vitest'
 import { parseNlx } from '../../src/commands'
 
 const agent = 'yarn@berry'
@@ -12,5 +12,5 @@ function _(arg: string, expected: string) {
   }
 }
 
-test('single uninstall', _('esbuild', 'yarn dlx esbuild'))
-test('multiple', _('esbuild --version', 'yarn dlx esbuild --version'))
+it('single uninstall', _('esbuild', 'yarn dlx esbuild'))
+it('multiple', _('esbuild --version', 'yarn dlx esbuild --version'))
