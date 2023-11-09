@@ -2,9 +2,8 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import ini from 'ini'
-import { findUp } from 'find-up'
 import type { Agent } from './agents'
-import { LOCKS } from './agents'
+import { detect } from './detect'
 
 const customRcPath = process.env.NI_CONFIG_FILE
 
@@ -30,18 +29,13 @@ let config: Config | undefined
 
 export async function getConfig(): Promise<Config> {
   if (!config) {
-    const result = await findUp('package.json') || ''
-    let packageManager = ''
-    if (result)
-      packageManager = JSON.parse(fs.readFileSync(result, 'utf8')).packageManager ?? ''
-    const [, agent, version] = packageManager.match(new RegExp(`^(${Object.values(LOCKS).join('|')})@(\\d).*?$`)) || []
+    const agent = await detect({ programmatic: true })
     if (agent)
-      config = Object.assign({}, defaultConfig, { defaultAgent: (agent === 'yarn' && Number.parseInt(version) > 1) ? 'yarn@berry' : agent })
-    else if (!fs.existsSync(rcPath))
-      config = defaultConfig
+      config = { ...defaultConfig, defaultAgent: agent }
     else
       config = Object.assign({}, defaultConfig, ini.parse(fs.readFileSync(rcPath, 'utf-8')))
   }
+
   return config
 }
 
