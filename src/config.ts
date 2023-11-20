@@ -30,10 +30,16 @@ let config: Config | undefined
 export async function getConfig(): Promise<Config> {
   if (!config) {
     const agent = await detect({ programmatic: true })
-    if (agent)
-      config = { ...defaultConfig, defaultAgent: agent }
-    else
-      config = Object.assign({}, defaultConfig, ini.parse(fs.readFileSync(rcPath, 'utf-8')))
+    if (agent) { config = { ...defaultConfig, defaultAgent: agent } }
+    else {
+      config = Object.assign(
+        {},
+        defaultConfig,
+        fs.existsSync(rcPath)
+          ? ini.parse(fs.readFileSync(rcPath, 'utf-8'))
+          : null,
+      )
+    }
   }
 
   return config
