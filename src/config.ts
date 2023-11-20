@@ -30,7 +30,9 @@ let config: Config | undefined
 export async function getConfig(): Promise<Config> {
   if (!config) {
     const agent = await detect({ programmatic: true })
-    if (agent) { config = { ...defaultConfig, defaultAgent: agent } }
+    if (agent) {
+      config = { ...defaultConfig, defaultAgent: agent }
+    }
     else {
       config = Object.assign(
         {},
