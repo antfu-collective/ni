@@ -4,7 +4,7 @@ import { exclude } from './utils'
 import type { Runner } from './runner'
 
 export class UnsupportedCommand extends Error {
-  constructor({ agent, command }: { agent: Agent; command: Command }) {
+  constructor({ agent, command }: { agent: Agent, command: Command }) {
     super(`Command "${command}" is not support by agent "${agent}"`)
   }
 }
