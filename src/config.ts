@@ -37,9 +37,8 @@ export async function getConfig(): Promise<Config> {
         : null,
     )
     const agent = await detect({ programmatic: true })
-    if (agent) {
+    if (agent)
       config.defaultAgent = agent
-    }
   }
 
   return config
