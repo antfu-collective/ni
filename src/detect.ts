@@ -34,14 +34,20 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
       if (typeof pkg.packageManager === 'string') {
         const [name, ver] = pkg.packageManager.replace(/^\^/, '').split('@')
         version = ver
-        if (name === 'yarn' && Number.parseInt(ver) > 1)
+        if (name === 'yarn' && Number.parseInt(ver) > 1) {
           agent = 'yarn@berry'
-        else if (name === 'pnpm' && Number.parseInt(ver) < 7)
+          // the version in packageManager isn't the actual yarn package version
+          version = 'berry'
+        }
+        else if (name === 'pnpm' && Number.parseInt(ver) < 7) {
           agent = 'pnpm@6'
-        else if (name in AGENTS)
+        }
+        else if (name in AGENTS) {
           agent = name
-        else if (!programmatic)
+        }
+        else if (!programmatic) {
           console.warn('[ni] Unknown packageManager:', pkg.packageManager)
+        }
       }
     }
     catch {}
@@ -69,7 +75,7 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
         process.exit(1)
     }
 
-    await execaCommand(`npm i -g ${agent}${version ? `@${version}` : ''}`, { stdio: 'inherit', cwd })
+    await execaCommand(`npm i -g ${agent.split('@')[0]}${version ? `@${version}` : ''}`, { stdio: 'inherit', cwd })
   }
 
   return agent
