@@ -6,7 +6,7 @@ exports[`lockfile > bun > na run foo 1`] = `"bun run foo"`;
 
 exports[`lockfile > bun > ni --frozen 1`] = `"bun install --no-save"`;
 
-exports[`lockfile > bun > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`lockfile > bun > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`lockfile > bun > ni 1`] = `"bun install"`;
 
@@ -20,7 +20,7 @@ exports[`lockfile > bun > nu -i 1`] = `"bun update"`;
 
 exports[`lockfile > bun > nu 1`] = `"bun update"`;
 
-exports[`lockfile > bun > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`lockfile > bun > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > bun > nun foo 1`] = `"bun remove foo"`;
 
@@ -30,7 +30,7 @@ exports[`lockfile > npm > na run foo 1`] = `"npm run foo"`;
 
 exports[`lockfile > npm > ni --frozen 1`] = `"npm ci"`;
 
-exports[`lockfile > npm > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`lockfile > npm > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`lockfile > npm > ni 1`] = `"npm i"`;
 
@@ -44,7 +44,7 @@ exports[`lockfile > npm > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not
 
 exports[`lockfile > npm > nu 1`] = `"npm update"`;
 
-exports[`lockfile > npm > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`lockfile > npm > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > npm > nun foo 1`] = `"npm uninstall foo"`;
 
@@ -54,7 +54,7 @@ exports[`lockfile > pnpm > na run foo 1`] = `"pnpm run foo"`;
 
 exports[`lockfile > pnpm > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
 
-exports[`lockfile > pnpm > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`lockfile > pnpm > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`lockfile > pnpm > ni 1`] = `"pnpm i"`;
 
@@ -68,7 +68,7 @@ exports[`lockfile > pnpm > nu -i 1`] = `"pnpm update -i"`;
 
 exports[`lockfile > pnpm > nu 1`] = `"pnpm update"`;
 
-exports[`lockfile > pnpm > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`lockfile > pnpm > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > pnpm > nun foo 1`] = `"pnpm remove foo"`;
 
@@ -78,7 +78,7 @@ exports[`lockfile > pnpm@6 > na run foo 1`] = `"pnpm run foo"`;
 
 exports[`lockfile > pnpm@6 > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
 
-exports[`lockfile > pnpm@6 > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`lockfile > pnpm@6 > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`lockfile > pnpm@6 > ni 1`] = `"pnpm i"`;
 
@@ -92,7 +92,7 @@ exports[`lockfile > pnpm@6 > nu -i 1`] = `"pnpm update -i"`;
 
 exports[`lockfile > pnpm@6 > nu 1`] = `"pnpm update"`;
 
-exports[`lockfile > pnpm@6 > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`lockfile > pnpm@6 > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > pnpm@6 > nun foo 1`] = `"pnpm remove foo"`;
 
@@ -102,7 +102,7 @@ exports[`lockfile > unknown > na run foo 1`] = `"pnpm run foo"`;
 
 exports[`lockfile > unknown > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
 
-exports[`lockfile > unknown > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`lockfile > unknown > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`lockfile > unknown > ni 1`] = `"pnpm i"`;
 
@@ -116,7 +116,7 @@ exports[`lockfile > unknown > nu -i 1`] = `"pnpm update -i"`;
 
 exports[`lockfile > unknown > nu 1`] = `"pnpm update"`;
 
-exports[`lockfile > unknown > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`lockfile > unknown > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > unknown > nun foo 1`] = `"pnpm remove foo"`;
 
@@ -126,7 +126,7 @@ exports[`lockfile > yarn > na run foo 1`] = `"yarn run foo"`;
 
 exports[`lockfile > yarn > ni --frozen 1`] = `"yarn install --frozen-lockfile"`;
 
-exports[`lockfile > yarn > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`lockfile > yarn > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`lockfile > yarn > ni 1`] = `"yarn install"`;
 
@@ -140,7 +140,7 @@ exports[`lockfile > yarn > nu -i 1`] = `"yarn upgrade-interactive"`;
 
 exports[`lockfile > yarn > nu 1`] = `"yarn upgrade"`;
 
-exports[`lockfile > yarn > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`lockfile > yarn > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > yarn > nun foo 1`] = `"yarn remove foo"`;
 
@@ -150,7 +150,7 @@ exports[`lockfile > yarn@berry > na run foo 1`] = `"yarn run foo"`;
 
 exports[`lockfile > yarn@berry > ni --frozen 1`] = `"yarn install --frozen-lockfile"`;
 
-exports[`lockfile > yarn@berry > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`lockfile > yarn@berry > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`lockfile > yarn@berry > ni 1`] = `"yarn install"`;
 
@@ -164,7 +164,7 @@ exports[`lockfile > yarn@berry > nu -i 1`] = `"yarn upgrade-interactive"`;
 
 exports[`lockfile > yarn@berry > nu 1`] = `"yarn upgrade"`;
 
-exports[`lockfile > yarn@berry > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`lockfile > yarn@berry > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > yarn@berry > nun foo 1`] = `"yarn remove foo"`;
 
@@ -174,7 +174,7 @@ exports[`packager > bun > na run foo 1`] = `"bun run foo"`;
 
 exports[`packager > bun > ni --frozen 1`] = `"bun install --no-save"`;
 
-exports[`packager > bun > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`packager > bun > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`packager > bun > ni 1`] = `"bun install"`;
 
@@ -188,7 +188,7 @@ exports[`packager > bun > nu -i 1`] = `"bun update"`;
 
 exports[`packager > bun > nu 1`] = `"bun update"`;
 
-exports[`packager > bun > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`packager > bun > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > bun > nun foo 1`] = `"bun remove foo"`;
 
@@ -198,7 +198,7 @@ exports[`packager > npm > na run foo 1`] = `"npm run foo"`;
 
 exports[`packager > npm > ni --frozen 1`] = `"npm ci"`;
 
-exports[`packager > npm > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`packager > npm > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`packager > npm > ni 1`] = `"npm i"`;
 
@@ -212,7 +212,7 @@ exports[`packager > npm > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not
 
 exports[`packager > npm > nu 1`] = `"npm update"`;
 
-exports[`packager > npm > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`packager > npm > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > npm > nun foo 1`] = `"npm uninstall foo"`;
 
@@ -222,7 +222,7 @@ exports[`packager > pnpm > na run foo 1`] = `"pnpm run foo"`;
 
 exports[`packager > pnpm > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
 
-exports[`packager > pnpm > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`packager > pnpm > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`packager > pnpm > ni 1`] = `"pnpm i"`;
 
@@ -236,7 +236,7 @@ exports[`packager > pnpm > nu -i 1`] = `"pnpm update -i"`;
 
 exports[`packager > pnpm > nu 1`] = `"pnpm update"`;
 
-exports[`packager > pnpm > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`packager > pnpm > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > pnpm > nun foo 1`] = `"pnpm remove foo"`;
 
@@ -246,7 +246,7 @@ exports[`packager > pnpm@6 > na run foo 1`] = `"pnpm run foo"`;
 
 exports[`packager > pnpm@6 > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
 
-exports[`packager > pnpm@6 > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`packager > pnpm@6 > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`packager > pnpm@6 > ni 1`] = `"pnpm i"`;
 
@@ -260,7 +260,7 @@ exports[`packager > pnpm@6 > nu -i 1`] = `"pnpm update -i"`;
 
 exports[`packager > pnpm@6 > nu 1`] = `"pnpm update"`;
 
-exports[`packager > pnpm@6 > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`packager > pnpm@6 > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > pnpm@6 > nun foo 1`] = `"pnpm remove foo"`;
 
@@ -270,7 +270,7 @@ exports[`packager > unknown > na run foo 1`] = `"pnpm run foo"`;
 
 exports[`packager > unknown > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
 
-exports[`packager > unknown > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`packager > unknown > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`packager > unknown > ni 1`] = `"pnpm i"`;
 
@@ -284,7 +284,7 @@ exports[`packager > unknown > nu -i 1`] = `"pnpm update -i"`;
 
 exports[`packager > unknown > nu 1`] = `"pnpm update"`;
 
-exports[`packager > unknown > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`packager > unknown > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > unknown > nun foo 1`] = `"pnpm remove foo"`;
 
@@ -294,7 +294,7 @@ exports[`packager > yarn > na run foo 1`] = `"yarn run foo"`;
 
 exports[`packager > yarn > ni --frozen 1`] = `"yarn install --frozen-lockfile"`;
 
-exports[`packager > yarn > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`packager > yarn > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`packager > yarn > ni 1`] = `"yarn install"`;
 
@@ -308,7 +308,7 @@ exports[`packager > yarn > nu -i 1`] = `"yarn upgrade-interactive"`;
 
 exports[`packager > yarn > nu 1`] = `"yarn upgrade"`;
 
-exports[`packager > yarn > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`packager > yarn > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > yarn > nun foo 1`] = `"yarn remove foo"`;
 
@@ -318,7 +318,7 @@ exports[`packager > yarn@berry > na run foo 1`] = `"yarn run foo"`;
 
 exports[`packager > yarn@berry > ni --frozen 1`] = `"yarn install --immutable"`;
 
-exports[`packager > yarn@berry > ni -g foo 1`] = `"pnpm add -g foo"`;
+exports[`packager > yarn@berry > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`packager > yarn@berry > ni 1`] = `"yarn install"`;
 
@@ -332,6 +332,6 @@ exports[`packager > yarn@berry > nu -i 1`] = `"yarn up -i"`;
 
 exports[`packager > yarn@berry > nu 1`] = `"yarn up"`;
 
-exports[`packager > yarn@berry > nun -g foo 1`] = `"pnpm remove --global foo"`;
+exports[`packager > yarn@berry > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > yarn@berry > nun foo 1`] = `"yarn remove foo"`;
