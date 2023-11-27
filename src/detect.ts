@@ -38,11 +38,14 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
           agent = 'yarn@berry'
           // the version in packageManager isn't the actual yarn package version
           version = 'berry'
-        } else if (name === 'pnpm' && Number.parseInt(ver) < 7) {
+        }
+        else if (name === 'pnpm' && Number.parseInt(ver) < 7) {
           agent = 'pnpm@6'
-        } else if (name in AGENTS) {
+        }
+        else if (name in AGENTS) {
           agent = name
-        } else if (!programmatic) {
+        }
+        else if (!programmatic) {
           console.warn('[ni] Unknown packageManager:', pkg.packageManager)
         }
       }
