@@ -29,7 +29,7 @@ export function getCommand(
     ? JSON.stringify(arg)
     : arg
 
-  return c.replace('{0}', args.map(quote).join(' ')).trim()
+  return c.replace('{0}', args.map(quote).join(' ')).trim().replace(/"/g, '')
 }
 
 export const parseNi = <Runner>((agent, args, ctx) => {
