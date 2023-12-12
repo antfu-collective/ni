@@ -227,6 +227,11 @@ globalAgent=npm
 export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 ```
 
+```PowerShell
+# Add the following command to your profile to persist custom configuration file path in PowerShell.The profile path is accessible within the `$profile` , 
+$Env:NI_CONFIG_FILE = 'C:\to\your\config\location'
+```
+
 <br>
 
 ### How?
