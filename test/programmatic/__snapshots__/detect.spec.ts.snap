@@ -20,10 +20,10 @@ exports[`packager > npm 1`] = `"npm"`;
 
 exports[`packager > pnpm 1`] = `"pnpm"`;
 
-exports[`packager > pnpm@6 1`] = `"pnpm"`;
+exports[`packager > pnpm@6 1`] = `"pnpm@6"`;
 
 exports[`packager > unknown 1`] = `null`;
 
 exports[`packager > yarn 1`] = `"yarn"`;
 
-exports[`packager > yarn@berry 1`] = `"yarn"`;
+exports[`packager > yarn@berry 1`] = `"yarn@berry"`;

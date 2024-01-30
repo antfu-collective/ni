@@ -7,11 +7,11 @@ import { AGENTS, detect } from '../../src'
 
 let basicLog: SpyInstance, errorLog: SpyInstance, warnLog: SpyInstance, infoLog: SpyInstance
 
-function detectTest(agent: string) {
+function detectTest(fixture: string, agent: string) {
   return async () => {
     const cwd = await fs.mkdtemp(path.join(tmpdir(), 'ni-'))
-    const fixture = path.join(__dirname, '..', 'fixtures', 'lockfile', agent)
-    await fs.copy(fixture, cwd)
+    const dir = path.join(__dirname, '..', 'fixtures', fixture, agent)
+    await fs.copy(dir, cwd)
 
     expect(await detect({ programmatic: true, cwd })).toMatchSnapshot()
   }
@@ -33,7 +33,7 @@ const fixtures = ['lockfile', 'packager']
 
 // matrix testing of: fixtures x agents
 fixtures.forEach(fixture => describe(fixture, () => agents.forEach((agent) => {
-  it(agent, detectTest(agent))
+  it(agent, detectTest(fixture, agent))
 
   it('no logs', () => {
     expect(basicLog).not.toHaveBeenCalled()
