@@ -5,22 +5,34 @@ import { Fzf } from 'fzf'
 import { parseNun } from '../parse'
 import { runCli } from '../runner'
 import { getPackageJSON } from '../fs'
-import { exclude } from '../utils'
+import { exclude, invariant } from '../utils'
+
+import { dump, load } from '../storage'
 
 runCli(async (agent, args, ctx) => {
-  const isEmpty = args.length === 0 && !ctx?.programmatic
+  const storage = await load()
 
-  if (isEmpty || args[0] === '-m') {
+  const isLastCmd = args[0] === '-'
+  const isInteractive = !args.length && !ctx?.programmatic
+
+  if (isLastCmd) {
+    if (!storage.lastUninstalledPkg) {
+      invariant(ctx?.programmatic, 'No last uninstalled package found')
+
+      throw new Error('No last uninstalled package')
+    }
+
+    args[0] = storage.lastUninstalledPkg
+  }
+
+  if (isInteractive || args[0] === '-m') {
     const pkg = getPackageJSON(ctx)
 
     const allDependencies = { ...pkg.dependencies, ...pkg.devDependencies }
 
     const raw = Object.entries(allDependencies) as [string, string][]
 
-    if (!raw.length) {
-      console.error('No dependencies found')
-      process.exit(1)
-    }
+    invariant(raw.length, 'No dependencies found')
 
     const fzf = new Fzf(raw, {
       selector: ([dep, version]) => `${dep} ${version}`,
@@ -32,6 +44,7 @@ runCli(async (agent, args, ctx) => {
       value: dependency,
       description: version,
     }))
+
     const isMultiple = args[0] === '-m'
 
     const type: PromptType = isMultiple
@@ -47,23 +60,29 @@ runCli(async (agent, args, ctx) => {
         name: 'depsToRemove',
         choices,
         instructions: false,
-        message: 'dependencies to remove',
+        message: 'remove dependencies',
         async suggest(input: string, choices: Choice[]) {
           const results = fzf.find(input)
           return results.map(r => choices.find(c => c.value === r.item[0]))
         },
       })
 
-      if (typeof depsToRemove === 'string') {
-        const singleDependency = depsToRemove
+      invariant(depsToRemove.length)
 
-        args.push(singleDependency)
-      }
-      else { args.push(...depsToRemove) }
+      const isSingleDependency = typeof depsToRemove === 'string'
+
+      if (isSingleDependency)
+        args.push(depsToRemove)
+      else args.push(...depsToRemove)
     }
     catch (e) {
       process.exit(1)
     }
+  }
+
+  if (storage.lastInstalledPkg !== args[0]) {
+    storage.lastInstalledPkg = args[0]
+    await dump()
   }
 
   return parseNun(agent, args, ctx)

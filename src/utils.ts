@@ -15,8 +15,8 @@ export function remove<T>(arr: T[], v: T) {
   return arr
 }
 
-export function exclude<T>(arr: T[], v: T) {
-  return arr.slice().filter(item => item !== v)
+export function exclude<T>(arr: T[], ...v: T[]) {
+  return arr.slice().filter(item => !v.includes(item))
 }
 
 export function cmdExists(cmd: string) {
@@ -90,4 +90,20 @@ export async function writeFileSafe(
   }
 
   return false
+}
+
+export function invariant(condition: unknown, errorMsg?: string) {
+  if (condition)
+    return
+
+  if (errorMsg) {
+    console.error(errorMsg)
+    process.exit(1)
+  }
+
+  /**
+   * if message is not provided
+   * just silently exit
+   */
+  process.exit(0)
 }
