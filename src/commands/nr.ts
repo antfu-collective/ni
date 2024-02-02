@@ -8,6 +8,8 @@ import { parseNr } from '../parse'
 import { getPackageJSON } from '../fs'
 import { runCli } from '../runner'
 
+export const builtinNpmScripts = ['preinstall', 'postinstall', 'prepublish', 'prepare', 'prepack', 'postpack', 'prepublishOnly']
+
 runCli(async (agent, args, ctx) => {
   const storage = await load()
 
@@ -35,7 +37,7 @@ runCli(async (agent, args, ctx) => {
       return
 
     const raw = names
-      .filter(i => !i[0].startsWith('?'))
+      .filter(([script]) => !script.startsWith('?') && !builtinNpmScripts.includes(script))
       .map(([key, cmd]) => ({
         key,
         cmd,
