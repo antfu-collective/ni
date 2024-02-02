@@ -204,6 +204,9 @@ ni -v
 
 # -h, --help      | Show help
 ni -h
+
+# --whoami      | show agent
+ni --whoami
 ```
 
 <br>

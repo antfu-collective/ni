@@ -66,6 +66,11 @@ export async function getCliCommand(
       return
   }
 
+  if (args[0] === '--whoami') {
+    console.log(`agent  ${c.cyan(agent)}`)
+    return
+  }
+
   return await fn(agent as Agent, args, {
     programmatic: options.programmatic,
     hasLock: Boolean(agent),
