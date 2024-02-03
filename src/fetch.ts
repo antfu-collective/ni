@@ -1,5 +1,6 @@
 import process from 'node:process'
 import type { Choice } from '@posva/prompts'
+import terminalLink from 'terminal-link'
 
 export interface NpmPackage {
   name: string
@@ -27,7 +28,7 @@ export async function fetchNpmPackages(pattern: string): Promise<Choice[]> {
       .then(res => res.json()) as NpmRegistryResponse
 
     return result.objects.map(({ package: pkg }) => ({
-      title: pkg.name,
+      title: terminalLink(pkg.name, pkg.links.repository ?? pkg.links.npm),
       value: pkg,
       description: `${pkg.version} - ${pkg.description}`,
     }))
