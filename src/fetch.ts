@@ -1,13 +1,17 @@
 import process from 'node:process'
 import type { Choice } from '@posva/prompts'
 
-interface NpmPackage {
+export interface NpmPackage {
   name: string
   description: string
   version: string
   keywords: string[]
   date: string
-  links: Record<string, string>
+  links: {
+    npm: string
+    homepage: string
+    repository: string
+  }
 }
 
 interface NpmRegistryResponse {
@@ -24,7 +28,7 @@ export async function fetchNpmPackages(pattern: string): Promise<Choice[]> {
 
     return result.objects.map(({ package: pkg }) => ({
       title: pkg.name,
-      value: pkg.name,
+      value: pkg,
       description: `${pkg.version} - ${pkg.description}`,
     }))
   }

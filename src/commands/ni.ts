@@ -1,6 +1,7 @@
 import type { Choice } from '@posva/prompts'
 import prompts from '@posva/prompts'
 import { Fzf } from 'fzf'
+import terminalLink from 'terminal-link'
 import { parseNi } from '../parse'
 import { runCli } from '../runner'
 import { exclude, invariant } from '../utils'
@@ -73,10 +74,14 @@ runCli(async (agent, args, ctx) => {
      */
     const canInstallPeers = ['npm', 'pnpm'].includes(agent)
 
+    const { npm, repository } = dependency.links
+
+    const pkgLink = terminalLink(dependency.name, repository ?? npm)
+
     const { mode } = await prompts({
       type: 'select',
       name: 'mode',
-      message: 'install as',
+      message: `install ${pkgLink} as`,
       choices: [
         {
           title: 'prod',
@@ -95,7 +100,7 @@ runCli(async (agent, args, ctx) => {
       ],
     })
 
-    args.push(dependency, mode)
+    args.push(dependency.name, mode)
   }
 
   if (storage.lastUninstalledPkg !== args[0]) {

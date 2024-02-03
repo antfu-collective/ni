@@ -66,7 +66,7 @@ ni -i
 ni -
 
 # uninstall the last 
-# `uninstalled` package
+# installed package
 ```
 
 ```bash
@@ -165,8 +165,8 @@ nun
 ```bash
 nun -m
 
-# same, but with 
-# multiple dependencies
+# interactive select, 
+# but with multiple dependencies
 ```
 
 ```bash
@@ -182,7 +182,7 @@ nun -g silent
 nun -
 
 # uninstall the last 
-# `installed` package
+# installed package
 ```
 
 <br>
