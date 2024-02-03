@@ -85,7 +85,7 @@ runCli(async (agent, args, ctx) => {
       choices: [
         {
           title: 'prod',
-          value: null,
+          value: '',
           selected: true,
         },
         {

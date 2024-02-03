@@ -60,7 +60,7 @@ runCli(async (agent, args, ctx) => {
         name: 'depsToRemove',
         choices,
         instructions: false,
-        message: 'remove dependencies',
+        message: `remove ${isMultiple ? 'dependencies' : 'dependency'}`,
         async suggest(input: string, choices: Choice[]) {
           const results = fzf.find(input)
           return results.map(r => choices.find(c => c.value === r.item[0]))

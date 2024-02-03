@@ -1,6 +1,7 @@
 import process from 'node:process'
 import type { Choice } from '@posva/prompts'
 import terminalLink from 'terminal-link'
+import { limitText } from './utils'
 
 export interface NpmPackage {
   name: string
@@ -23,6 +24,8 @@ export async function fetchNpmPackages(pattern: string): Promise<Choice[]> {
   const registryLink = (pattern: string) =>
         `https://registry.npmjs.com/-/v1/search?text=${pattern}&size=35`
 
+  const terminalColumns = process.stdout?.columns || 80
+
   try {
     const result = await fetch(registryLink(pattern))
       .then(res => res.json()) as NpmRegistryResponse
@@ -30,7 +33,7 @@ export async function fetchNpmPackages(pattern: string): Promise<Choice[]> {
     return result.objects.map(({ package: pkg }) => ({
       title: terminalLink(pkg.name, pkg.links.repository ?? pkg.links.npm),
       value: pkg,
-      description: `${pkg.version} - ${pkg.description}`,
+      description: limitText(pkg.version, terminalColumns - 20),
     }))
   }
   catch (e) {
