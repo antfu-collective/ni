@@ -236,6 +236,21 @@ $Env:NI_CONFIG_FILE = 'C:\to\your\config\location'
 
 <br>
 
+### asdf
+
+You can also install ni via the 3rd-party asdf-plugin
+
+```bash
+# first add the plugin
+asdf plugin add ni https://github.com/CanRau/asdf-ni.git
+
+# then install the latest version
+asdf install ni latest
+
+# and make it globally available
+asdf global ni latest
+```
+
 ### How?
 
 **ni** assumes that you work with lockfiles (and you should)
