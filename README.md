@@ -236,9 +236,11 @@ $Env:NI_CONFIG_FILE = 'C:\to\your\config\location'
 
 <br>
 
-### asdf
+### Integrations
 
-You can also install ni via the 3rd-party asdf-plugin
+#### asdf
+
+You can also install ni via the [3rd-party asdf-plugin](https://github.com/CanRau/asdf-ni.git) maintained by [CanRau](https://github.com/CanRau)
 
 ```bash
 # first add the plugin
