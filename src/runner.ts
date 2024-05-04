@@ -139,5 +139,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     return
   }
 
+  console.log(c.dim('Running:'), c.green(command))
+
   await execaCommand(command, { stdio: 'inherit', cwd })
 }
