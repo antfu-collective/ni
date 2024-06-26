@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
-import { execaCommand } from 'execa'
+import { async as ezspawn } from '@jsdevtools/ez-spawn'
 import { findUp } from 'find-up'
 import terminalLink from 'terminal-link'
 import prompts from '@posva/prompts'
@@ -75,7 +75,7 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
         process.exit(1)
     }
 
-    await execaCommand(`npm i -g ${agent.split('@')[0]}${version ? `@${version}` : ''}`, { stdio: 'inherit', cwd })
+    await ezspawn(`npm i -g ${agent.split('@')[0]}${version ? `@${version}` : ''}`, { stdio: 'inherit', cwd })
   }
 
   return agent

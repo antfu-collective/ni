@@ -26,7 +26,7 @@ function runCliTest(fixtureName: string, agent: string, runner: Runner, args: st
         args,
       },
     ).catch((e) => {
-      // it will always throw if execa is mocked
+      // it will always throw if ezspawn is mocked
       if (e.command)
         expect(e.command).toMatchSnapshot()
       else
@@ -41,11 +41,11 @@ beforeAll(() => {
   errorLog = vi.spyOn(console, 'error')
   infoLog = vi.spyOn(console, 'info')
 
-  vi.mock('execa', async (importOriginal) => {
+  vi.mock('@jsdevtools/ez-spawn', async (importOriginal) => {
     const mod = await importOriginal() as any
     return {
       ...mod,
-      execaCommand: (cmd: string) => {
+      async: (cmd: string) => {
         // break execution flow for easier snapshotting
         // eslint-disable-next-line no-throw-literal
         throw { command: cmd }
