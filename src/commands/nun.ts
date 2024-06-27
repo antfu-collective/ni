@@ -7,23 +7,8 @@ import { runCli } from '../runner'
 import { getPackageJSON } from '../fs'
 import { exclude, invariant } from '../utils'
 
-import { dump, load } from '../storage'
-
 runCli(async (agent, args, ctx) => {
-  const storage = await load()
-
-  const isLastCmd = args[0] === '-'
   const isInteractive = !args.length && !ctx?.programmatic
-
-  if (isLastCmd) {
-    if (!storage.lastUninstalledPkg) {
-      invariant(ctx?.programmatic, 'No last uninstalled package found')
-
-      throw new Error('No last uninstalled package')
-    }
-
-    args[0] = storage.lastUninstalledPkg
-  }
 
   if (isInteractive || args[0] === '-m') {
     const pkg = getPackageJSON(ctx)
@@ -78,11 +63,6 @@ runCli(async (agent, args, ctx) => {
     catch (e) {
       process.exit(1)
     }
-  }
-
-  if (storage.lastInstalledPkg !== args[0]) {
-    storage.lastInstalledPkg = args[0]
-    await dump()
   }
 
   return parseNun(agent, args, ctx)

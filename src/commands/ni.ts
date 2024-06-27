@@ -5,24 +5,10 @@ import terminalLink from 'terminal-link'
 import { parseNi } from '../parse'
 import { runCli } from '../runner'
 import { exclude, invariant } from '../utils'
-import { dump, load } from '../storage'
 import { fetchNpmPackages } from '../fetch'
 
 runCli(async (agent, args, ctx) => {
-  const storage = await load()
-
-  const isLastCmd = args[0] === '-'
   const isInteractive = args[0] === '-i'
-
-  if (isLastCmd) {
-    if (!storage.lastInstalledPkg) {
-      invariant(ctx?.programmatic, 'No last installed package found\'')
-
-      throw new Error('No last installed package')
-    }
-
-    args[0] = storage.lastInstalledPkg
-  }
 
   if (isInteractive) {
     let fetchPattern: string
@@ -101,11 +87,6 @@ runCli(async (agent, args, ctx) => {
     })
 
     args.push(dependency.name, mode)
-  }
-
-  if (storage.lastUninstalledPkg !== args[0]) {
-    storage.lastUninstalledPkg = args[0]
-    await dump()
   }
 
   return parseNi(agent, args, ctx)

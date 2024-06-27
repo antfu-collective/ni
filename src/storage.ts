@@ -4,8 +4,6 @@ import { CLI_TEMP_DIR, writeFileSafe } from './utils'
 
 export interface Storage {
   lastRunCommand?: string
-  lastUninstalledPkg?: string
-  lastInstalledPkg?: string
 }
 
 let storage: Storage | undefined
