@@ -56,6 +56,20 @@ ni --frozen
 ```
 
 ```bash
+ni -i
+
+# interactively select the dependency to install
+# fetches all similar packages by name 
+```
+
+```bash
+ni -
+
+# uninstall the last 
+# installed package
+```
+
+```bash
 ni -g eslint
 
 # npm i -g eslint
@@ -142,12 +156,33 @@ nun webpack
 ```
 
 ```bash
+nun
+
+# interactively select 
+# the dependency to remove
+```
+
+```bash
+nun -m
+
+# interactive select, 
+# but with multiple dependencies
+```
+
+```bash
 nun -g silent
 
 # npm uninstall -g silent
 # yarn global remove silent
 # pnpm remove -g silent
 # bun remove -g silent
+```
+
+```bash
+nun -
+
+# uninstall the last 
+# installed package
 ```
 
 <br>
