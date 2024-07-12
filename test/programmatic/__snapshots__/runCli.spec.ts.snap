@@ -4,7 +4,7 @@ exports[`lockfile > bun > na 1`] = `"bun"`;
 
 exports[`lockfile > bun > na run foo 1`] = `"bun run foo"`;
 
-exports[`lockfile > bun > ni --frozen 1`] = `"bun install --no-save"`;
+exports[`lockfile > bun > ni --frozen 1`] = `"bun install --frozen-lockfile"`;
 
 exports[`lockfile > bun > ni -g foo 1`] = `"npm i -g foo"`;
 
@@ -172,7 +172,7 @@ exports[`packager > bun > na 1`] = `"bun"`;
 
 exports[`packager > bun > na run foo 1`] = `"bun run foo"`;
 
-exports[`packager > bun > ni --frozen 1`] = `"bun install --no-save"`;
+exports[`packager > bun > ni --frozen 1`] = `"bun install --frozen-lockfile"`;
 
 exports[`packager > bun > ni -g foo 1`] = `"npm i -g foo"`;
 
