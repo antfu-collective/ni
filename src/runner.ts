@@ -121,6 +121,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     console.log(`nci   ${dash}  clean install`)
     console.log(`na    ${dash}  agent alias`)
     console.log(`ni -v ${dash}  show used agent`)
+    console.log(`ni -i ${dash}  interactive package management`)
     console.log(c.yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
     return
   }
