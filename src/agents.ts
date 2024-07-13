@@ -36,7 +36,7 @@ const bun = {
   'agent': 'bun {0}',
   'run': 'bun run {0}',
   'install': 'bun install {0}',
-  'frozen': 'bun install --no-save',
+  'frozen': 'bun install --frozen-lockfile',
   'global': 'bun add -g {0}',
   'add': 'bun add {0}',
   'upgrade': 'bun update {0}',
