@@ -1,11 +1,11 @@
 import path from 'node:path'
 import { tmpdir } from 'node:os'
-import type { SpyInstance } from 'vitest'
+import type { MockInstance } from 'vitest'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import fs from 'fs-extra'
 import { AGENTS, detect } from '../../src'
 
-let basicLog: SpyInstance, errorLog: SpyInstance, warnLog: SpyInstance, infoLog: SpyInstance
+let basicLog: MockInstance, errorLog: MockInstance, warnLog: MockInstance, infoLog: MockInstance
 
 function detectTest(fixture: string, agent: string) {
   return async () => {

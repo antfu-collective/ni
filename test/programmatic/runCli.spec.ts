@@ -1,13 +1,13 @@
 import path from 'node:path'
 import { tmpdir } from 'node:os'
 import fs from 'fs-extra'
-import type { SpyInstance } from 'vitest'
+import type { MockInstance } from 'vitest'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { AGENTS, parseNa, parseNi, parseNlx, parseNu, parseNun, runCli } from '../../src'
 
 import type { Runner } from '../../src'
 
-let basicLog: SpyInstance, errorLog: SpyInstance, warnLog: SpyInstance, infoLog: SpyInstance
+let basicLog: MockInstance, errorLog: MockInstance, warnLog: MockInstance, infoLog: MockInstance
 
 function runCliTest(fixtureName: string, agent: string, runner: Runner, args: string[]) {
   return async () => {
