@@ -64,6 +64,13 @@ ni -g eslint
 # this uses default agent, regardless your current working directory
 ```
 
+```bash
+ni -i
+
+# interactively select the dependency to install
+# search for packages by name
+```
+
 <br>
 
 ### `nr` - run
@@ -137,6 +144,20 @@ nun webpack
 # yarn remove webpack
 # pnpm remove webpack
 # bun remove webpack
+```
+
+```bash
+nun
+
+# interactively select
+# the dependency to remove
+```
+
+```bash
+nun -m
+
+# interactive select,
+# but with multiple dependencies
 ```
 
 ```bash

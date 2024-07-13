@@ -1,12 +1,12 @@
 import process from 'node:process'
 import type { Choice } from '@posva/prompts'
 import prompts from '@posva/prompts'
-import c from 'kleur'
 import { Fzf } from 'fzf'
 import { dump, load } from '../storage'
 import { parseNr } from '../parse'
 import { getPackageJSON } from '../fs'
 import { runCli } from '../runner'
+import { limitText } from '../utils'
 
 runCli(async (agent, args, ctx) => {
   const storage = await load()
@@ -44,11 +44,6 @@ runCli(async (agent, args, ctx) => {
 
     const terminalColumns = process.stdout?.columns || 80
 
-    function limitText(text: string, maxWidth: number) {
-      if (text.length <= maxWidth)
-        return text
-      return `${text.slice(0, maxWidth)}${c.dim('…')}`
-    }
     const choices: Choice[] = raw
       .map(({ key, description }) => ({
         title: key,

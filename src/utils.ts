@@ -4,6 +4,8 @@ import { existsSync, promises as fs } from 'node:fs'
 import type { Buffer } from 'node:buffer'
 import process from 'node:process'
 import which from 'which'
+import c from 'kleur'
+import terminalLink from 'terminal-link'
 
 export const CLI_TEMP_DIR = join(os.tmpdir(), 'antfu-ni')
 
@@ -15,8 +17,8 @@ export function remove<T>(arr: T[], v: T) {
   return arr
 }
 
-export function exclude<T>(arr: T[], v: T) {
-  return arr.slice().filter(item => item !== v)
+export function exclude<T>(arr: T[], ...v: T[]) {
+  return arr.slice().filter(item => !v.includes(item))
 }
 
 export function cmdExists(cmd: string) {
@@ -90,4 +92,24 @@ export async function writeFileSafe(
   }
 
   return false
+}
+
+export function limitText(text: string, maxWidth: number) {
+  if (text.length <= maxWidth)
+    return text
+  return `${text.slice(0, maxWidth)}${c.dim('…')}`
+}
+
+export function formatPackageWithUrl(pkg: string, url?: string, limits = 80) {
+  return url
+    ? terminalLink(
+      pkg,
+      url,
+      {
+        fallback: (_, url) => (pkg.length + url.length > limits)
+          ? pkg
+          : pkg + c.dim(` - ${url}`),
+      },
+    )
+    : pkg
 }
