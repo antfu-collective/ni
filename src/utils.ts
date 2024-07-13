@@ -5,6 +5,7 @@ import type { Buffer } from 'node:buffer'
 import process from 'node:process'
 import which from 'which'
 import c from 'kleur'
+import terminalLink from 'terminal-link'
 
 export const CLI_TEMP_DIR = join(os.tmpdir(), 'antfu-ni')
 
@@ -93,24 +94,22 @@ export async function writeFileSafe(
   return false
 }
 
-export function invariant(condition: unknown, errorMsg?: string) {
-  if (condition)
-    return
-
-  if (errorMsg) {
-    console.error(errorMsg)
-    process.exit(1)
-  }
-
-  /**
-   * if message is not provided
-   * just silently exit
-   */
-  process.exit(0)
-}
-
 export function limitText(text: string, maxWidth: number) {
   if (text.length <= maxWidth)
     return text
   return `${text.slice(0, maxWidth)}${c.dim('…')}`
+}
+
+export function formatPackageWithUrl(pkg: string, url?: string, limits = 80) {
+  return url
+    ? terminalLink(
+      pkg,
+      url,
+      {
+        fallback: (_, url) => (pkg.length + url.length > limits)
+          ? pkg
+          : pkg + c.dim(` - ${url}`),
+      },
+    )
+    : pkg
 }

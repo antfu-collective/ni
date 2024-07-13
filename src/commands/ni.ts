@@ -1,10 +1,11 @@
+import process from 'node:process'
 import type { Choice } from '@posva/prompts'
 import prompts from '@posva/prompts'
 import { Fzf } from 'fzf'
-import terminalLink from 'terminal-link'
+import c from 'kleur'
 import { parseNi } from '../parse'
 import { runCli } from '../runner'
-import { exclude, invariant } from '../utils'
+import { exclude } from '../utils'
 import { fetchNpmPackages } from '../fetch'
 
 runCli(async (agent, args, ctx) => {
@@ -20,17 +21,24 @@ runCli(async (agent, args, ctx) => {
       const { pattern } = await prompts({
         type: 'text',
         name: 'pattern',
-        message: 'package name',
+        message: 'search for package',
       })
 
       fetchPattern = pattern
     }
 
-    invariant(fetchPattern)
+    if (!fetchPattern) {
+      process.exitCode = 1
+      return
+    }
 
     const packages = await fetchNpmPackages(fetchPattern)
 
-    invariant(packages.length, 'No results found')
+    if (!packages.length) {
+      console.error('No results found')
+      process.exitCode = 1
+      return
+    }
 
     const fzf = new Fzf(packages, {
       selector: (item: Choice) => item.title,
@@ -42,15 +50,18 @@ runCli(async (agent, args, ctx) => {
       name: 'dependency',
       choices: packages,
       instructions: false,
-      message: 'choose package',
-      limit: 25,
+      message: 'choose a package to install',
+      limit: 15,
       async suggest(input: string, choices: Choice[]) {
         const results = fzf.find(input)
         return results.map(r => choices.find((c: any) => c.value === r.item.value))
       },
     })
 
-    invariant(dependency)
+    if (!dependency) {
+      process.exitCode = 1
+      return
+    }
 
     args = exclude(args, '-d', '-p', '-i')
 
@@ -60,14 +71,10 @@ runCli(async (agent, args, ctx) => {
      */
     const canInstallPeers = ['npm', 'pnpm'].includes(agent)
 
-    const { npm, repository } = dependency.links
-
-    const pkgLink = terminalLink(dependency.name, repository ?? npm)
-
     const { mode } = await prompts({
       type: 'select',
       name: 'mode',
-      message: `install ${pkgLink} as`,
+      message: `install ${c.yellow(dependency.name)} as`,
       choices: [
         {
           title: 'prod',

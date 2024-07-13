@@ -12,9 +12,7 @@ npm i -g @antfu/ni
 
 <a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.io/'>pnpm</a> · <a href='https://bun.sh/'>bun</a>
 
-
 <br>
-
 
 ### `ni` - install
 
@@ -56,20 +54,6 @@ ni --frozen
 ```
 
 ```bash
-ni -i
-
-# interactively select the dependency to install
-# fetches all similar packages by name 
-```
-
-```bash
-ni -
-
-# uninstall the last 
-# installed package
-```
-
-```bash
 ni -g eslint
 
 # npm i -g eslint
@@ -78,6 +62,13 @@ ni -g eslint
 # bun add -g eslint
 
 # this uses default agent, regardless your current working directory
+```
+
+```bash
+ni -i
+
+# interactively select the dependency to install
+# search for packages by name
 ```
 
 <br>
@@ -158,14 +149,14 @@ nun webpack
 ```bash
 nun
 
-# interactively select 
+# interactively select
 # the dependency to remove
 ```
 
 ```bash
 nun -m
 
-# interactive select, 
+# interactive select,
 # but with multiple dependencies
 ```
 
@@ -176,13 +167,6 @@ nun -g silent
 # yarn global remove silent
 # pnpm remove -g silent
 # bun remove -g silent
-```
-
-```bash
-nun -
-
-# uninstall the last 
-# installed package
 ```
 
 <br>

@@ -1,7 +1,7 @@
 import process from 'node:process'
 import type { Choice } from '@posva/prompts'
-import terminalLink from 'terminal-link'
-import { limitText } from './utils'
+import c from 'kleur'
+import { formatPackageWithUrl } from './utils'
 
 export interface NpmPackage {
   name: string
@@ -31,12 +31,15 @@ export async function fetchNpmPackages(pattern: string): Promise<Choice[]> {
       .then(res => res.json()) as NpmRegistryResponse
 
     return result.objects.map(({ package: pkg }) => ({
-      title: terminalLink(pkg.name, pkg.links.repository ?? pkg.links.npm),
+      title: formatPackageWithUrl(
+        `${pkg.name.padEnd(30, ' ')} ${c.blue(`v${pkg.version}`)}`,
+        pkg.links.repository ?? pkg.links.npm,
+        terminalColumns,
+      ),
       value: pkg,
-      description: limitText(pkg.version, terminalColumns - 20),
     }))
   }
-  catch (e) {
+  catch {
     console.error('Error when fetching npm registry')
     process.exit(1)
   }

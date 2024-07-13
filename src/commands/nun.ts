@@ -5,7 +5,7 @@ import { Fzf } from 'fzf'
 import { parseNun } from '../parse'
 import { runCli } from '../runner'
 import { getPackageJSON } from '../fs'
-import { exclude, invariant } from '../utils'
+import { exclude } from '../utils'
 
 runCli(async (agent, args, ctx) => {
   const isInteractive = !args.length && !ctx?.programmatic
@@ -17,7 +17,10 @@ runCli(async (agent, args, ctx) => {
 
     const raw = Object.entries(allDependencies) as [string, string][]
 
-    invariant(raw.length, 'No dependencies found')
+    if (!raw.length) {
+      console.error('No dependencies found')
+      return
+    }
 
     const fzf = new Fzf(raw, {
       selector: ([dep, version]) => `${dep} ${version}`,
@@ -52,7 +55,10 @@ runCli(async (agent, args, ctx) => {
         },
       })
 
-      invariant(depsToRemove.length)
+      if (!depsToRemove) {
+        process.exitCode = 1
+        return
+      }
 
       const isSingleDependency = typeof depsToRemove === 'string'
 
@@ -60,7 +66,7 @@ runCli(async (agent, args, ctx) => {
         args.push(depsToRemove)
       else args.push(...depsToRemove)
     }
-    catch (e) {
+    catch {
       process.exit(1)
     }
   }
