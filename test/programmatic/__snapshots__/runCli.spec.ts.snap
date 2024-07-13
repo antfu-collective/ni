@@ -40,7 +40,7 @@ exports[`lockfile > npm > ni foo 1`] = `"npm i foo"`;
 
 exports[`lockfile > npm > nlx 1`] = `"npx foo"`;
 
-exports[`lockfile > npm > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not support by agent \\"npm\\""`;
+exports[`lockfile > npm > nu -i 1`] = `"Command "upgrade-interactive" is not support by agent "npm""`;
 
 exports[`lockfile > npm > nu 1`] = `"npm update"`;
 
@@ -208,7 +208,7 @@ exports[`packager > npm > ni foo 1`] = `"npm i foo"`;
 
 exports[`packager > npm > nlx 1`] = `"npx foo"`;
 
-exports[`packager > npm > nu -i 1`] = `"Command \\"upgrade-interactive\\" is not support by agent \\"npm\\""`;
+exports[`packager > npm > nu -i 1`] = `"Command "upgrade-interactive" is not support by agent "npm""`;
 
 exports[`packager > npm > nu 1`] = `"npm update"`;
 
