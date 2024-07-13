@@ -50,7 +50,7 @@ ni --frozen
 # yarn install --frozen-lockfile (Yarn 1)
 # yarn install --immutable (Yarn Berry)
 # pnpm install --frozen-lockfile
-# bun install --no-save
+# bun install --frozen-lockfile
 ```
 
 ```bash
@@ -179,7 +179,7 @@ nci
 # npm ci
 # yarn install --frozen-lockfile
 # pnpm install --frozen-lockfile
-# bun install --no-save
+# bun install --frozen-lockfile
 ```
 
 if the corresponding node manager is not present, this command will install it globally along the way.
