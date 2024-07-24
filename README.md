@@ -244,6 +244,10 @@ globalAgent=npm
 
 # custom configuration file path
 export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
+
+# environment variables have higher priority than config file if presented
+export NI_DEFAULT_AGENT="npm" # default "prompt"
+export NI_GLOBAL_AGENT="npm"
 ```
 
 ```ps
