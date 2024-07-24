@@ -229,8 +229,6 @@ ni -h
 
 ### Config
 
-The config is loaded from defaults first, then ~/.nirc, and lastly environment variables.
-
 ```ini
 ; ~/.nirc
 
@@ -247,10 +245,8 @@ globalAgent=npm
 # custom configuration file path
 export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 
-# fallback when no lock found
+# environment variables have higher priority than config file if presented
 export NI_DEFAULT_AGENT="npm" # default "prompt"
-
-# for global installs
 export NI_GLOBAL_AGENT="npm"
 ```
 
