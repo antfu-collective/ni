@@ -36,6 +36,13 @@ export async function getConfig(): Promise<Config> {
         ? ini.parse(fs.readFileSync(rcPath, 'utf-8'))
         : null,
     )
+
+    if (process.env.NI_DEFAULT_AGENT)
+      config.defaultAgent = process.env.NI_DEFAULT_AGENT as Agent
+
+    if (process.env.NI_GLOBAL_AGENT)
+      config.globalAgent = process.env.NI_GLOBAL_AGENT as Agent
+
     const agent = await detect({ programmatic: true })
     if (agent)
       config.defaultAgent = agent
