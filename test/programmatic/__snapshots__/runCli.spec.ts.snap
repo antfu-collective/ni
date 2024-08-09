@@ -14,7 +14,7 @@ exports[`lockfile > bun > ni foo -D 1`] = `"bun add foo -d"`;
 
 exports[`lockfile > bun > ni foo 1`] = `"bun add foo"`;
 
-exports[`lockfile > bun > nlx 1`] = `"bunx foo"`;
+exports[`lockfile > bun > nlx 1`] = `"bun x foo"`;
 
 exports[`lockfile > bun > nu -i 1`] = `"bun update"`;
 
@@ -182,7 +182,7 @@ exports[`packager > bun > ni foo -D 1`] = `"bun add foo -d"`;
 
 exports[`packager > bun > ni foo 1`] = `"bun add foo"`;
 
-exports[`packager > bun > nlx 1`] = `"bunx foo"`;
+exports[`packager > bun > nlx 1`] = `"bun x foo"`;
 
 exports[`packager > bun > nu -i 1`] = `"bun update"`;
 
