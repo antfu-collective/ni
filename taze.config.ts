@@ -4,8 +4,8 @@ export default defineConfig({
   ignorePaths: [
     'test/fixtures',
   ],
-  exclude: [
+  /* exclude: [
     // v7.0.0 has some bundle issue
     'find-up',
-  ],
+  ], */
 })

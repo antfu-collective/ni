@@ -3,7 +3,8 @@ import { tmpdir } from 'node:os'
 import fs from 'fs-extra'
 import type { MockInstance } from 'vitest'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
-import { AGENTS, parseNa, parseNi, parseNlx, parseNu, parseNun, runCli } from '../../src'
+import { AGENTS } from 'package-manager-detector/agents'
+import { parseNa, parseNi, parseNlx, parseNu, parseNun, runCli } from '../../src'
 
 import type { Runner } from '../../src'
 
@@ -58,7 +59,7 @@ afterAll(() => {
   vi.resetAllMocks()
 })
 
-const agents = [...Object.keys(AGENTS), 'unknown']
+const agents = [...AGENTS, 'unknown']
 const fixtures = ['lockfile', 'packager']
 
 // matrix testing of: fixtures x agents x commands
