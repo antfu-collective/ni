@@ -6,12 +6,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 beforeEach(() => {
   vi.unstubAllEnvs()
-  // vi.resetModules()
+  vi.resetModules()
 })
 
-// vi.mock('find-up', () => ({
-//   findUp: vi.fn(),
-// }))
+vi.mock('../../src/detect', () => ({
+  detect: vi.fn(),
+}))
 
 it('has correct defaults', async () => {
   const { getConfig } = await import('../../src/config')
