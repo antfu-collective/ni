@@ -4,7 +4,7 @@ import process from 'node:process'
 import prompts from '@posva/prompts'
 import type { Options as TinyExecOptions } from 'tinyexec'
 import { x } from 'tinyexec'
-import c from 'kleur'
+import { blue, bold, cyan, dim, green, red, yellow } from 'yoctocolors'
 import type { Agent } from 'package-manager-detector/agents'
 import { AGENTS } from 'package-manager-detector/agents'
 import { version } from '../package.json'
@@ -33,7 +33,7 @@ export async function runCli(fn: Runner, options: DetectOptions & { args?: strin
   }
   catch (error) {
     if (error instanceof UnsupportedCommand && !options.programmatic)
-      console.log(c.red(`\u2717 ${error.message}`))
+      console.log(red(`\u2717 ${error.message}`))
 
     if (!options.programmatic)
       process.exit(1)
@@ -99,15 +99,15 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
       nodeOptions: { cwd },
     })
 
-    console.log(`@antfu/ni  ${c.cyan(`v${version}`)}`)
-    console.log(`node       ${c.green(await nodeVersionPromise)}`)
+    console.log(`@antfu/ni  ${cyan(`v${version}`)}`)
+    console.log(`node       ${green(await nodeVersionPromise)}`)
     const [agent, agentVersion] = await Promise.all([agentPromise, agentVersionPromise])
     if (agent)
-      console.log(`${agent.padEnd(10)} ${c.blue(agentVersion)}`)
+      console.log(`${agent.padEnd(10)} ${blue(agentVersion)}`)
     else
       console.log('agent      no lock file')
     const [globalAgent, globalAgentVersion] = await Promise.all([globalAgentPromise, globalAgentVersionPromise])
-    console.log(`${(`${globalAgent} -g`).padEnd(10)} ${c.blue(globalAgentVersion)}`)
+    console.log(`${(`${globalAgent} -g`).padEnd(10)} ${blue(globalAgentVersion)}`)
     return
   }
 
@@ -117,8 +117,8 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   }
 
   if (args.length === 1 && ['-h', '--help'].includes(args[0])) {
-    const dash = c.dim('-')
-    console.log(c.green(c.bold('@antfu/ni')) + c.dim(` use the right package manager v${version}\n`))
+    const dash = dim('-')
+    console.log(green(bold('@antfu/ni')) + dim(` use the right package manager v${version}\n`))
     console.log(`ni    ${dash}  install`)
     console.log(`nr    ${dash}  run`)
     console.log(`nlx   ${dash}  execute`)
@@ -128,7 +128,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     console.log(`na    ${dash}  agent alias`)
     console.log(`ni -v ${dash}  show used agent`)
     console.log(`ni -i ${dash}  interactive package management`)
-    console.log(c.yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
+    console.log(yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
     return
   }
 
