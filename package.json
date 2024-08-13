@@ -49,11 +49,11 @@
     "test-config": "vitest -t nirc"
   },
   "dependencies": {
-    "package-manager-detector": "^0.1.1"
+    "package-manager-detector": "^0.1.1",
+    "tinyexec": "^0.1.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.25.0",
-    "@jsdevtools/ez-spawn": "^3.0.4",
     "@posva/prompts": "^2.4.4",
     "@types/fs-extra": "^11.0.4",
     "@types/ini": "^4.1.1",

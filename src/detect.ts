@@ -1,5 +1,5 @@
 import process from 'node:process'
-import { async as ezspawn } from '@jsdevtools/ez-spawn'
+import { x } from 'tinyexec'
 import terminalLink from 'terminal-link'
 import prompts from '@posva/prompts'
 import { detect as detectPM } from 'package-manager-detector'
@@ -43,7 +43,12 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
         process.exit(1)
     }
 
-    await ezspawn(`npm i -g ${agent.split('@')[0]}${version ? `@${version}` : ''}`, { stdio: 'inherit', cwd })
+    await x(`npm i -g ${agent.split('@')[0]}${version ? `@${version}` : ''}`, undefined, {
+      nodeOptions: {
+        stdio: 'inherit',
+        cwd,
+      },
+    })
   }
 
   return agent
