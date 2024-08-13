@@ -1,4 +1,4 @@
-import type { Command } from 'package-manager-detector/agents'
-import { COMMANDS } from 'package-manager-detector/agents'
+import type { Agent, Command } from 'package-manager-detector/agents'
+import { AGENTS, COMMANDS, INSTALL_PAGE, LOCKS } from 'package-manager-detector/agents'
 
-export const agentsCommands = Object.keys(COMMANDS) as Command[]
+export { AGENTS, type Agent, COMMANDS, type Command, INSTALL_PAGE, LOCKS }
