@@ -45,8 +45,7 @@
     "stub": "unbuild --stub",
     "release": "bumpp && npm publish",
     "lint": "eslint .",
-    "test": "vitest",
-    "test-config": "vitest -t nirc"
+    "test": "vitest"
   },
   "dependencies": {
     "package-manager-detector": "^0.1.1",
