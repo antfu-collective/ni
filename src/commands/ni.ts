@@ -2,7 +2,7 @@ import process from 'node:process'
 import type { Choice } from '@posva/prompts'
 import prompts from '@posva/prompts'
 import { Fzf } from 'fzf'
-import c from 'kleur'
+import { yellow } from 'yoctocolors'
 import { parseNi } from '../parse'
 import { runCli } from '../runner'
 import { exclude } from '../utils'
@@ -74,7 +74,7 @@ runCli(async (agent, args, ctx) => {
     const { mode } = await prompts({
       type: 'select',
       name: 'mode',
-      message: `install ${c.yellow(dependency.name)} as`,
+      message: `install ${yellow(dependency.name)} as`,
       choices: [
         {
           title: 'prod',
