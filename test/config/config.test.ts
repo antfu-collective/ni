@@ -9,8 +9,8 @@ beforeEach(() => {
   vi.resetModules()
 })
 
-vi.mock('find-up', () => ({
-  findUp: vi.fn(),
+vi.mock('../../src/detect', () => ({
+  detect: vi.fn(),
 }))
 
 it('has correct defaults', async () => {
