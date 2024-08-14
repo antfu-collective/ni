@@ -86,7 +86,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
 
   if (args.length === 1 && (args[0]?.toLowerCase() === '-v' || args[0] === '--version')) {
     const getCmd = (a: Agent) => AGENTS.includes(a) ? getCommand(a, 'agent', ['-v']) : `${a} -v`
-    const getV = (a: string, o: Partial<TinyExecOptions> = {}) => x(getCmd(a as Agent), undefined, o).then(e => e.stdout).then(e => e.startsWith('v') ? e : `v${e}`)
+    const getV = (a: string, o?: Partial<TinyExecOptions>) => x(getCmd(a as Agent), undefined, o).then(e => e.stdout).then(e => e.startsWith('v') ? e : `v${e}`)
     const globalAgentPromise = getGlobalAgent()
     const globalAgentVersionPromise = globalAgentPromise.then(getV)
     const agentPromise = detect({ ...options, cwd }).then(a => a || '')
