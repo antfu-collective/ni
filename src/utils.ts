@@ -4,7 +4,7 @@ import { existsSync, promises as fs } from 'node:fs'
 import type { Buffer } from 'node:buffer'
 import process from 'node:process'
 import which from 'which'
-import c from 'picocolors'
+import c from 'kleur'
 import terminalLink from 'terminal-link'
 
 export const CLI_TEMP_DIR = join(os.tmpdir(), 'antfu-ni')

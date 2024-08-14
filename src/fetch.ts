@@ -1,6 +1,6 @@
 import process from 'node:process'
 import type { Choice } from '@posva/prompts'
-import c from 'picocolors'
+import c from 'kleur'
 import { formatPackageWithUrl } from './utils'
 
 export interface NpmPackage {

@@ -3,8 +3,7 @@ import { tmpdir } from 'node:os'
 import fs from 'fs-extra'
 import type { MockInstance } from 'vitest'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
-import { AGENTS } from 'package-manager-detector/agents'
-import { parseNa, parseNi, parseNlx, parseNu, parseNun, runCli } from '../../src'
+import { AGENTS, parseNa, parseNi, parseNlx, parseNu, parseNun, runCli } from '../../src'
 
 import type { Runner } from '../../src'
 
@@ -42,11 +41,11 @@ beforeAll(() => {
   errorLog = vi.spyOn(console, 'error')
   infoLog = vi.spyOn(console, 'info')
 
-  vi.mock('tinyexec', async (importOriginal) => {
+  vi.mock('@jsdevtools/ez-spawn', async (importOriginal) => {
     const mod = await importOriginal() as any
     return {
       ...mod,
-      x: (cmd: string) => {
+      async: (cmd: string) => {
         // break execution flow for easier snapshotting
         // eslint-disable-next-line no-throw-literal
         throw { command: cmd }
@@ -59,7 +58,7 @@ afterAll(() => {
   vi.resetAllMocks()
 })
 
-const agents = [...AGENTS, 'unknown']
+const agents = [...Object.keys(AGENTS), 'unknown']
 const fixtures = ['lockfile', 'packager']
 
 // matrix testing of: fixtures x agents x commands

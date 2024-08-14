@@ -2,11 +2,12 @@
 import { resolve } from 'node:path'
 import process from 'node:process'
 import prompts from '@posva/prompts'
+import type { Options as EzSpawnOptions } from '@jsdevtools/ez-spawn'
 import { async as ezspawn } from '@jsdevtools/ez-spawn'
-import c from 'picocolors'
-import type { Agent } from 'package-manager-detector/agents'
-import { AGENTS } from 'package-manager-detector/agents'
+import c from 'kleur'
 import { version } from '../package.json'
+import type { Agent } from './agents'
+import { agents } from './agents'
 import { getDefaultAgent, getGlobalAgent } from './config'
 import type { DetectOptions } from './detect'
 import { detect } from './detect'
@@ -34,10 +35,8 @@ export async function runCli(fn: Runner, options: DetectOptions & { args?: strin
     if (error instanceof UnsupportedCommand && !options.programmatic)
       console.log(c.red(`\u2717 ${error.message}`))
 
-    if (!options.programmatic) {
-      console.error(error)
+    if (!options.programmatic)
       process.exit(1)
-    }
 
     throw error
   }
@@ -60,7 +59,7 @@ export async function getCliCommand(
         name: 'agent',
         type: 'select',
         message: 'Choose the agent',
-        choices: AGENTS.filter(i => !i.includes('@')).map(value => ({ title: value, value })),
+        choices: agents.filter(i => !i.includes('@')).map(value => ({ title: value, value })),
       })
     ).agent
     if (!agent)
@@ -86,19 +85,13 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   }
 
   if (args.length === 1 && (args[0]?.toLowerCase() === '-v' || args[0] === '--version')) {
-    const getVersionOf = (a: string) => {
-      const command = AGENTS.includes(a as Agent)
-        ? getCommand(a as Agent, 'agent', ['-v'])
-        : `${a} -v`
-      return ezspawn(command, { cwd })
-        .then(e => e.stdout)
-        .then(e => e.startsWith('v') ? e : `v${e}`)
-    }
+    const getCmd = (a: Agent) => agents.includes(a) ? getCommand(a, 'agent', ['-v']) : `${a} -v`
+    const getV = (a: string, o: EzSpawnOptions = {}) => ezspawn(getCmd(a as Agent), o).then(e => e.stdout).then(e => e.startsWith('v') ? e : `v${e}`)
     const globalAgentPromise = getGlobalAgent()
-    const globalAgentVersionPromise = globalAgentPromise.then(getVersionOf)
+    const globalAgentVersionPromise = globalAgentPromise.then(getV)
     const agentPromise = detect({ ...options, cwd }).then(a => a || '')
-    const agentVersionPromise = agentPromise.then(a => a && getVersionOf(a))
-    const nodeVersionPromise = getVersionOf('node')
+    const agentVersionPromise = agentPromise.then(a => a && getV(a, { cwd }))
+    const nodeVersionPromise = getV('node', { cwd })
 
     console.log(`@antfu/ni  ${c.cyan(`v${version}`)}`)
     console.log(`node       ${c.green(await nodeVersionPromise)}`)

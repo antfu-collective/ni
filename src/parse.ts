@@ -1,6 +1,5 @@
-import type { Agent, Command } from 'package-manager-detector/agents'
-import { AGENTS, COMMANDS } from 'package-manager-detector/agents'
-
+import type { Agent, Command } from './agents'
+import { AGENTS } from './agents'
 import { exclude } from './utils'
 import type { Runner } from './runner'
 
@@ -15,10 +14,10 @@ export function getCommand(
   command: Command,
   args: string[] = [],
 ) {
-  if (!AGENTS.includes(agent))
+  if (!(agent in AGENTS))
     throw new Error(`Unsupported agent "${agent}"`)
 
-  const c = COMMANDS[agent][command]
+  const c = AGENTS[agent][command]
 
   if (typeof c === 'function')
     return c(args)
