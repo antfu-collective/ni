@@ -48,6 +48,9 @@ importers:
       ini:
         specifier: ^4.1.3
         version: 4.1.3
+      picocolors:
+        specifier: ^1.0.1
+        version: 1.0.1
       taze:
         specifier: ^0.16.3
         version: 0.16.3
@@ -72,9 +75,6 @@ importers:
       which:
         specifier: ^4.0.0
         version: 4.0.0
-      yoctocolors:
-        specifier: ^2.1.1
-        version: 2.1.1
 
 packages:
 
@@ -2994,10 +2994,6 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
-
-  yoctocolors@2.1.1:
-    resolution: {integrity: sha512-GQHQqAopRhwU8Kt1DDM8NjibDXHC8eoh1erhGAJPEyveY9qqVeXvVikNKrDz69sHowPMorbPUrH/mx8c50eiBQ==}
-    engines: {node: '>=18'}
 
 snapshots:
 
@@ -5929,5 +5925,3 @@ snapshots:
       yargs-parser: 21.1.1
 
   yocto-queue@0.1.0: {}
-
-  yoctocolors@2.1.1: {}

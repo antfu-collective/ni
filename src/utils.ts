@@ -4,7 +4,7 @@ import { existsSync, promises as fs } from 'node:fs'
 import type { Buffer } from 'node:buffer'
 import process from 'node:process'
 import which from 'which'
-import { dim } from 'yoctocolors'
+import c from 'picocolors'
 import terminalLink from 'terminal-link'
 
 export const CLI_TEMP_DIR = join(os.tmpdir(), 'antfu-ni')
@@ -97,7 +97,7 @@ export async function writeFileSafe(
 export function limitText(text: string, maxWidth: number) {
   if (text.length <= maxWidth)
     return text
-  return `${text.slice(0, maxWidth)}${dim('…')}`
+  return `${text.slice(0, maxWidth)}${c.dim('…')}`
 }
 
 export function formatPackageWithUrl(pkg: string, url?: string, limits = 80) {
@@ -108,7 +108,7 @@ export function formatPackageWithUrl(pkg: string, url?: string, limits = 80) {
       {
         fallback: (_, url) => (pkg.length + url.length > limits)
           ? pkg
-          : pkg + dim(` - ${url}`),
+          : pkg + c.dim(` - ${url}`),
       },
     )
     : pkg
