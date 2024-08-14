@@ -1,5 +1,5 @@
 import type { Agent, Command } from './agents'
-import { AGENTS } from './agents'
+import { AGENTS, COMMANDS } from './agents'
 import { exclude } from './utils'
 import type { Runner } from './runner'
 
@@ -14,10 +14,10 @@ export function getCommand(
   command: Command,
   args: string[] = [],
 ) {
-  if (!(agent in AGENTS))
+  if (!AGENTS.includes(agent))
     throw new Error(`Unsupported agent "${agent}"`)
 
-  const c = AGENTS[agent][command]
+  const c = COMMANDS[agent][command]
 
   if (typeof c === 'function')
     return c(args)
