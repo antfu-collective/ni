@@ -3,7 +3,7 @@ import { defineBuildConfig } from 'unbuild'
 import { globSync } from 'tinyglobby'
 
 export default defineBuildConfig({
-  entries: globSync(['src/commands/*.ts']).map(i => ({
+  entries: globSync(['src/commands/*.ts'], { expandDirectories: false }).map(i => ({
     input: i.slice(0, -3),
     name: basename(i).slice(0, -3),
   })),
