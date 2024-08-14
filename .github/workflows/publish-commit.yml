@@ -27,5 +27,5 @@ jobs:
 #        working-directory: .
         run: pnpm build
 
-      - run: pnpm pkg-pr-new publish --compact --pnpm
+      - run: pnpm pkg-pr-new publish --pnpm
 #      - run: pnpm pkg-pr-new publish --compact --pnpm .
