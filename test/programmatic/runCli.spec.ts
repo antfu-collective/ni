@@ -58,7 +58,7 @@ afterAll(() => {
   vi.resetAllMocks()
 })
 
-const agents = [...Object.keys(AGENTS), 'unknown']
+const agents = [...AGENTS, 'unknown']
 const fixtures = ['lockfile', 'packager']
 
 // matrix testing of: fixtures x agents x commands

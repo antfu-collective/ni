@@ -1,12 +1,9 @@
-import fs from 'node:fs'
-import path from 'node:path'
 import process from 'node:process'
 import { async as ezspawn } from '@jsdevtools/ez-spawn'
-import { findUp } from 'find-up'
+import { detect as detectPM } from 'package-manager-detector'
 import terminalLink from 'terminal-link'
 import prompts from '@posva/prompts'
-import type { Agent } from './agents'
-import { AGENTS, INSTALL_PAGE, LOCKS } from './agents'
+import { INSTALL_PAGE } from './agents'
 import { cmdExists } from './utils'
 
 export interface DetectOptions {
@@ -16,46 +13,17 @@ export interface DetectOptions {
 }
 
 export async function detect({ autoInstall, programmatic, cwd }: DetectOptions = {}) {
-  let agent: Agent | null = null
-  let version: string | null = null
-
-  const lockPath = await findUp(Object.keys(LOCKS), { cwd })
-  let packageJsonPath: string | undefined
-
-  if (lockPath)
-    packageJsonPath = path.resolve(lockPath, '../package.json')
-  else
-    packageJsonPath = await findUp('package.json', { cwd })
-
-  // read `packageManager` field in package.json
-  if (packageJsonPath && fs.existsSync(packageJsonPath)) {
-    try {
-      const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
-      if (typeof pkg.packageManager === 'string') {
-        const [name, ver] = pkg.packageManager.replace(/^\^/, '').split('@')
-        version = ver
-        if (name === 'yarn' && Number.parseInt(ver) > 1) {
-          agent = 'yarn@berry'
-          // the version in packageManager isn't the actual yarn package version
-          version = 'berry'
-        }
-        else if (name === 'pnpm' && Number.parseInt(ver) < 7) {
-          agent = 'pnpm@6'
-        }
-        else if (name in AGENTS) {
-          agent = name
-        }
-        else if (!programmatic) {
-          console.warn('[ni] Unknown packageManager:', pkg.packageManager)
-        }
+  const pmDetection = await detectPM({
+    cwd,
+    onUnknown: (packageManager) => {
+      if (!programmatic) {
+        console.warn('[ni] Unknown packageManager:', packageManager)
       }
-    }
-    catch {}
-  }
+    },
+  })
 
-  // detect based on lock
-  if (!agent && lockPath)
-    agent = LOCKS[path.basename(lockPath)]
+  const agent = pmDetection?.agent ?? null
+  const version = pmDetection?.version ?? null
 
   // auto install
   if (agent && !cmdExists(agent.split('@')[0]) && !programmatic) {
