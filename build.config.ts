@@ -1,9 +1,9 @@
 import { basename } from 'node:path'
 import { defineBuildConfig } from 'unbuild'
-import fg from 'fast-glob'
+import { globSync } from 'tinyglobby'
 
 export default defineBuildConfig({
-  entries: fg.sync('src/commands/*.ts').map(i => ({
+  entries: globSync(['src/commands/*.ts'], { expandDirectories: false }).map(i => ({
     input: i.slice(0, -3),
     name: basename(i).slice(0, -3),
   })),
