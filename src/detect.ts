@@ -43,12 +43,16 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
         process.exit(1)
     }
 
-    await x(`npm i -g ${agent.split('@')[0]}${version ? `@${version}` : ''}`, undefined, {
-      nodeOptions: {
-        stdio: 'inherit',
-        cwd,
+    await x(
+      'npm',
+      ['i', '-g', `${agent.split('@')[0]}${version ? `@${version}` : ''}`],
+      {
+        nodeOptions: {
+          stdio: 'inherit',
+          cwd,
+        },
       },
-    })
+    )
   }
 
   return agent
