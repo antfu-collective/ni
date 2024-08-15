@@ -6,13 +6,13 @@
   "description": "Use the right package manager",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/antfu/ni#readme",
+  "homepage": "https://github.com/antfu-collective/ni#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/antfu/ni.git"
+    "url": "git+https://github.com/antfu-collective/ni.git"
   },
   "bugs": {
-    "url": "https://github.com/antfu/ni/issues"
+    "url": "https://github.com/antfu-collective/ni/issues"
   },
   "exports": {
     ".": {
