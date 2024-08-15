@@ -25,4 +25,4 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - run: pnpm pkg-pr-new publish --pnpm
+      - run: pnpm dlx pkg-pr-new publish --pnpm
