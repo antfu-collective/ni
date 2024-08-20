@@ -22,7 +22,7 @@ interface NpmRegistryResponse {
 
 export async function fetchNpmPackages(pattern: string): Promise<Choice[]> {
   const registryLink = (pattern: string) =>
-        `https://registry.npmjs.com/-/v1/search?text=${pattern}&size=35`
+    `https://registry.npmjs.com/-/v1/search?text=${pattern}&size=35`
 
   const terminalColumns = process.stdout?.columns || 80
 
