@@ -1,7 +1,7 @@
 import type { Agent, Command, ResolvedCommand } from 'package-manager-detector'
-import { resolveCommand } from 'package-manager-detector'
 import { exclude } from './utils'
 import type { Runner } from './runner'
+import { COMMANDS, constructCommand } from '.'
 
 export class UnsupportedCommand extends Error {
   constructor({ agent, command }: { agent: Agent, command: Command }) {
@@ -14,11 +14,12 @@ export function getCommand(
   command: Command,
   args: string[] = [],
 ): ResolvedCommand {
-  const result = resolveCommand(agent, command, args)
+  if (!COMMANDS[agent])
+    throw new Error(`Unsupported agent "${agent}"`)
+  if (!COMMANDS[agent][command])
+    throw new UnsupportedCommand({ agent, command })
 
-  if (!result)
-    throw new Error(`Unsupported agent or command "${agent} ${command}"`)
-  return result
+  return constructCommand(COMMANDS[agent][command], args)!
 }
 
 export const parseNi = <Runner>((agent, args, ctx) => {
@@ -47,12 +48,20 @@ export const parseNr = <Runner>((agent, args) => {
   if (args.length === 0)
     args.push('start')
 
+  let hasIfPresent = false
   if (args.includes('--if-present')) {
     args = exclude(args, '--if-present')
-    args[0] = `--if-present ${args[0]}`
+    hasIfPresent = true
   }
 
-  return getCommand(agent, 'run', args)
+  const cmd = getCommand(agent, 'run', args)
+  if (!cmd)
+    return cmd
+
+  if (hasIfPresent)
+    cmd.args.splice(1, 0, '--if-present')
+
+  return cmd
 })
 
 export const parseNu = <Runner>((agent, args) => {
@@ -75,3 +84,11 @@ export const parseNlx = <Runner>((agent, args) => {
 export const parseNa = <Runner>((agent, args) => {
   return getCommand(agent, 'agent', args)
 })
+
+export function serializeCommand(command?: ResolvedCommand) {
+  if (!command)
+    return undefined
+  if (command.args.length === 0)
+    return command.command
+  return `${command.command} ${command.args.map(i => i.includes(' ') ? `"${i}"` : i).join(' ')}`
+}
