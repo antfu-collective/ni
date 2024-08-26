@@ -25,16 +25,13 @@ export function cmdExists(cmd: string) {
   return which.sync(cmd, { nothrow: true }) !== null
 }
 
-export function getVoltaPrefix(): string {
-  // https://blog.volta.sh/2020/11/25/command-spotlight-volta-run/
-  const VOLTA_PREFIX = 'volta run'
-  const hasVoltaCommand = cmdExists('volta')
-  return hasVoltaCommand ? VOLTA_PREFIX : ''
+export function isVoltaExists(): boolean {
+  return cmdExists('volta')
 }
 
 interface TempFile {
-  path: string
   fd: fs.FileHandle
+  path: string
   cleanup: () => void
 }
 
@@ -45,7 +42,8 @@ async function openTemp(): Promise<TempFile | undefined> {
     await fs.mkdir(CLI_TEMP_DIR, { recursive: true })
 
   const competitivePath = join(CLI_TEMP_DIR, `.${process.pid}.${counter}`)
-  counter++
+
+  counter += 1
 
   return fs.open(competitivePath, 'wx')
     .then(fd => ({

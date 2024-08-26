@@ -1,15 +1,15 @@
 name: Publish Any Commit
 
 on:
+  pull_request:
   push:
     branches:
       - main
-  issue_comment:
-    types: [created]
+    tags:
+      - '!**'
 
 jobs:
   build:
-    if: github.repository == 'antfu-collective/ni' && (github.event_name == 'push' || github.event.issue.pull_request && startsWith(github.event.comment.body, '/pkg-pr-new'))
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,6 @@ jobs:
         run: pnpm install
 
       - name: Build
-        working-directory: .
         run: pnpm build
 
-      - run: pnpm dlx pkg-pr-new@0.0 publish --compact --pnpm .
+      - run: pnpm dlx pkg-pr-new publish --pnpm

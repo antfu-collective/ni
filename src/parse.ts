@@ -1,5 +1,5 @@
-import type { Agent, Command } from './agents'
-import { AGENTS, COMMANDS } from './agents'
+import type { Agent, Command, ResolvedCommand } from 'package-manager-detector'
+import { resolveCommand } from 'package-manager-detector'
 import { exclude } from './utils'
 import type { Runner } from './runner'
 
@@ -13,23 +13,12 @@ export function getCommand(
   agent: Agent,
   command: Command,
   args: string[] = [],
-) {
-  if (!AGENTS.includes(agent))
-    throw new Error(`Unsupported agent "${agent}"`)
+): ResolvedCommand {
+  const result = resolveCommand(agent, command, args)
 
-  const c = COMMANDS[agent][command]
-
-  if (typeof c === 'function')
-    return c(args)
-
-  if (!c)
-    throw new UnsupportedCommand({ agent, command })
-
-  const quote = (arg: string) => (!arg.startsWith('--') && arg.includes(' '))
-    ? JSON.stringify(arg)
-    : arg
-
-  return c.replace('{0}', args.map(quote).join(' ')).trim()
+  if (!result)
+    throw new Error(`Unsupported agent or command "${agent} ${command}"`)
+  return result
 }
 
 export const parseNi = <Runner>((agent, args, ctx) => {
