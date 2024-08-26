@@ -51,6 +51,7 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
           stdio: 'inherit',
           cwd,
         },
+        throwOnError: true,
       },
     )
   }

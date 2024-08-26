@@ -90,6 +90,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
       nodeOptions: {
         cwd,
       },
+      throwOnError: true,
     } satisfies Partial<TinyExecOptions>
     const getV = (a: string) => {
       const [command, ...xArguments] = getCmd(a as Agent).split(' ')
@@ -155,5 +156,6 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
       stdio: 'inherit',
       cwd,
     },
+    throwOnError: true,
   })
 }
