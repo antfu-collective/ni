@@ -45,7 +45,7 @@ async function openTemp(): Promise<TempFile | undefined> {
     await fs.mkdir(CLI_TEMP_DIR, { recursive: true })
 
   const competitivePath = join(CLI_TEMP_DIR, `.${process.pid}.${counter}`)
-  counter++
+  counter += 1
 
   return fs.open(competitivePath, 'wx')
     .then(fd => ({
