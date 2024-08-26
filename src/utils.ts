@@ -30,8 +30,8 @@ export function isVoltaExists(): boolean {
 }
 
 interface TempFile {
-  fd: fs.FileHandle
   path: string
+  fd: fs.FileHandle
   cleanup: () => void
 }
 
@@ -42,7 +42,6 @@ async function openTemp(): Promise<TempFile | undefined> {
     await fs.mkdir(CLI_TEMP_DIR, { recursive: true })
 
   const competitivePath = join(CLI_TEMP_DIR, `.${process.pid}.${counter}`)
-
   counter += 1
 
   return fs.open(competitivePath, 'wx')
