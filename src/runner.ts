@@ -11,7 +11,7 @@ import { version } from '../package.json'
 import { getDefaultAgent, getGlobalAgent } from './config'
 import type { DetectOptions } from './detect'
 import { detect } from './detect'
-import { isVoltaExists, remove } from './utils'
+import { cmdExists, remove } from './utils'
 import { UnsupportedCommand, getCommand } from './parse'
 
 const DEBUG_SIGN = '?'
@@ -74,6 +74,10 @@ export async function getCliCommand(
 }
 
 export async function run(fn: Runner, args: string[], options: DetectOptions = {}) {
+  const {
+    detectVolta = true,
+  } = options
+
   const debug = args.includes(DEBUG_SIGN)
   if (debug)
     remove(args, DEBUG_SIGN)
@@ -144,7 +148,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   if (!command)
     return
 
-  if (isVoltaExists()) {
+  if (detectVolta && cmdExists('volta')) {
     command.args = ['run', command.command, ...command.args]
     command.command = 'volta'
   }

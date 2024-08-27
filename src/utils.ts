@@ -25,10 +25,6 @@ export function cmdExists(cmd: string) {
   return which.sync(cmd, { nothrow: true }) !== null
 }
 
-export function isVoltaExists(): boolean {
-  return cmdExists('volta')
-}
-
 interface TempFile {
   path: string
   fd: fs.FileHandle

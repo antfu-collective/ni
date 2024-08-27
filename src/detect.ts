@@ -10,6 +10,13 @@ export interface DetectOptions {
   autoInstall?: boolean
   programmatic?: boolean
   cwd?: string
+  /**
+   * Should use Volta when present
+   *
+   * @see https://volta.sh/
+   * @default true
+   */
+  detectVolta?: boolean
 }
 
 export async function detect({ autoInstall, programmatic, cwd }: DetectOptions = {}) {
