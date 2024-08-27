@@ -1,7 +1,7 @@
 {
   "name": "@antfu/ni",
   "type": "module",
-  "version": "0.22.4",
+  "version": "0.23.0",
   "packageManager": "pnpm@9.9.0",
   "description": "Use the right package manager",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
@@ -49,7 +49,7 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.27.2",
+    "@antfu/eslint-config": "^2.27.3",
     "@posva/prompts": "^2.4.4",
     "@types/fs-extra": "^11.0.4",
     "@types/ini": "^4.1.1",
