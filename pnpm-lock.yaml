@@ -11,9 +11,6 @@ importers:
       '@antfu/eslint-config':
         specifier: ^2.27.2
         version: 2.27.2(@typescript-eslint/utils@8.2.0(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4))(@vue/compiler-sfc@3.4.31)(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4)(vitest@2.0.5(@types/node@22.5.0))
-      '@jsdevtools/ez-spawn':
-        specifier: ^3.0.4
-        version: 3.0.4
       '@posva/prompts':
         specifier: ^2.4.4
         version: 2.4.4
@@ -48,8 +45,8 @@ importers:
         specifier: ^15.2.9
         version: 15.2.9
       package-manager-detector:
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: ^0.2.0
+        version: 0.2.0
       picocolors:
         specifier: ^1.0.1
         version: 1.0.1
@@ -62,6 +59,9 @@ importers:
       terminal-link:
         specifier: ^3.0.0
         version: 3.0.0
+      tinyexec:
+        specifier: ^0.3.0
+        version: 0.3.0
       tinyglobby:
         specifier: ^0.2.5
         version: 0.2.5
@@ -2452,9 +2452,6 @@ packages:
 
   package-json-from-dist@1.0.0:
     resolution: {integrity: sha512-dATvCeZN/8wQsGywez1mzHtTlP22H8OEfPrVMLNr4/eGa+ijtLn/6M5f0dY8UKNrC2O9UCU6SSoG3qRKnt7STw==}
-
-  package-manager-detector@0.1.2:
-    resolution: {integrity: sha512-iePyefLTOm2gEzbaZKSW+eBMjg+UYsQvUKxmvGXAQ987K16efBg10MxIjZs08iyX+DY2/owKY9DIdu193kX33w==}
 
   package-manager-detector@0.2.0:
     resolution: {integrity: sha512-E385OSk9qDcXhcM9LNSe4sdhx8a9mAPrZ4sMLW+tmxl5ZuGtPUcdFu+MPP2jbgiWAZ6Pfe5soGFMd+0Db5Vrog==}
@@ -5469,8 +5466,6 @@ snapshots:
   p-try@2.2.0: {}
 
   package-json-from-dist@1.0.0: {}
-
-  package-manager-detector@0.1.2: {}
 
   package-manager-detector@0.2.0: {}
 

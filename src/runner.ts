@@ -2,16 +2,16 @@
 import { resolve } from 'node:path'
 import process from 'node:process'
 import prompts from '@posva/prompts'
-import type { Options as EzSpawnOptions } from '@jsdevtools/ez-spawn'
-import { async as ezspawn } from '@jsdevtools/ez-spawn'
+import type { Options as TinyExecOptions } from 'tinyexec'
+import { x } from 'tinyexec'
 import c from 'picocolors'
+import type { Agent, ResolvedCommand } from 'package-manager-detector'
+import { AGENTS } from 'package-manager-detector'
 import { version } from '../package.json'
-import type { Agent } from './agents'
-import { AGENTS } from './agents'
 import { getDefaultAgent, getGlobalAgent } from './config'
 import type { DetectOptions } from './detect'
 import { detect } from './detect'
-import { getVoltaPrefix, remove } from './utils'
+import { cmdExists, remove } from './utils'
 import { UnsupportedCommand, getCommand } from './parse'
 
 const DEBUG_SIGN = '?'
@@ -22,7 +22,7 @@ export interface RunnerContext {
   cwd?: string
 }
 
-export type Runner = (agent: Agent, args: string[], ctx?: RunnerContext) => Promise<string | undefined> | string | undefined
+export type Runner = (agent: Agent, args: string[], ctx?: RunnerContext) => Promise<ResolvedCommand | undefined> | ResolvedCommand | undefined
 
 export async function runCli(fn: Runner, options: DetectOptions & { args?: string[] } = {}) {
   const {
@@ -74,6 +74,10 @@ export async function getCliCommand(
 }
 
 export async function run(fn: Runner, args: string[], options: DetectOptions = {}) {
+  const {
+    detectVolta = true,
+  } = options
+
   const debug = args.includes(DEBUG_SIGN)
   if (debug)
     remove(args, DEBUG_SIGN)
@@ -85,13 +89,26 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   }
 
   if (args.length === 1 && (args[0]?.toLowerCase() === '-v' || args[0] === '--version')) {
-    const getCmd = (a: Agent) => AGENTS.includes(a) ? getCommand(a, 'agent', ['-v']) : `${a} -v`
-    const getV = (a: string, o: EzSpawnOptions = {}) => ezspawn(getCmd(a as Agent), o).then(e => e.stdout).then(e => e.startsWith('v') ? e : `v${e}`)
+    const getCmd = (a: Agent) => AGENTS.includes(a)
+      ? getCommand(a, 'agent', ['-v'])
+      : { command: a, args: ['-v'] }
+    const xVersionOptions = {
+      nodeOptions: {
+        cwd,
+      },
+      throwOnError: true,
+    } satisfies Partial<TinyExecOptions>
+    const getV = (a: string) => {
+      const { command, args } = getCmd(a as Agent)
+      return x(command, args, xVersionOptions)
+        .then(e => e.stdout)
+        .then(e => e.startsWith('v') ? e : `v${e}`)
+    }
     const globalAgentPromise = getGlobalAgent()
     const globalAgentVersionPromise = globalAgentPromise.then(getV)
     const agentPromise = detect({ ...options, cwd }).then(a => a || '')
-    const agentVersionPromise = agentPromise.then(a => a && getV(a, { cwd }))
-    const nodeVersionPromise = getV('node', { cwd })
+    const agentVersionPromise = agentPromise.then(a => a && getV(a))
+    const nodeVersionPromise = getV('node')
 
     console.log(`@antfu/ni  ${c.cyan(`v${version}`)}`)
     console.log(`node       ${c.green(await nodeVersionPromise)}`)
@@ -126,19 +143,30 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     return
   }
 
-  let command = await getCliCommand(fn, args, options, cwd)
+  const command = await getCliCommand(fn, args, options, cwd)
 
   if (!command)
     return
 
-  const voltaPrefix = getVoltaPrefix()
-  if (voltaPrefix)
-    command = voltaPrefix.concat(' ').concat(command)
+  if (detectVolta && cmdExists('volta')) {
+    command.args = ['run', command.command, ...command.args]
+    command.command = 'volta'
+  }
 
   if (debug) {
     console.log(command)
     return
   }
 
-  await ezspawn(command, { stdio: 'inherit', cwd })
+  await x(
+    command.command,
+    command.args,
+    {
+      nodeOptions: {
+        stdio: 'inherit',
+        cwd,
+      },
+      throwOnError: true,
+    },
+  )
 }

@@ -1,11 +1,11 @@
 import { expect, it } from 'vitest'
-import { parseNun } from '../../src/commands'
+import { parseNun, serializeCommand } from '../../src/commands'
 
 const agent = 'bun'
 function _(arg: string, expected: string) {
-  return () => {
+  return async () => {
     expect(
-      parseNun(agent, arg.split(' ').filter(Boolean)),
+      serializeCommand(await parseNun(agent, arg.split(' ').filter(Boolean))),
     ).toBe(
       expected,
     )

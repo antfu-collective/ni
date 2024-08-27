@@ -8,7 +8,7 @@ exports[`lockfile > pnpm 1`] = `"pnpm"`;
 
 exports[`lockfile > pnpm@6 1`] = `"pnpm"`;
 
-exports[`lockfile > unknown 1`] = `null`;
+exports[`lockfile > unknown 1`] = `undefined`;
 
 exports[`lockfile > yarn 1`] = `"yarn"`;
 
@@ -22,7 +22,7 @@ exports[`packager > pnpm 1`] = `"pnpm"`;
 
 exports[`packager > pnpm@6 1`] = `"pnpm@6"`;
 
-exports[`packager > unknown 1`] = `null`;
+exports[`packager > unknown 1`] = `undefined`;
 
 exports[`packager > yarn 1`] = `"yarn"`;
 

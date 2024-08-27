@@ -1,11 +1,11 @@
 import { expect, it } from 'vitest'
-import { parseNr } from '../../src/commands'
+import { parseNr, serializeCommand } from '../../src/commands'
 
 const agent = 'pnpm'
 function _(arg: string, expected: string) {
-  return () => {
+  return async () => {
     expect(
-      parseNr(agent, arg.split(' ').filter(Boolean)),
+      serializeCommand(await parseNr(agent, arg.split(' ').filter(Boolean))),
     ).toBe(
       expected,
     )

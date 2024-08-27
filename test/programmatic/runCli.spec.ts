@@ -41,14 +41,14 @@ beforeAll(() => {
   errorLog = vi.spyOn(console, 'error')
   infoLog = vi.spyOn(console, 'info')
 
-  vi.mock('@jsdevtools/ez-spawn', async (importOriginal) => {
+  vi.mock('tinyexec', async (importOriginal) => {
     const mod = await importOriginal() as any
     return {
       ...mod,
-      async: (cmd: string) => {
+      x: (cmd: string, args?: string[]) => {
         // break execution flow for easier snapshotting
         // eslint-disable-next-line no-throw-literal
-        throw { command: cmd }
+        throw { command: [cmd, ...(args ?? [])].join(' ') }
       },
     }
   })
