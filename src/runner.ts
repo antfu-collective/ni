@@ -122,11 +122,6 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     return
   }
 
-  if (args.length === 1 && (args[0] === '--version' || args[0] === '-v')) {
-    console.log(`@antfu/ni v${version}`)
-    return
-  }
-
   if (args.length === 1 && ['-h', '--help'].includes(args[0])) {
     const dash = c.dim('-')
     console.log(c.green(c.bold('@antfu/ni')) + c.dim(` use the right package manager v${version}\n`))
