@@ -69,6 +69,8 @@ runCli(async (agent, args, ctx) => {
         type: 'autocomplete',
         choices,
         async suggest(input: string, choices: Choice[]) {
+          if (!input)
+            return choices
           const results = fzf.find(input)
           return results.map(r => choices.find(c => c.value === r.item.key))
         },
