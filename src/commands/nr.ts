@@ -1,7 +1,7 @@
 import process from 'node:process'
 import type { Choice } from '@posva/prompts'
 import prompts from '@posva/prompts'
-import { Fzf } from 'fzf'
+import { Fzf, byLengthAsc } from 'fzf'
 import { dump, load } from '../storage'
 import { parseNr } from '../parse'
 import { getPackageJSON } from '../fs'
@@ -54,6 +54,7 @@ runCli(async (agent, args, ctx) => {
     const fzf = new Fzf(raw, {
       selector: item => `${item.key} ${item.description}`,
       casing: 'case-insensitive',
+      tiebreakers: [byLengthAsc],
     })
 
     if (storage.lastRunCommand) {
