@@ -5,11 +5,85 @@ import { Fzf, byLengthAsc } from 'fzf'
 import { dump, load } from '../storage'
 import { parseNr } from '../parse'
 import { getPackageJSON } from '../fs'
-import { runCli } from '../runner'
+import { type RunnerContext, runCli } from '../runner'
 import { limitText } from '../utils'
+
+function getScripts(ctx: RunnerContext | undefined) {
+  // support https://www.npmjs.com/package/npm-scripts-info conventions
+  const pkg = getPackageJSON(ctx)
+  const scripts = pkg.scripts || {}
+  const scriptsInfo = pkg['scripts-info'] || {}
+
+  return Object.entries(scripts)
+    .filter(i => !i[0].startsWith('?'))
+    .map(([key, cmd]) => ({
+      key,
+      cmd,
+      description: scriptsInfo[key] || scripts[`?${key}`] || cmd,
+    }))
+}
 
 runCli(async (agent, args, ctx) => {
   const storage = await load()
+
+  // Use --completion to generate completion script and do completion logic
+  // (No package manager would have an argument named --completion)
+  if (args[0] === '--completion') {
+    const compLine = process.env.COMP_LINE
+    const rawCompCword = process.env.COMP_CWORD
+    if (compLine !== undefined && rawCompCword !== undefined) {
+      const compCword = Number.parseInt(rawCompCword, 10)
+      const compWords = args.slice(1)
+      // Only complete the second word (nr __here__ ...)
+      if (compCword === 1) {
+        const raw = getScripts(ctx)
+        const fzf = new Fzf(raw, {
+          selector: item => item.key,
+          casing: 'case-insensitive',
+          tiebreakers: [byLengthAsc],
+        })
+
+        // compWords will be ['nr'] when the user does not type anything after `nr` so fallback to empty string
+        const results = fzf.find(compWords[1] || '')
+
+        // eslint-disable-next-line no-console
+        console.log(results.map(r => r.item.key).join('\n'))
+      }
+    }
+    else {
+      // Print completion script
+      const rawCompletionScript = `
+        ###-begin-nr-completion-###
+
+        if type complete &>/dev/null; then
+          _nr_completion() {
+            local words
+            local cur
+            local cword
+            _get_comp_words_by_ref -n =: cur words cword
+            IFS=$'\\n'
+            COMPREPLY=($(COMP_CWORD=$cword COMP_LINE=$cur nr --completion \${words[@]}))
+          }
+          complete -F _nr_completion nr
+        fi
+
+        ###-end-nr-completion-###
+        `.replace(/^\n/g, '')
+
+      const numIndent = rawCompletionScript.match(/^\s*/)?.[0].length
+      if (!numIndent)
+        throw new Error('Invalid indent')
+
+      const completionScript = rawCompletionScript
+        .split('\n')
+        .map(i => i.slice(numIndent))
+        .join('\n')
+
+      // eslint-disable-next-line no-console
+      console.log(completionScript)
+    }
+    process.exit(0)
+  }
 
   if (args[0] === '-') {
     if (!storage.lastRunCommand) {
@@ -24,23 +98,7 @@ runCli(async (agent, args, ctx) => {
   }
 
   if (args.length === 0 && !ctx?.programmatic) {
-    // support https://www.npmjs.com/package/npm-scripts-info conventions
-    const pkg = getPackageJSON(ctx)
-    const scripts = pkg.scripts || {}
-    const scriptsInfo = pkg['scripts-info'] || {}
-
-    const names = Object.entries(scripts) as [string, string][]
-
-    if (!names.length)
-      return
-
-    const raw = names
-      .filter(i => !i[0].startsWith('?'))
-      .map(([key, cmd]) => ({
-        key,
-        cmd,
-        description: scriptsInfo[key] || scripts[`?${key}`] || cmd,
-      }))
+    const raw = getScripts(ctx)
 
     const terminalColumns = process.stdout?.columns || 80
 
