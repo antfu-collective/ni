@@ -82,7 +82,7 @@ runCli(async (agent, args, ctx) => {
       // eslint-disable-next-line no-console
       console.log(completionScript)
     }
-    process.exit(0)
+    return
   }
 
   if (args[0] === '-') {
