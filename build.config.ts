@@ -1,6 +1,6 @@
 import { basename } from 'node:path'
-import { defineBuildConfig } from 'unbuild'
 import { globSync } from 'tinyglobby'
+import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
   entries: globSync(

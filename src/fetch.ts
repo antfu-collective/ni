@@ -1,5 +1,5 @@
-import process from 'node:process'
 import type { Choice } from '@posva/prompts'
+import process from 'node:process'
 import c from 'picocolors'
 import { formatPackageWithUrl } from './utils'
 

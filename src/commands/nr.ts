@@ -1,11 +1,12 @@
-import process from 'node:process'
 import type { Choice } from '@posva/prompts'
+import type { RunnerContext } from '../runner'
+import process from 'node:process'
 import prompts from '@posva/prompts'
-import { Fzf, byLengthAsc } from 'fzf'
-import { dump, load } from '../storage'
-import { parseNr } from '../parse'
+import { byLengthAsc, Fzf } from 'fzf'
 import { getPackageJSON } from '../fs'
-import { type RunnerContext, runCli } from '../runner'
+import { parseNr } from '../parse'
+import { runCli } from '../runner'
+import { dump, load } from '../storage'
 import { limitText } from '../utils'
 
 function getScripts(ctx: RunnerContext | undefined) {

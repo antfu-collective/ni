@@ -1,8 +1,8 @@
+import type { Agent } from 'package-manager-detector'
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import ini from 'ini'
-import type { Agent } from 'package-manager-detector'
 import { detect } from './detect'
 
 const customRcPath = process.env.NI_CONFIG_FILE

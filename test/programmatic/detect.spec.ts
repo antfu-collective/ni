@@ -1,8 +1,8 @@
-import path from 'node:path'
-import { tmpdir } from 'node:os'
 import type { MockInstance } from 'vitest'
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { tmpdir } from 'node:os'
+import path from 'node:path'
 import fs from 'fs-extra'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { AGENTS, detect } from '../../src'
 
 let basicLog: MockInstance, errorLog: MockInstance, warnLog: MockInstance, infoLog: MockInstance

@@ -1,9 +1,9 @@
 import process from 'node:process'
-import { detect as detectPM } from 'package-manager-detector'
-import { x } from 'tinyexec'
-import terminalLink from 'terminal-link'
 import prompts from '@posva/prompts'
+import { detect as detectPM } from 'package-manager-detector'
 import { INSTALL_PAGE } from 'package-manager-detector/constants'
+import terminalLink from 'terminal-link'
+import { x } from 'tinyexec'
 import { cmdExists } from './utils'
 
 export interface DetectOptions {

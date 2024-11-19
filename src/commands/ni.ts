@@ -1,12 +1,12 @@
-import process from 'node:process'
 import type { Choice } from '@posva/prompts'
+import process from 'node:process'
 import prompts from '@posva/prompts'
 import { Fzf } from 'fzf'
 import c from 'picocolors'
+import { fetchNpmPackages } from '../fetch'
 import { parseNi } from '../parse'
 import { runCli } from '../runner'
 import { exclude } from '../utils'
-import { fetchNpmPackages } from '../fetch'
 
 runCli(async (agent, args, ctx) => {
   const isInteractive = args[0] === '-i'
