@@ -1,7 +1,7 @@
 import type { Agent, Command, ResolvedCommand } from 'package-manager-detector'
-import { exclude } from './utils'
 import type { Runner } from './runner'
 import { COMMANDS, constructCommand } from '.'
+import { exclude } from './utils'
 
 export class UnsupportedCommand extends Error {
   constructor({ agent, command }: { agent: Agent, command: Command }) {

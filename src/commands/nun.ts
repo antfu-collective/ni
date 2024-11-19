@@ -1,10 +1,10 @@
-import process from 'node:process'
 import type { Choice, PromptType } from '@posva/prompts'
+import process from 'node:process'
 import prompts from '@posva/prompts'
 import { Fzf } from 'fzf'
+import { getPackageJSON } from '../fs'
 import { parseNun } from '../parse'
 import { runCli } from '../runner'
-import { getPackageJSON } from '../fs'
 import { exclude } from '../utils'
 
 runCli(async (agent, args, ctx) => {

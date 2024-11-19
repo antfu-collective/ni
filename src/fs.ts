@@ -1,7 +1,7 @@
-import { resolve } from 'node:path'
-import fs from 'node:fs'
-import process from 'node:process'
 import type { RunnerContext } from './runner'
+import fs from 'node:fs'
+import { resolve } from 'node:path'
+import process from 'node:process'
 
 export function getPackageJSON(ctx?: RunnerContext): any {
   const cwd = ctx?.cwd ?? process.cwd()
