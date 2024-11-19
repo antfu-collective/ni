@@ -3,13 +3,14 @@ import type { RunnerContext } from '../runner'
 import process from 'node:process'
 import prompts from '@posva/prompts'
 import { byLengthAsc, Fzf } from 'fzf'
+import { rawCompletionScript } from '../completion'
 import { getPackageJSON } from '../fs'
 import { parseNr } from '../parse'
 import { runCli } from '../runner'
 import { dump, load } from '../storage'
 import { limitText } from '../utils'
 
-function getScripts(ctx: RunnerContext | undefined) {
+function readPackageScripts(ctx: RunnerContext | undefined) {
   // support https://www.npmjs.com/package/npm-scripts-info conventions
   const pkg = getPackageJSON(ctx)
   const scripts = pkg.scripts || {}
@@ -37,7 +38,7 @@ runCli(async (agent, args, ctx) => {
       const compWords = args.slice(1)
       // Only complete the second word (nr __here__ ...)
       if (compCword === 1) {
-        const raw = getScripts(ctx)
+        const raw = readPackageScripts(ctx)
         const fzf = new Fzf(raw, {
           selector: item => item.key,
           casing: 'case-insensitive',
@@ -52,36 +53,8 @@ runCli(async (agent, args, ctx) => {
       }
     }
     else {
-      // Print completion script
-      const rawCompletionScript = `
-        ###-begin-nr-completion-###
-
-        if type complete &>/dev/null; then
-          _nr_completion() {
-            local words
-            local cur
-            local cword
-            _get_comp_words_by_ref -n =: cur words cword
-            IFS=$'\\n'
-            COMPREPLY=($(COMP_CWORD=$cword COMP_LINE=$cur nr --completion \${words[@]}))
-          }
-          complete -F _nr_completion nr
-        fi
-
-        ###-end-nr-completion-###
-        `.replace(/^\n/g, '')
-
-      const numIndent = rawCompletionScript.match(/^\s*/)?.[0].length
-      if (!numIndent)
-        throw new Error('Invalid indent')
-
-      const completionScript = rawCompletionScript
-        .split('\n')
-        .map(i => i.slice(numIndent))
-        .join('\n')
-
       // eslint-disable-next-line no-console
-      console.log(completionScript)
+      console.log(rawCompletionScript)
     }
     return
   }
@@ -99,7 +72,7 @@ runCli(async (agent, args, ctx) => {
   }
 
   if (args.length === 0 && !ctx?.programmatic) {
-    const raw = getScripts(ctx)
+    const raw = readPackageScripts(ctx)
 
     const terminalColumns = process.stdout?.columns || 80
 
