@@ -96,13 +96,13 @@ export function limitText(text: string, maxWidth: number) {
 export function formatPackageWithUrl(pkg: string, url?: string, limits = 80) {
   return url
     ? terminalLink(
-      pkg,
-      url,
-      {
-        fallback: (_, url) => (pkg.length + url.length > limits)
-          ? pkg
-          : pkg + c.dim(` - ${url}`),
-      },
-    )
+        pkg,
+        url,
+        {
+          fallback: (_, url) => (pkg.length + url.length > limits)
+            ? pkg
+            : pkg + c.dim(` - ${url}`),
+        },
+      )
     : pkg
 }
