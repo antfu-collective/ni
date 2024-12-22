@@ -1,15 +1,63 @@
 import type { Choice } from '@posva/prompts'
+import type { RunnerContext } from '../runner'
 import process from 'node:process'
 import prompts from '@posva/prompts'
 import { byLengthAsc, Fzf } from 'fzf'
+import { rawCompletionScript } from '../completion'
 import { getPackageJSON } from '../fs'
 import { parseNr } from '../parse'
 import { runCli } from '../runner'
 import { dump, load } from '../storage'
 import { limitText } from '../utils'
 
+function readPackageScripts(ctx: RunnerContext | undefined) {
+  // support https://www.npmjs.com/package/npm-scripts-info conventions
+  const pkg = getPackageJSON(ctx)
+  const scripts = pkg.scripts || {}
+  const scriptsInfo = pkg['scripts-info'] || {}
+
+  return Object.entries(scripts)
+    .filter(i => !i[0].startsWith('?'))
+    .map(([key, cmd]) => ({
+      key,
+      cmd,
+      description: scriptsInfo[key] || scripts[`?${key}`] || cmd,
+    }))
+}
+
 runCli(async (agent, args, ctx) => {
   const storage = await load()
+
+  // Use --completion to generate completion script and do completion logic
+  // (No package manager would have an argument named --completion)
+  if (args[0] === '--completion') {
+    const compLine = process.env.COMP_LINE
+    const rawCompCword = process.env.COMP_CWORD
+    if (compLine !== undefined && rawCompCword !== undefined) {
+      const compCword = Number.parseInt(rawCompCword, 10)
+      const compWords = args.slice(1)
+      // Only complete the second word (nr __here__ ...)
+      if (compCword === 1) {
+        const raw = readPackageScripts(ctx)
+        const fzf = new Fzf(raw, {
+          selector: item => item.key,
+          casing: 'case-insensitive',
+          tiebreakers: [byLengthAsc],
+        })
+
+        // compWords will be ['nr'] when the user does not type anything after `nr` so fallback to empty string
+        const results = fzf.find(compWords[1] || '')
+
+        // eslint-disable-next-line no-console
+        console.log(results.map(r => r.item.key).join('\n'))
+      }
+    }
+    else {
+      // eslint-disable-next-line no-console
+      console.log(rawCompletionScript)
+    }
+    return
+  }
 
   if (args[0] === '-') {
     if (!storage.lastRunCommand) {
@@ -24,23 +72,7 @@ runCli(async (agent, args, ctx) => {
   }
 
   if (args.length === 0 && !ctx?.programmatic) {
-    // support https://www.npmjs.com/package/npm-scripts-info conventions
-    const pkg = getPackageJSON(ctx)
-    const scripts = pkg.scripts || {}
-    const scriptsInfo = pkg['scripts-info'] || {}
-
-    const names = Object.entries(scripts) as [string, string][]
-
-    if (!names.length)
-      return
-
-    const raw = names
-      .filter(i => !i[0].startsWith('?'))
-      .map(([key, cmd]) => ({
-        key,
-        cmd,
-        description: scriptsInfo[key] || scripts[`?${key}`] || cmd,
-      }))
+    const raw = readPackageScripts(ctx)
 
     const terminalColumns = process.stdout?.columns || 80
 
