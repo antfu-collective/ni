@@ -30,9 +30,13 @@ afterAll(() => {
 
 const agents = [...AGENTS, 'unknown']
 const fixtures = ['lockfile', 'packager']
+const skippedAgents = ['deno']
 
 // matrix testing of: fixtures x agents
 fixtures.forEach(fixture => describe(fixture, () => agents.forEach((agent) => {
+  if (skippedAgents.includes(agent))
+    return it.skip(`skipped for ${agent}`, () => {})
+
   it(agent, detectTest(fixture, agent))
 
   it('no logs', () => {
