@@ -27,6 +27,13 @@ export const parseNi = <Runner>((agent, args, ctx) => {
   if (agent === 'bun')
     args = args.map(i => i === '-D' ? '-d' : i)
 
+  // npm use `--omit=dev` instead of `--production`
+  if (agent === 'npm')
+    args = args.map(i => i === '-P' ? '--omit=dev' : i)
+
+  if (args.includes('-P'))
+    args = args.map(i => i === '-P' ? '--production' : i)
+
   if (args.includes('-g'))
     return getCommand(agent, 'global', exclude(args, '-g'))
 

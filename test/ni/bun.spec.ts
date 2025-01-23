@@ -23,3 +23,5 @@ it('multiple', _('eslint @types/node', 'bun add eslint @types/node'))
 it('global', _('eslint -g', 'bun add -g eslint'))
 
 it('frozen', _('--frozen', 'bun install --frozen-lockfile'))
+
+it('production', _('-P', 'bun install --production'))

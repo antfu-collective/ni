@@ -23,3 +23,5 @@ it('-D', _('eslint @types/node -D', 'npm i eslint @types/node -D'))
 it('global', _('eslint -g', 'npm i -g eslint'))
 
 it('frozen', _('--frozen', 'npm ci'))
+
+it('production', _('-P', 'npm i --omit=dev'))
