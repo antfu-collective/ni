@@ -44,6 +44,15 @@ ni @types/node -D
 ```
 
 ```bash
+ni -P
+
+# npm i --omit=dev
+# yarn install --production
+# pnpm i --production
+# bun install --production
+```
+
+```bash
 ni --frozen
 
 # npm ci
