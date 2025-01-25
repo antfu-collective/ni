@@ -106,6 +106,12 @@ nr -
 # rerun the last command
 ```
 
+```bash
+nr --completion >> ~/.bashrc
+
+# add completion script to your shell (only bash supported for now)
+```
+
 <br>
 
 ### `nlx` - download & execute
