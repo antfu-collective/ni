@@ -23,3 +23,5 @@ it('-D', _('eslint @types/node -D', 'yarn add eslint @types/node -D'))
 it('global', _('eslint ni -g', 'npm i -g eslint ni'))
 
 it('frozen', _('--frozen', 'yarn install --immutable'))
+
+it('production', _('-P', 'yarn install --production'))
