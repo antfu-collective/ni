@@ -69,7 +69,7 @@ runCli(async (agent, args, ctx) => {
      * yarn and bun do not support
      * the installation of peers programmatically
      */
-    const canInstallPeers = ['npm', 'pnpm'].includes(agent)
+    const canInstallPeers = ['npm', 'pnpm', 'yarn', 'bun'].includes(agent)
 
     const { mode } = await prompts({
       type: 'select',
