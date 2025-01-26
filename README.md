@@ -44,6 +44,15 @@ ni @types/node -D
 ```
 
 ```bash
+ni @types/node -p
+
+# npm i vite --save-peer
+# yarn add vite --peer
+# pnpm add --save-peer vite
+# bun add --peer vite
+```
+
+```bash
 ni -P
 
 # npm i --omit=dev
