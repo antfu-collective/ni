@@ -16,6 +16,8 @@ it('empty', _('', 'pnpm i'))
 
 it('single add', _('axios', 'pnpm add axios'))
 
+it('add peer', _('vite -p', 'pnpm add vite --save-peer'))
+
 it('multiple', _('eslint @types/node', 'pnpm add eslint @types/node'))
 
 it('-D', _('-D eslint @types/node', 'pnpm add -D eslint @types/node'))

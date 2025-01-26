@@ -16,6 +16,8 @@ it('empty', _('', 'yarn install'))
 
 it('single add', _('axios', 'yarn add axios'))
 
+it('add peer', _('vite -p', 'yarn add vite --peer'))
+
 it('multiple', _('eslint @types/node', 'yarn add eslint @types/node'))
 
 it('-D', _('eslint @types/node -D', 'yarn add eslint @types/node -D'))
