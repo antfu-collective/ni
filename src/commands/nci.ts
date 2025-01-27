@@ -2,6 +2,6 @@ import { parseNi } from '../parse'
 import { runCli } from '../runner'
 
 runCli(
-  (agent, _, hasLock) => parseNi(agent, ['--frozen-if-present'], hasLock),
+  (agent, args, hasLock) => parseNi(agent, [...args, '--frozen-if-present'], hasLock),
   { autoInstall: true },
 )

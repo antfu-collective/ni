@@ -25,3 +25,5 @@ it('global', _('eslint ni -g', 'npm i -g eslint ni'))
 it('frozen', _('--frozen', 'yarn install --immutable'))
 
 it('production', _('-P', 'yarn install --production'))
+
+it('frozen production', _('--frozen -P', 'yarn install --immutable --production'))
