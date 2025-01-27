@@ -63,6 +63,16 @@ ni --frozen
 ```
 
 ```bash
+ni --frozen -P
+
+# npm ci --omit=dev
+# yarn install --frozen-lockfile --production (Yarn 1)
+# yarn install --immutable --production (Yarn Berry)
+# pnpm install --frozen-lockfile --production
+# bun install --frozen-lockfile --production
+```
+
+```bash
 ni -g eslint
 
 # npm i -g eslint
@@ -195,6 +205,16 @@ nci
 # yarn install --frozen-lockfile
 # pnpm install --frozen-lockfile
 # bun install --frozen-lockfile
+```
+
+```bash
+nci -P
+
+# npm ci --omit=dev
+# yarn install --frozen-lockfile --production (Yarn 1)
+# yarn install --immutable --production (Yarn Berry)
+# pnpm install --frozen-lockfile --production
+# bun install --frozen-lockfile --production
 ```
 
 if the corresponding node manager is not present, this command will install it globally along the way.
