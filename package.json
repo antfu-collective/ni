@@ -61,7 +61,7 @@
     "fzf": "^0.5.2",
     "ini": "^5.0.0",
     "lint-staged": "^15.4.2",
-    "package-manager-detector": "^0.2.8",
+    "package-manager-detector": "^0.2.9",
     "picocolors": "^1.1.1",
     "simple-git-hooks": "^2.11.1",
     "taze": "^18.3.0",
