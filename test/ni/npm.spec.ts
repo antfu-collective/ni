@@ -25,3 +25,5 @@ it('global', _('eslint -g', 'npm i -g eslint'))
 it('frozen', _('--frozen', 'npm ci'))
 
 it('production', _('-P', 'npm i --omit=dev'))
+
+it('frozen production', _('--frozen -P', 'npm ci --omit=dev'))

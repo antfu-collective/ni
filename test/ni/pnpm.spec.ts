@@ -28,3 +28,5 @@ it('forward1', _('--anything', 'pnpm i --anything'))
 it('forward2', _('-a', 'pnpm i -a'))
 
 it('production', _('-P', 'pnpm i --production'))
+
+it('frozen production', _('--frozen -P', 'pnpm i --frozen-lockfile --production'))
