@@ -295,7 +295,7 @@ asdf global ni latest
 
 **ni** assumes that you work with lock-files (and you should).
 
-Before `ni` runs the command, it detects your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` / `bun.lock` / `bun.lockb` to check the current package manager (or `packageManager` field in your packages.json if specified) using the [package-manager-detector](https://github.com/antfu-collective/package-manager-detector) package and then runs the corresponding [package-manager-detector command](https://github.com/antfu-collective/package-manager-detector/blob/main/src/commands.ts).
+Before `ni` runs the command, it detects your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` / `bun.lock` / `bun.lockb` to know the current package manager (or `packageManager` field in your packages.json if specified) using the [package-manager-detector](https://github.com/antfu-collective/package-manager-detector) package and then runs the corresponding [package-manager-detector command](https://github.com/antfu-collective/package-manager-detector/blob/main/src/commands.ts).
 
 ### Trouble shooting
 
