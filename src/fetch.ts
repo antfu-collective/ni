@@ -1,6 +1,6 @@
 import type { Choice } from '@posva/prompts'
 import process from 'node:process'
-import c from 'picocolors'
+import c from 'ansis'
 import { formatPackageWithUrl } from './utils'
 
 export interface NpmPackage {
@@ -32,7 +32,7 @@ export async function fetchNpmPackages(pattern: string): Promise<Choice[]> {
 
     return result.objects.map(({ package: pkg }) => ({
       title: formatPackageWithUrl(
-        `${pkg.name.padEnd(30, ' ')} ${c.blue(`v${pkg.version}`)}`,
+        `${pkg.name.padEnd(30, ' ')} ${c.blue`v${pkg.version}`}`,
         pkg.links.repository ?? pkg.links.npm,
         terminalColumns,
       ),

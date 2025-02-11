@@ -3,7 +3,7 @@ import { existsSync, promises as fs } from 'node:fs'
 import os from 'node:os'
 import { dirname, join } from 'node:path'
 import process from 'node:process'
-import c from 'picocolors'
+import c from 'ansis'
 import terminalLink from 'terminal-link'
 import which from 'which'
 
@@ -101,7 +101,7 @@ export function formatPackageWithUrl(pkg: string, url?: string, limits = 80) {
         {
           fallback: (_, url) => (pkg.length + url.length > limits)
             ? pkg
-            : pkg + c.dim(` - ${url}`),
+            : pkg + c.dim` - ${url}`,
         },
       )
     : pkg
