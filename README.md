@@ -106,12 +106,6 @@ nr -
 # rerun the last command
 ```
 
-```bash
-nr --completion >> ~/.bashrc
-
-# add completion script to your shell (only bash supported for now)
-```
-
 <br>
 
 ### `nlx` - download & execute
@@ -291,6 +285,34 @@ asdf install ni latest
 asdf global ni latest
 ```
 
+#### shell
+
+You can use `nr` with completion in bash and zsh shells
+
+##### bash
+> [!Note]
+> Bash completions require [bash-completions](https://github.com/scop/bash-completion) to be installed and configured
+
+```bash
+nr --print-completions bash >> ~/.bashrc
+
+```
+
+##### zsh
+If you have [oh-my-zsh](https://ohmyz.sh/) installed
+```zsh
+nr --print-completions zsh >> ~/.oh-my-zsh/completions/_nr
+```
+
+Without oh-my-zsh
+```
+mkdir -p ~/.zsh/completions
+nr --print-completions zsh >> ~/.zsh/completions/_nr
+
+fpath=(~/.zsh/completion $fpath)
+autoload -U compinit
+compinit
+```
 ### How?
 
 **ni** assumes that you work with lock-files (and you should).
