@@ -3,7 +3,7 @@ import type { RunnerContext } from '../runner'
 import process from 'node:process'
 import prompts from '@posva/prompts'
 import { byLengthAsc, Fzf } from 'fzf'
-import { rawCompletionScript } from '../completion'
+import { printCompletionScript } from '../completion'
 import { getPackageJSON } from '../fs'
 import { parseNr } from '../parse'
 import { runCli } from '../runner'
@@ -53,9 +53,14 @@ runCli(async (agent, args, ctx) => {
       }
     }
     else {
-      // eslint-disable-next-line no-console
-      console.log(rawCompletionScript)
+      // Print `bash` completions if no argument is provided, for backwards compatibility
+      printCompletionScript('bash')
     }
+    return
+  }
+
+  if (args[0] === '--print-completions') {
+    printCompletionScript(args[1])
     return
   }
 
