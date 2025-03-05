@@ -38,7 +38,7 @@ export const parseNi = <Runner>((agent, args, ctx) => {
     args = args.map(i => i === '-p' ? '--save-peer' : i)
   }
 
-  if (['bun', 'yarn'].includes(agent)) {
+  if (['bun', 'yarn', 'yarn@berry'].includes(agent)) {
     args = args.map(i => i === '-p' ? '--peer' : i)
   }
 
