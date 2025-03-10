@@ -1,8 +1,8 @@
 import type { MockInstance } from 'vitest'
 import type { Runner } from '../../src'
+import fs from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
-import fs from 'fs-extra'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 
 import { AGENTS, parseNa, parseNi, parseNlx, parseNu, parseNun, runCli } from '../../src'
@@ -13,7 +13,7 @@ function runCliTest(fixtureName: string, agent: string, runner: Runner, args: st
   return async () => {
     const cwd = await fs.mkdtemp(path.join(tmpdir(), 'ni-'))
     const fixture = path.join(__dirname, '..', 'fixtures', fixtureName, agent)
-    await fs.copy(fixture, cwd)
+    await fs.cp(fixture, cwd, { recursive: true })
 
     await runCli(
       async (agent, _, ctx) => {

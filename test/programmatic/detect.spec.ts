@@ -1,7 +1,7 @@
 import type { MockInstance } from 'vitest'
+import fs from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
-import fs from 'fs-extra'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { AGENTS, detect } from '../../src'
 
@@ -11,7 +11,7 @@ function detectTest(fixture: string, agent: string) {
   return async () => {
     const cwd = await fs.mkdtemp(path.join(tmpdir(), 'ni-'))
     const dir = path.join(__dirname, '..', 'fixtures', fixture, agent)
-    await fs.copy(dir, cwd)
+    await fs.cp(dir, cwd, { recursive: true })
 
     expect(await detect({ programmatic: true, cwd })).toMatchSnapshot()
   }
