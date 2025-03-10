@@ -2,7 +2,7 @@
   "name": "@antfu/ni",
   "type": "module",
   "version": "23.3.1",
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.6.2",
   "description": "Use the right package manager",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -49,30 +49,35 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.0.1",
+    "@antfu/eslint-config": "^4.8.1",
     "@posva/prompts": "^2.4.4",
     "@types/fs-extra": "^11.0.4",
     "@types/ini": "^4.1.1",
-    "@types/node": "^22.10.10",
+    "@types/node": "^22.13.10",
     "@types/which": "^3.0.4",
-    "ansis": "^3.12.0",
-    "bumpp": "^10.0.1",
-    "eslint": "^9.19.0",
+    "ansis": "^3.17.0",
+    "bumpp": "^10.0.3",
+    "eslint": "^9.22.0",
     "fs-extra": "^11.3.0",
     "fzf": "^0.5.2",
     "ini": "^5.0.0",
-    "lint-staged": "^15.4.2",
-    "package-manager-detector": "^0.2.9",
+    "lint-staged": "^15.4.3",
+    "package-manager-detector": "^1.0.0",
     "simple-git-hooks": "^2.11.1",
-    "taze": "^18.3.0",
+    "taze": "^18.7.1",
     "terminal-link": "^3.0.0",
     "tinyexec": "^0.3.2",
-    "tinyglobby": "^0.2.10",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.3",
-    "unbuild": "^3.3.1",
-    "vitest": "^3.0.4",
+    "tinyglobby": "^0.2.12",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "unbuild": "^3.5.0",
+    "vitest": "^3.0.8",
     "which": "^5.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
