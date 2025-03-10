@@ -11,12 +11,8 @@ export default defineBuildConfig({
     name: basename(i).slice(0, -3),
   })),
   clean: true,
-  declaration: true,
+  declaration: 'node16',
   rollup: {
-    emitCJS: true,
     inlineDependencies: true,
-    commonjs: {
-      exclude: ['**/*.d.ts'],
-    },
   },
 })
