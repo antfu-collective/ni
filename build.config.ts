@@ -13,6 +13,19 @@ export default defineBuildConfig({
   clean: true,
   declaration: 'node16',
   rollup: {
-    inlineDependencies: true,
+    inlineDependencies: [
+      'which',
+      'ini',
+      '@posva/prompts',
+
+      'terminal-link',
+      'ansi-escapes',
+      'supports-hyperlinks',
+      'isexe',
+      'supports-color',
+      'has-flag',
+      'kleur',
+      'sisteransi',
+    ],
   },
 })
