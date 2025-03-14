@@ -15,7 +15,14 @@
     "url": "https://github.com/antfu-collective/ni/issues"
   },
   "exports": {
-    ".": "./dist/index.mjs"
+    ".": "./dist/index.mjs",
+    "./ni": "./dist/ni.mjs",
+    "./nci": "./dist/nci.mjs",
+    "./nr": "./dist/nr.mjs",
+    "./nu": "./dist/nu.mjs",
+    "./nlx": "./dist/nlx.mjs",
+    "./na": "./dist/na.mjs",
+    "./nun": "./dist/nun.mjs"
   },
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
