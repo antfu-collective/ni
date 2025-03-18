@@ -13,16 +13,22 @@ import { limitText } from '../utils'
 function readPackageScripts(ctx: RunnerContext | undefined) {
   // support https://www.npmjs.com/package/npm-scripts-info conventions
   const pkg = getPackageJSON(ctx)
-  const scripts = pkg.scripts || {}
+  const rawScripts = pkg.scripts || {}
   const scriptsInfo = pkg['scripts-info'] || {}
 
-  return Object.entries(scripts)
+  const scripts = Object.entries(rawScripts)
     .filter(i => !i[0].startsWith('?'))
     .map(([key, cmd]) => ({
       key,
       cmd,
-      description: scriptsInfo[key] || scripts[`?${key}`] || cmd,
+      description: scriptsInfo[key] || rawScripts[`?${key}`] || cmd,
     }))
+
+  if (scripts.length === 0 && !ctx?.programmatic) {
+    console.warn('No scripts found in package.json')
+  }
+
+  return scripts
 }
 
 runCli(async (agent, args, ctx) => {
