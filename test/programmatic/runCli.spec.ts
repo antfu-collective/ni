@@ -96,3 +96,15 @@ fixtures.forEach(fixture => describe(fixture, () => agents.forEach(agent => desc
     expect(infoLog).not.toHaveBeenCalled()
   })
 }))))
+
+// https://github.com/antfu-collective/ni/issues/266
+describe('debug mode', () => {
+  beforeAll(() => basicLog.mockClear())
+
+  it('ni', runCliTest('lockfile', 'npm', parseNi, ['@antfu/ni', '?']))
+  it('should return command results in plain text format', () => {
+    expect(basicLog).toHaveBeenCalled()
+
+    expect(basicLog.mock.calls[0][0]).toMatchSnapshot()
+  })
+})
