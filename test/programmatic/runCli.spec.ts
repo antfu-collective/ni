@@ -65,7 +65,7 @@ const skippedAgents = ['deno']
 // matrix testing of: fixtures x agents x commands
 fixtures.forEach(fixture => describe(fixture, () => agents.forEach(agent => describe(agent, () => {
   if (skippedAgents.includes(agent))
-    return it.skip(`skipped for ${agent}`, () => { })
+    return it.skip(`skipped for ${agent}`, () => {})
 
   /** na */
   it('na', runCliTest(fixture, agent, parseNa, []))
