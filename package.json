@@ -2,7 +2,7 @@
   "name": "@antfu/ni",
   "type": "module",
   "version": "24.2.0",
-  "packageManager": "pnpm@10.6.3",
+  "packageManager": "pnpm@10.6.4",
   "description": "Use the right package manager",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -55,8 +55,8 @@
   "dependencies": {
     "ansis": "^3.17.0",
     "fzf": "^0.5.2",
-    "package-manager-detector": "^1.0.0",
-    "tinyexec": "^0.3.2"
+    "package-manager-detector": "^1.1.0",
+    "tinyexec": "^1.0.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.10.1",
@@ -75,7 +75,7 @@
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "unbuild": "^3.5.0",
-    "vitest": "^3.0.8",
+    "vitest": "^3.0.9",
     "which": "^5.0.0"
   },
   "pnpm": {
