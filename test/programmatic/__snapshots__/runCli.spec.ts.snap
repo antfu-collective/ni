@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`debug should work normally > log 1`] = `"npm i @antfu/ni"`;
+exports[`debug mode > should return command results in plain text format 1`] = `"npm i @antfu/ni"`;
 
 exports[`lockfile > bun > na 1`] = `"bun"`;
 
