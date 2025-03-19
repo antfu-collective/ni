@@ -14,7 +14,7 @@ import { detect } from './detect'
 import { getCommand, UnsupportedCommand } from './parse'
 import { cmdExists, remove } from './utils'
 
-const LEGACY_DEBUG_SIGN = '?'
+const NORMAL_DEBUG_SIGN = '?'
 const DEBUG_SIGN_JSON = '?json'
 const DEBUG_SIGN_RAW = '?raw'
 
@@ -83,13 +83,13 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   // =========== debug ===========
   // https://github.com/antfu-collective/ni/issues/266
   let debug: 'json' | 'raw' | undefined
-  if ([LEGACY_DEBUG_SIGN, DEBUG_SIGN_JSON].some(e => args.includes(e)))
+  if ([NORMAL_DEBUG_SIGN, DEBUG_SIGN_JSON].some(e => args.includes(e)))
     debug = 'json'
   else if (args.includes(DEBUG_SIGN_RAW))
     debug = 'raw'
 
   if (debug)
-    remove(args, [LEGACY_DEBUG_SIGN, DEBUG_SIGN_JSON, DEBUG_SIGN_RAW])
+    remove(args, [NORMAL_DEBUG_SIGN, DEBUG_SIGN_JSON, DEBUG_SIGN_RAW])
 
   let cwd = options.cwd ?? process.cwd()
   if (args[0] === '-C') {
