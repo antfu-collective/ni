@@ -65,7 +65,7 @@ const skippedAgents = ['deno']
 // matrix testing of: fixtures x agents x commands
 fixtures.forEach(fixture => describe(fixture, () => agents.forEach(agent => describe(agent, () => {
   if (skippedAgents.includes(agent))
-    return it.skip(`skipped for ${agent}`, () => {})
+    return it.skip(`skipped for ${agent}`, () => { })
 
   /** na */
   it('na', runCliTest(fixture, agent, parseNa, []))
@@ -96,3 +96,15 @@ fixtures.forEach(fixture => describe(fixture, () => agents.forEach(agent => desc
     expect(infoLog).not.toHaveBeenCalled()
   })
 }))))
+
+// https://github.com/antfu-collective/ni/issues/266
+describe('debug should work normally', () => {
+  beforeAll(() => basicLog.mockClear())
+
+  it('ni', runCliTest('lockfile', 'npm', parseNi, ['@antfu/ni', '?']))
+  it('log', () => {
+    expect(basicLog).toHaveBeenCalled()
+
+    expect(basicLog.mock.calls[0][0]).toMatchSnapshot()
+  })
+})
