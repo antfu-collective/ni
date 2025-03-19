@@ -1,5 +1,17 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`debug > normal > log 1`] = `
+"{
+  "command": "npm",
+  "args": [
+    "i",
+    "@antfu/ni"
+  ]
+}"
+`;
+
+exports[`debug > raw > log 1`] = `"npm i @antfu/ni"`;
+
 exports[`lockfile > bun > na 1`] = `"bun"`;
 
 exports[`lockfile > bun > na run foo 1`] = `"bun run foo"`;
