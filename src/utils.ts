@@ -9,10 +9,15 @@ import which from 'which'
 
 export const CLI_TEMP_DIR = join(os.tmpdir(), 'antfu-ni')
 
-export function remove<T>(arr: T[], v: T) {
-  const index = arr.indexOf(v)
-  if (index >= 0)
-    arr.splice(index, 1)
+export function remove<T>(arr: T[], v: T | T[]) {
+  const realV = (Array.isArray(v) ? v : [v]).filter(Boolean)
+
+  for (const item of realV) {
+    const index = arr.indexOf(item)
+    if (index > -1) {
+      arr.splice(index, 1)
+    }
+  }
 
   return arr
 }
