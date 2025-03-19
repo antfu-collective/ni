@@ -226,8 +226,9 @@ na run foo
 ### Global Flags
 
 ```bash
-# ?               | Print the command execution depends on the agent
+# ?               | Print the command execution depends on the agent (json)
 ni vite ?
+ni vite ?raw      | Print the raw command without execution
 
 # -C              | Change directory before running the command
 ni -C packages/foo vite
