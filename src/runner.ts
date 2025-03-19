@@ -149,7 +149,8 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   }
 
   if (debug) {
-    console.log(command)
+    const commandStr = [command.command, ...command.args].join(' ')
+    console.log(commandStr)
     return
   }
 
