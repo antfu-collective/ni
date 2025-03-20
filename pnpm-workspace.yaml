@@ -1,0 +1,27 @@
+packages: []
+catalogs:
+  dev:
+    '@antfu/eslint-config': ^4.10.1
+    '@types/ini': ^4.1.1
+    '@types/node': ^22.13.10
+    '@types/which': ^3.0.4
+    bumpp: ^10.1.0
+    eslint: ^9.22.0
+    lint-staged: ^15.5.0
+    simple-git-hooks: ^2.11.1
+    taze: ^19.0.2
+    tinyglobby: ^0.2.12
+    tsx: ^4.19.3
+    typescript: ^5.8.2
+    unbuild: ^3.5.0
+    vitest: ^3.0.9
+  prod:
+    ansis: ^3.17.0
+    fzf: ^0.5.2
+    package-manager-detector: ^1.1.0
+    tinyexec: ^1.0.0
+  prod-inlined:
+    '@posva/prompts': ^2.4.4
+    ini: ^5.0.0
+    terminal-link: ^3.0.0
+    which: ^5.0.0
