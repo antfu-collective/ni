@@ -11,6 +11,7 @@ import { x } from 'tinyexec'
 import { version } from '../package.json'
 import { getDefaultAgent, getGlobalAgent } from './config'
 import { detect } from './detect'
+import { getEnvironmentOptions } from './environment'
 import { getCommand, UnsupportedCommand } from './parse'
 import { cmdExists, remove } from './utils'
 
@@ -25,6 +26,10 @@ export interface RunnerContext {
 export type Runner = (agent: Agent, args: string[], ctx?: RunnerContext) => Promise<ResolvedCommand | undefined> | ResolvedCommand | undefined
 
 export async function runCli(fn: Runner, options: DetectOptions & { args?: string[] } = {}) {
+  options = {
+    ...getEnvironmentOptions(),
+    ...options,
+  }
   const {
     args = process.argv.slice(2).filter(Boolean),
   } = options
