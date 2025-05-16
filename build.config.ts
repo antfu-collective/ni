@@ -20,6 +20,7 @@ export default defineBuildConfig({
 
       'terminal-link',
       'ansi-escapes',
+      'environment',
       'supports-hyperlinks',
       'isexe',
       'supports-color',
