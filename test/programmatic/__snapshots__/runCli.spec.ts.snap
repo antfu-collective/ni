@@ -18,13 +18,13 @@ exports[`lockfile > bun > ni foo 1`] = `"bun add foo"`;
 
 exports[`lockfile > bun > nlx 1`] = `"bun x foo"`;
 
-exports[`lockfile > bun > nu -i 1`] = `"bun update"`;
-
-exports[`lockfile > bun > nu 1`] = `"bun update"`;
-
 exports[`lockfile > bun > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > bun > nun foo 1`] = `"bun remove foo"`;
+
+exports[`lockfile > bun > nup -i 1`] = `"bun update"`;
+
+exports[`lockfile > bun > nup 1`] = `"bun update"`;
 
 exports[`lockfile > npm > na 1`] = `"npm"`;
 
@@ -42,13 +42,13 @@ exports[`lockfile > npm > ni foo 1`] = `"npm i foo"`;
 
 exports[`lockfile > npm > nlx 1`] = `"npx foo"`;
 
-exports[`lockfile > npm > nu -i 1`] = `"Command "upgrade-interactive" is not support by agent "npm""`;
-
-exports[`lockfile > npm > nu 1`] = `"npm update"`;
-
 exports[`lockfile > npm > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > npm > nun foo 1`] = `"npm uninstall foo"`;
+
+exports[`lockfile > npm > nup -i 1`] = `"Command "upgrade-interactive" is not support by agent "npm""`;
+
+exports[`lockfile > npm > nup 1`] = `"npm update"`;
 
 exports[`lockfile > pnpm > na 1`] = `"pnpm"`;
 
@@ -66,13 +66,13 @@ exports[`lockfile > pnpm > ni foo 1`] = `"pnpm add foo"`;
 
 exports[`lockfile > pnpm > nlx 1`] = `"pnpm dlx foo"`;
 
-exports[`lockfile > pnpm > nu -i 1`] = `"pnpm update -i"`;
-
-exports[`lockfile > pnpm > nu 1`] = `"pnpm update"`;
-
 exports[`lockfile > pnpm > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > pnpm > nun foo 1`] = `"pnpm remove foo"`;
+
+exports[`lockfile > pnpm > nup -i 1`] = `"pnpm update -i"`;
+
+exports[`lockfile > pnpm > nup 1`] = `"pnpm update"`;
 
 exports[`lockfile > pnpm@6 > na 1`] = `"pnpm"`;
 
@@ -90,13 +90,13 @@ exports[`lockfile > pnpm@6 > ni foo 1`] = `"pnpm add foo"`;
 
 exports[`lockfile > pnpm@6 > nlx 1`] = `"pnpm dlx foo"`;
 
-exports[`lockfile > pnpm@6 > nu -i 1`] = `"pnpm update -i"`;
-
-exports[`lockfile > pnpm@6 > nu 1`] = `"pnpm update"`;
-
 exports[`lockfile > pnpm@6 > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > pnpm@6 > nun foo 1`] = `"pnpm remove foo"`;
+
+exports[`lockfile > pnpm@6 > nup -i 1`] = `"pnpm update -i"`;
+
+exports[`lockfile > pnpm@6 > nup 1`] = `"pnpm update"`;
 
 exports[`lockfile > unknown > na 1`] = `"pnpm"`;
 
@@ -114,13 +114,13 @@ exports[`lockfile > unknown > ni foo 1`] = `"pnpm add foo"`;
 
 exports[`lockfile > unknown > nlx 1`] = `"pnpm dlx foo"`;
 
-exports[`lockfile > unknown > nu -i 1`] = `"pnpm update -i"`;
-
-exports[`lockfile > unknown > nu 1`] = `"pnpm update"`;
-
 exports[`lockfile > unknown > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > unknown > nun foo 1`] = `"pnpm remove foo"`;
+
+exports[`lockfile > unknown > nup -i 1`] = `"pnpm update -i"`;
+
+exports[`lockfile > unknown > nup 1`] = `"pnpm update"`;
 
 exports[`lockfile > yarn > na 1`] = `"yarn"`;
 
@@ -138,13 +138,13 @@ exports[`lockfile > yarn > ni foo 1`] = `"yarn add foo"`;
 
 exports[`lockfile > yarn > nlx 1`] = `"npx foo"`;
 
-exports[`lockfile > yarn > nu -i 1`] = `"yarn upgrade-interactive"`;
-
-exports[`lockfile > yarn > nu 1`] = `"yarn upgrade"`;
-
 exports[`lockfile > yarn > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > yarn > nun foo 1`] = `"yarn remove foo"`;
+
+exports[`lockfile > yarn > nup -i 1`] = `"yarn upgrade-interactive"`;
+
+exports[`lockfile > yarn > nup 1`] = `"yarn upgrade"`;
 
 exports[`lockfile > yarn@berry > na 1`] = `"yarn"`;
 
@@ -162,13 +162,13 @@ exports[`lockfile > yarn@berry > ni foo 1`] = `"yarn add foo"`;
 
 exports[`lockfile > yarn@berry > nlx 1`] = `"npx foo"`;
 
-exports[`lockfile > yarn@berry > nu -i 1`] = `"yarn upgrade-interactive"`;
-
-exports[`lockfile > yarn@berry > nu 1`] = `"yarn upgrade"`;
-
 exports[`lockfile > yarn@berry > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > yarn@berry > nun foo 1`] = `"yarn remove foo"`;
+
+exports[`lockfile > yarn@berry > nup -i 1`] = `"yarn upgrade-interactive"`;
+
+exports[`lockfile > yarn@berry > nup 1`] = `"yarn upgrade"`;
 
 exports[`packager > bun > na 1`] = `"bun"`;
 
@@ -186,13 +186,13 @@ exports[`packager > bun > ni foo 1`] = `"bun add foo"`;
 
 exports[`packager > bun > nlx 1`] = `"bun x foo"`;
 
-exports[`packager > bun > nu -i 1`] = `"bun update"`;
-
-exports[`packager > bun > nu 1`] = `"bun update"`;
-
 exports[`packager > bun > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > bun > nun foo 1`] = `"bun remove foo"`;
+
+exports[`packager > bun > nup -i 1`] = `"bun update"`;
+
+exports[`packager > bun > nup 1`] = `"bun update"`;
 
 exports[`packager > npm > na 1`] = `"npm"`;
 
@@ -210,13 +210,13 @@ exports[`packager > npm > ni foo 1`] = `"npm i foo"`;
 
 exports[`packager > npm > nlx 1`] = `"npx foo"`;
 
-exports[`packager > npm > nu -i 1`] = `"Command "upgrade-interactive" is not support by agent "npm""`;
-
-exports[`packager > npm > nu 1`] = `"npm update"`;
-
 exports[`packager > npm > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > npm > nun foo 1`] = `"npm uninstall foo"`;
+
+exports[`packager > npm > nup -i 1`] = `"Command "upgrade-interactive" is not support by agent "npm""`;
+
+exports[`packager > npm > nup 1`] = `"npm update"`;
 
 exports[`packager > pnpm > na 1`] = `"pnpm"`;
 
@@ -234,13 +234,13 @@ exports[`packager > pnpm > ni foo 1`] = `"pnpm add foo"`;
 
 exports[`packager > pnpm > nlx 1`] = `"pnpm dlx foo"`;
 
-exports[`packager > pnpm > nu -i 1`] = `"pnpm update -i"`;
-
-exports[`packager > pnpm > nu 1`] = `"pnpm update"`;
-
 exports[`packager > pnpm > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > pnpm > nun foo 1`] = `"pnpm remove foo"`;
+
+exports[`packager > pnpm > nup -i 1`] = `"pnpm update -i"`;
+
+exports[`packager > pnpm > nup 1`] = `"pnpm update"`;
 
 exports[`packager > pnpm@6 > na 1`] = `"pnpm"`;
 
@@ -258,13 +258,13 @@ exports[`packager > pnpm@6 > ni foo 1`] = `"pnpm add foo"`;
 
 exports[`packager > pnpm@6 > nlx 1`] = `"pnpm dlx foo"`;
 
-exports[`packager > pnpm@6 > nu -i 1`] = `"pnpm update -i"`;
-
-exports[`packager > pnpm@6 > nu 1`] = `"pnpm update"`;
-
 exports[`packager > pnpm@6 > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > pnpm@6 > nun foo 1`] = `"pnpm remove foo"`;
+
+exports[`packager > pnpm@6 > nup -i 1`] = `"pnpm update -i"`;
+
+exports[`packager > pnpm@6 > nup 1`] = `"pnpm update"`;
 
 exports[`packager > unknown > na 1`] = `"pnpm"`;
 
@@ -282,13 +282,13 @@ exports[`packager > unknown > ni foo 1`] = `"pnpm add foo"`;
 
 exports[`packager > unknown > nlx 1`] = `"pnpm dlx foo"`;
 
-exports[`packager > unknown > nu -i 1`] = `"pnpm update -i"`;
-
-exports[`packager > unknown > nu 1`] = `"pnpm update"`;
-
 exports[`packager > unknown > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > unknown > nun foo 1`] = `"pnpm remove foo"`;
+
+exports[`packager > unknown > nup -i 1`] = `"pnpm update -i"`;
+
+exports[`packager > unknown > nup 1`] = `"pnpm update"`;
 
 exports[`packager > yarn > na 1`] = `"yarn"`;
 
@@ -306,13 +306,13 @@ exports[`packager > yarn > ni foo 1`] = `"yarn add foo"`;
 
 exports[`packager > yarn > nlx 1`] = `"npx foo"`;
 
-exports[`packager > yarn > nu -i 1`] = `"yarn upgrade-interactive"`;
-
-exports[`packager > yarn > nu 1`] = `"yarn upgrade"`;
-
 exports[`packager > yarn > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > yarn > nun foo 1`] = `"yarn remove foo"`;
+
+exports[`packager > yarn > nup -i 1`] = `"yarn upgrade-interactive"`;
+
+exports[`packager > yarn > nup 1`] = `"yarn upgrade"`;
 
 exports[`packager > yarn@berry > na 1`] = `"yarn"`;
 
@@ -330,10 +330,10 @@ exports[`packager > yarn@berry > ni foo 1`] = `"yarn add foo"`;
 
 exports[`packager > yarn@berry > nlx 1`] = `"yarn dlx foo"`;
 
-exports[`packager > yarn@berry > nu -i 1`] = `"yarn up -i"`;
-
-exports[`packager > yarn@berry > nu 1`] = `"yarn up"`;
-
 exports[`packager > yarn@berry > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > yarn@berry > nun foo 1`] = `"yarn remove foo"`;
+
+exports[`packager > yarn@berry > nup -i 1`] = `"yarn up -i"`;
+
+exports[`packager > yarn@berry > nup 1`] = `"yarn up"`;
