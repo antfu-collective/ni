@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 
-import { AGENTS, parseNa, parseNi, parseNlx, parseNu, parseNun, runCli } from '../../src'
+import { AGENTS, parseNa, parseNi, parseNlx, parseNun, parseNup, runCli } from '../../src'
 
 let basicLog: MockInstance, errorLog: MockInstance, warnLog: MockInstance, infoLog: MockInstance
 
@@ -81,9 +81,9 @@ fixtures.forEach(fixture => describe(fixture, () => agents.forEach(agent => desc
   /** nlx */
   it('nlx', runCliTest(fixture, agent, parseNlx, ['foo']))
 
-  /** nu */
-  it('nu', runCliTest(fixture, agent, parseNu, []))
-  it('nu -i', runCliTest(fixture, agent, parseNu, ['-i']))
+  /** nup */
+  it('nup', runCliTest(fixture, agent, parseNup, []))
+  it('nup -i', runCliTest(fixture, agent, parseNup, ['-i']))
 
   /** nun */
   it('nun foo', runCliTest(fixture, agent, parseNun, ['foo']))

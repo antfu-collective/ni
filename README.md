@@ -127,10 +127,10 @@ nlx vitest
 
 <br>
 
-### `nu` - upgrade
+### `nup` - upgrade
 
 ```bash
-nu
+nup
 
 # npm upgrade
 # yarn upgrade (Yarn 1)
@@ -140,7 +140,7 @@ nu
 ```
 
 ```bash
-nu -i
+nup -i
 
 # (not available for npm & bun)
 # yarn upgrade-interactive (Yarn 1)
@@ -327,12 +327,14 @@ if ($profileContent -notcontains $profileEntry) {
 }
 ```
 
-#### `nx` and `nix` is no longer available
+#### `nx`, `nix` and `nu` are no longer available
 
-We renamed `nx`/`nix` to `nlx` to avoid conflicts with the other existing tools - [nx](https://nx.dev/) and [nix](https://nixos.org/). You can always alias them back on your shell configuration file (`.zshrc`, `.bashrc`, etc).
+We renamed `nx`/`nix` and `nu` to `nlx` and `nup` to avoid conflicts with the other existing tools - [nx](https://nx.dev/), [nix](https://nixos.org/) and [nushell](https://www.nushell.sh/). You can always alias them back on your shell configuration file (`.zshrc`, `.bashrc`, etc).
 
 ```bash
 alias nx="nlx"
 # or
 alias nix="nlx"
+# or
+alias nu="nup"
 ```
