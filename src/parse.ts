@@ -71,7 +71,7 @@ export const parseNr = <Runner>((agent, args) => {
   return cmd
 })
 
-export const parseNu = <Runner>((agent, args) => {
+export const parseNup = <Runner>((agent, args) => {
   if (args.includes('-i'))
     return getCommand(agent, 'upgrade-interactive', exclude(args, '-i'))
 

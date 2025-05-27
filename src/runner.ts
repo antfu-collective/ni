@@ -133,7 +133,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     console.log(`ni    ${dash}  install`)
     console.log(`nr    ${dash}  run`)
     console.log(`nlx   ${dash}  execute`)
-    console.log(`nu    ${dash}  upgrade`)
+    console.log(`nup    ${dash}  upgrade`)
     console.log(`nun   ${dash}  uninstall`)
     console.log(`nci   ${dash}  clean install`)
     console.log(`na    ${dash}  agent alias`)
