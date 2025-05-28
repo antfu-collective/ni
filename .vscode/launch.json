@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debugger nr",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
+      "program": "${workspaceFolder}/src/commands/nr.ts",
+      "args": [
+        "?", // debugger
+        "dev",
+        "--foo",
+        "--bar",
+        "--baz=true"
+      ],
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
