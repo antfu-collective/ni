@@ -82,24 +82,24 @@ runCli(async (agent, args, ctx) => {
 
     const terminalColumns = process.stdout?.columns || 80
 
-    const choices: Choice[] = raw
-      .map(({ key, description }) => ({
+    const last = storage.lastRunCommand
+    const choices = raw.reduce<Choice[]>((acc, { key, description }) => {
+      const item = {
         title: key,
         value: key,
         description: limitText(description, terminalColumns - 15),
-      }))
+      }
+      if (last && key === last) {
+        return [item, ...acc]
+      }
+      return [...acc, item]
+    }, [])
 
     const fzf = new Fzf(raw, {
       selector: item => `${item.key} ${item.description}`,
       casing: 'case-insensitive',
       tiebreakers: [byLengthAsc],
     })
-
-    if (storage.lastRunCommand) {
-      const last = choices.find(i => i.value === storage.lastRunCommand)
-      if (last)
-        choices.unshift(last)
-    }
 
     try {
       const { fn } = await prompts({
