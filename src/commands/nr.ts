@@ -96,9 +96,12 @@ runCli(async (agent, args, ctx) => {
     })
 
     if (storage.lastRunCommand) {
-      const last = choices.find(i => i.value === storage.lastRunCommand)
-      if (last)
-        choices.unshift(last)
+      const exists = choices.find(i => i.value === storage.lastRunCommand)
+      // If it exists, move it to the first position
+      if (exists) {
+        choices.splice(0, 0, exists)
+        choices.splice(choices.indexOf(exists) + 1, 1)
+      }
     }
 
     try {
