@@ -10,7 +10,7 @@
 npm i -g @antfu/ni
 ```
 
-<a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.io/'>pnpm</a> · <a href='https://bun.sh/'>bun</a>
+<a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.io/'>pnpm</a> · <a href='https://bun.sh/'>bun</a> · <a href='https://deno.land/'>deno</a>
 
 <br>
 
@@ -23,6 +23,7 @@ ni
 # yarn install
 # pnpm install
 # bun install
+# deno install
 ```
 
 ```bash
@@ -32,6 +33,7 @@ ni vite
 # yarn add vite
 # pnpm add vite
 # bun add vite
+# deno add vite
 ```
 
 ```bash
@@ -41,6 +43,7 @@ ni @types/node -D
 # yarn add @types/node -D
 # pnpm add -D @types/node
 # bun add -d @types/node
+# deno add -D @types/node
 ```
 
 ```bash
@@ -50,6 +53,7 @@ ni -P
 # yarn install --production
 # pnpm i --production
 # bun install --production
+# (deno not supported)
 ```
 
 ```bash
@@ -60,6 +64,7 @@ ni --frozen
 # yarn install --immutable (Yarn Berry)
 # pnpm install --frozen-lockfile
 # bun install --frozen-lockfile
+# deno install --frozen
 ```
 
 ```bash
@@ -69,6 +74,7 @@ ni -g eslint
 # yarn global add eslint (Yarn 1)
 # pnpm add -g eslint
 # bun add -g eslint
+# deno install eslint
 
 # this uses default agent, regardless your current working directory
 ```
@@ -91,6 +97,7 @@ nr dev --port=3000
 # yarn run dev --port=3000
 # pnpm run dev --port=3000
 # bun run dev --port=3000
+# deno task dev --port=3000
 ```
 
 ```bash
@@ -123,6 +130,7 @@ nlx vitest
 # yarn dlx vitest
 # pnpm dlx vitest
 # bunx vitest
+# deno run npm:vitest
 ```
 
 <br>
@@ -137,12 +145,13 @@ nup
 # yarn up (Yarn Berry)
 # pnpm update
 # bun update
+# deno upgrade
 ```
 
 ```bash
 nup -i
 
-# (not available for npm & bun)
+# (not available for npm & bun & deno)
 # yarn upgrade-interactive (Yarn 1)
 # yarn up -i (Yarn Berry)
 # pnpm update -i
@@ -159,6 +168,7 @@ nun webpack
 # yarn remove webpack
 # pnpm remove webpack
 # bun remove webpack
+# deno remove webpack
 ```
 
 ```bash
@@ -182,6 +192,7 @@ nun -g silent
 # yarn global remove silent
 # pnpm remove -g silent
 # bun remove -g silent
+# deno uninstall -g silent
 ```
 
 <br>
@@ -195,6 +206,7 @@ nci
 # yarn install --frozen-lockfile
 # pnpm install --frozen-lockfile
 # bun install --frozen-lockfile
+# deno cache --reload
 ```
 
 if the corresponding node manager is not present, this command will install it globally along the way.
@@ -210,6 +222,7 @@ na
 # yarn
 # pnpm
 # bun
+# deno
 ```
 
 ```bash
@@ -219,6 +232,7 @@ na run foo
 # yarn run foo
 # pnpm run foo
 # bun run foo
+# deno task foo
 ```
 
 <br>
@@ -295,7 +309,7 @@ asdf global ni latest
 
 **ni** assumes that you work with lock-files (and you should).
 
-Before `ni` runs the command, it detects your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` / `bun.lock` / `bun.lockb` to know the current package manager (or `packageManager` field in your packages.json if specified) using the [package-manager-detector](https://github.com/antfu-collective/package-manager-detector) package and then runs the corresponding [package-manager-detector command](https://github.com/antfu-collective/package-manager-detector/blob/main/src/commands.ts).
+Before `ni` runs the command, it detects your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` / `bun.lock` / `bun.lockb` / `deno.json` / `deno.jsonc` to know the current package manager (or `packageManager` field in your packages.json if specified) using the [package-manager-detector](https://github.com/antfu-collective/package-manager-detector) package and then runs the corresponding [package-manager-detector command](https://github.com/antfu-collective/package-manager-detector/blob/main/src/commands.ts).
 
 ### Trouble shooting
 
