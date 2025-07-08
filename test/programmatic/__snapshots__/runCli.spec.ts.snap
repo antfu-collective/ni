@@ -26,6 +26,30 @@ exports[`lockfile > bun > nup -i 1`] = `"bun update"`;
 
 exports[`lockfile > bun > nup 1`] = `"bun update"`;
 
+exports[`lockfile > deno > na 1`] = `"deno"`;
+
+exports[`lockfile > deno > na run foo 1`] = `"deno run foo"`;
+
+exports[`lockfile > deno > ni --frozen 1`] = `"deno install --frozen"`;
+
+exports[`lockfile > deno > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`lockfile > deno > ni 1`] = `"deno install"`;
+
+exports[`lockfile > deno > ni foo -D 1`] = `"deno add foo -D"`;
+
+exports[`lockfile > deno > ni foo 1`] = `"deno add foo"`;
+
+exports[`lockfile > deno > nlx 1`] = `"deno run npm:foo"`;
+
+exports[`lockfile > deno > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`lockfile > deno > nun foo 1`] = `"deno remove foo"`;
+
+exports[`lockfile > deno > nup -i 1`] = `"deno outdated --update"`;
+
+exports[`lockfile > deno > nup 1`] = `"deno outdated --update"`;
+
 exports[`lockfile > npm > na 1`] = `"npm"`;
 
 exports[`lockfile > npm > na run foo 1`] = `"npm run foo"`;
@@ -193,6 +217,30 @@ exports[`packager > bun > nun foo 1`] = `"bun remove foo"`;
 exports[`packager > bun > nup -i 1`] = `"bun update"`;
 
 exports[`packager > bun > nup 1`] = `"bun update"`;
+
+exports[`packager > deno > na 1`] = `"pnpm"`;
+
+exports[`packager > deno > na run foo 1`] = `"pnpm run foo"`;
+
+exports[`packager > deno > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
+
+exports[`packager > deno > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`packager > deno > ni 1`] = `"pnpm i"`;
+
+exports[`packager > deno > ni foo -D 1`] = `"pnpm add foo -D"`;
+
+exports[`packager > deno > ni foo 1`] = `"pnpm add foo"`;
+
+exports[`packager > deno > nlx 1`] = `"pnpm dlx foo"`;
+
+exports[`packager > deno > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`packager > deno > nun foo 1`] = `"pnpm remove foo"`;
+
+exports[`packager > deno > nup -i 1`] = `"pnpm update -i"`;
+
+exports[`packager > deno > nup 1`] = `"pnpm update"`;
 
 exports[`packager > npm > na 1`] = `"npm"`;
 
