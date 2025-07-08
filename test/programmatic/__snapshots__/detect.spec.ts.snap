@@ -18,7 +18,7 @@ exports[`lockfile > yarn@berry 1`] = `"yarn"`;
 
 exports[`packager > bun 1`] = `"bun"`;
 
-exports[`packager > deno 1`] = `undefined`;
+exports[`packager > deno 1`] = `"deno"`;
 
 exports[`packager > npm 1`] = `"npm"`;
 

@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs'
+import path from 'node:path'
 import process from 'node:process'
 import prompts from '@posva/prompts'
 import { detect as detectPM } from 'package-manager-detector'
@@ -20,6 +22,14 @@ export interface DetectOptions {
 }
 
 export async function detect({ autoInstall, programmatic, cwd }: DetectOptions = {}) {
+  const targetDir = cwd ?? process.cwd()
+
+  // Check for deno.json or deno.jsonc before using package-manager-detector
+  if (existsSync(path.join(targetDir, 'deno.json')) || existsSync(path.join(targetDir, 'deno.jsonc'))) {
+    // Return early with deno agent if deno.json/deno.jsonc is present
+    return 'deno'
+  }
+
   const {
     name,
     agent,

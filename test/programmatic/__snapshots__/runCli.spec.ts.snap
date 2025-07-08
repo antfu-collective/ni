@@ -218,29 +218,29 @@ exports[`packager > bun > nup -i 1`] = `"bun update"`;
 
 exports[`packager > bun > nup 1`] = `"bun update"`;
 
-exports[`packager > deno > na 1`] = `"pnpm"`;
+exports[`packager > deno > na 1`] = `"deno"`;
 
-exports[`packager > deno > na run foo 1`] = `"pnpm run foo"`;
+exports[`packager > deno > na run foo 1`] = `"deno run foo"`;
 
-exports[`packager > deno > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
+exports[`packager > deno > ni --frozen 1`] = `"deno install --frozen"`;
 
 exports[`packager > deno > ni -g foo 1`] = `"npm i -g foo"`;
 
-exports[`packager > deno > ni 1`] = `"pnpm i"`;
+exports[`packager > deno > ni 1`] = `"deno install"`;
 
-exports[`packager > deno > ni foo -D 1`] = `"pnpm add foo -D"`;
+exports[`packager > deno > ni foo -D 1`] = `"deno add foo -D"`;
 
-exports[`packager > deno > ni foo 1`] = `"pnpm add foo"`;
+exports[`packager > deno > ni foo 1`] = `"deno add foo"`;
 
-exports[`packager > deno > nlx 1`] = `"pnpm dlx foo"`;
+exports[`packager > deno > nlx 1`] = `"deno run npm:foo"`;
 
 exports[`packager > deno > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
-exports[`packager > deno > nun foo 1`] = `"pnpm remove foo"`;
+exports[`packager > deno > nun foo 1`] = `"deno remove foo"`;
 
-exports[`packager > deno > nup -i 1`] = `"pnpm update -i"`;
+exports[`packager > deno > nup -i 1`] = `"deno outdated --update"`;
 
-exports[`packager > deno > nup 1`] = `"pnpm update"`;
+exports[`packager > deno > nup 1`] = `"deno outdated --update"`;
 
 exports[`packager > npm > na 1`] = `"npm"`;
 
