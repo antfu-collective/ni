@@ -114,9 +114,15 @@ nr -
 ```
 
 ```bash
-nr --completion >> ~/.bashrc
+# Add completion script for bash
+nr --completion-bash >> ~/.bashrc
 
-# add completion script to your shell (only bash supported for now)
+# Add completion script for zsh
+# For zim:fw
+mkdir -p ~/.zim/custom/ni-completions
+nr --completion-zsh > ~/.zim/custom/ni-completions/_ni
+echo "zmodule $HOME/.zim/custom/ni-completions --fpath ." >> ~/.zimrc
+zimfw install
 ```
 
 <br>
