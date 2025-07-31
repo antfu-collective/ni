@@ -2,7 +2,7 @@ import type { Choice } from '@posva/prompts'
 import process from 'node:process'
 import prompts from '@posva/prompts'
 import { byLengthAsc, Fzf } from 'fzf'
-import { getCompletionSuggestions, rawBashCompletionScript, rawZshCompletionScript } from '../completion'
+import { getCompletionSuggestions, getFilterCompletionSuggestions, rawBashCompletionScript, rawZshCompletionScript } from '../completion'
 import { readPackageScripts } from '../package'
 import { parseNr } from '../parse'
 import { runCli } from '../runner'
@@ -31,6 +31,14 @@ runCli(async (agent, args, ctx) => {
     }
     // In other shells, return suggestions directly
     else {
+      if (args[1] === '-F' || args[1] === '--filter') {
+        const suggestions = await getFilterCompletionSuggestions(args, ctx)
+
+        // eslint-disable-next-line no-console
+        console.log(suggestions.join('\n'))
+        return
+      }
+
       const suggestions = getCompletionSuggestions(args, ctx)
 
       // eslint-disable-next-line no-console

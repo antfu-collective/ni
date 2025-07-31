@@ -55,8 +55,10 @@
   "dependencies": {
     "ansis": "catalog:prod",
     "fzf": "catalog:prod",
+    "glob": "catalog:prod-inlined",
     "package-manager-detector": "catalog:prod",
-    "tinyexec": "catalog:prod"
+    "tinyexec": "catalog:prod",
+    "yaml": "catalog:prod-inlined"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:dev",

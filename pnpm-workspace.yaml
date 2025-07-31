@@ -22,9 +22,11 @@ catalogs:
     tinyexec: ^1.0.1
   prod-inlined:
     '@posva/prompts': ^2.4.4
+    glob: ^11.0.3
     ini: ^5.0.0
     terminal-link: ^4.0.0
     which: ^5.0.0
+    yaml: ^2.8.0
 onlyBuiltDependencies:
   - simple-git-hooks
   - unrs-resolver
