@@ -108,6 +108,14 @@ nr
 ```
 
 ```bash
+nr -p
+nr -p dev
+
+# interactively select the package and script to run
+# supports https://www.npmjs.com/package/npm-scripts-info convention
+```
+
+```bash
 nr -
 
 # rerun the last command

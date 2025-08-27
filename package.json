@@ -47,7 +47,7 @@
     "build": "unbuild",
     "stub": "unbuild --stub",
     "release": "bumpp && pnpm publish",
-    "typecheck": "tsc",
+    "typecheck": "tsc --noEmit",
     "prepare": "npx simple-git-hooks",
     "lint": "eslint",
     "test": "vitest"
@@ -56,7 +56,8 @@
     "ansis": "catalog:prod",
     "fzf": "catalog:prod",
     "package-manager-detector": "catalog:prod",
-    "tinyexec": "catalog:prod"
+    "tinyexec": "catalog:prod",
+    "tinyglobby": "catalog:prod"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:dev",
@@ -71,7 +72,6 @@
     "simple-git-hooks": "catalog:dev",
     "taze": "catalog:dev",
     "terminal-link": "catalog:prod-inlined",
-    "tinyglobby": "catalog:dev",
     "tsx": "catalog:dev",
     "typescript": "catalog:dev",
     "unbuild": "catalog:dev",

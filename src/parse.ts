@@ -51,7 +51,7 @@ export const parseNi = <Runner>((agent, args, ctx) => {
   return getCommand(agent, 'add', args)
 })
 
-export const parseNr = <Runner>((agent, args) => {
+export const parseNr = <Runner>((agent, args, ctx) => {
   if (args.length === 0)
     args.push('start')
 
@@ -61,7 +61,15 @@ export const parseNr = <Runner>((agent, args) => {
     hasIfPresent = true
   }
 
+  if (args.includes('-p')) {
+    args = exclude(args, '-p')
+  }
+
   const cmd = getCommand(agent, 'run', args)
+  if (ctx?.cwd) {
+    cmd.cwd = ctx.cwd
+  }
+
   if (!cmd)
     return cmd
 

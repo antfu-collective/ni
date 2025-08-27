@@ -165,7 +165,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     {
       nodeOptions: {
         stdio: 'inherit',
-        cwd,
+        cwd: command.cwd ?? cwd,
       },
       throwOnError: true,
     },
