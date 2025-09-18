@@ -69,8 +69,8 @@ catalogs:
       specifier: ^5.0.0
       version: 5.0.0
     terminal-link:
-      specifier: ^5.0.0
-      version: 5.0.0
+      specifier: ^4.0.0
+      version: 4.0.0
     which:
       specifier: ^5.0.0
       version: 5.0.0
@@ -127,7 +127,7 @@ importers:
         version: 19.6.0
       terminal-link:
         specifier: catalog:prod-inlined
-        version: 5.0.0
+        version: 4.0.0
       tinyglobby:
         specifier: catalog:dev
         version: 0.2.15
@@ -1815,10 +1815,6 @@ packages:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
 
-  has-flag@5.0.1:
-    resolution: {integrity: sha512-CsNUt5x9LUdx6hnk/E2SZLsDyvfqANZSUq4+D3D8RzDJ2M+HDTIkF60ibS1vHaK55vzgiZw1bEPFG9yH7l33wA==}
-    engines: {node: '>=12'}
-
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
@@ -2668,17 +2664,13 @@ packages:
     peerDependencies:
       postcss: ^8.4.31
 
-  supports-color@10.2.2:
-    resolution: {integrity: sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g==}
-    engines: {node: '>=18'}
-
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
 
-  supports-hyperlinks@4.2.0:
-    resolution: {integrity: sha512-FWXryrXrsYX2vlTD9WdfgOeN7a2EbuS3MiMaDkFibR0B6IxelCNbFgUJEGLn3eSn+9HX7RuM0ig6Lzr8lccxUA==}
-    engines: {node: '>=20'}
+  supports-hyperlinks@3.2.0:
+    resolution: {integrity: sha512-zFObLMyZeEwzAoKCyu1B91U79K2t7ApXuQfo8OuxwXLDgcKxuwM+YvcbIhm6QWqz7mHUH1TVytR1PwVVjEuMig==}
+    engines: {node: '>=14.18'}
 
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
@@ -2701,9 +2693,9 @@ packages:
     resolution: {integrity: sha512-hQGQH4WVtV9BqsZbrGzOmOP4NdWqie948BnqtH+NPwdVt5mI+qALVRDvgzgdf+neN7bcrVVpV4ToyFkxg0U0xQ==}
     hasBin: true
 
-  terminal-link@5.0.0:
-    resolution: {integrity: sha512-qFAy10MTMwjzjU8U16YS4YoZD+NQLHzLssFMNqgravjbvIPNiqkGFR4yjhJfmY9R5OFU7+yHxc6y+uGHkKwLRA==}
-    engines: {node: '>=20'}
+  terminal-link@4.0.0:
+    resolution: {integrity: sha512-lk+vH+MccxNqgVqSnkMVKx4VLJfnLjDBGzH16JVZjKE2DoxP57s6/vt6JmXV5I3jBcfGrxNrYtC+mPtU7WJztA==}
+    engines: {node: '>=18'}
 
   tinybench@2.9.0:
     resolution: {integrity: sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==}
@@ -4554,8 +4546,6 @@ snapshots:
 
   has-flag@4.0.0: {}
 
-  has-flag@5.0.1: {}
-
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
@@ -5553,16 +5543,14 @@ snapshots:
       postcss: 8.5.3
       postcss-selector-parser: 6.1.2
 
-  supports-color@10.2.2: {}
-
   supports-color@7.2.0:
     dependencies:
       has-flag: 4.0.0
 
-  supports-hyperlinks@4.2.0:
+  supports-hyperlinks@3.2.0:
     dependencies:
-      has-flag: 5.0.1
-      supports-color: 10.2.2
+      has-flag: 4.0.0
+      supports-color: 7.2.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
@@ -5597,10 +5585,10 @@ snapshots:
       unconfig: 7.3.3
       yaml: 2.8.1
 
-  terminal-link@5.0.0:
+  terminal-link@4.0.0:
     dependencies:
       ansi-escapes: 7.0.0
-      supports-hyperlinks: 4.2.0
+      supports-hyperlinks: 3.2.0
 
   tinybench@2.9.0: {}
 
