@@ -49,7 +49,7 @@
     "nr": "tsx src/commands/nr.ts",
     "build": "unbuild",
     "stub": "unbuild --stub",
-    "release": "bumpp && pnpm publish",
+    "release": "bumpp",
     "typecheck": "tsc --noEmit",
     "prepare": "npx simple-git-hooks",
     "lint": "eslint",
