@@ -23,7 +23,7 @@ catalogs:
   prod-inlined:
     '@posva/prompts': ^2.4.4
     ini: ^5.0.0
-    terminal-link: ^5.0.0
+    terminal-link: ^4.0.0
     which: ^5.0.0
 onlyBuiltDependencies:
   - esbuild
