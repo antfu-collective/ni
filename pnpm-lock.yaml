@@ -33,9 +33,6 @@ catalogs:
     taze:
       specifier: ^19.6.0
       version: 19.6.0
-    tinyglobby:
-      specifier: ^0.2.15
-      version: 0.2.15
     tsx:
       specifier: ^4.20.5
       version: 4.20.5
@@ -61,6 +58,9 @@ catalogs:
     tinyexec:
       specifier: ^1.0.1
       version: 1.0.1
+    tinyglobby:
+      specifier: ^0.2.15
+      version: 0.2.15
   prod-inlined:
     '@posva/prompts':
       specifier: ^2.4.4
@@ -91,6 +91,9 @@ importers:
       tinyexec:
         specifier: catalog:prod
         version: 1.0.1
+      tinyglobby:
+        specifier: catalog:prod
+        version: 0.2.15
     devDependencies:
       '@antfu/eslint-config':
         specifier: catalog:dev
@@ -128,9 +131,6 @@ importers:
       terminal-link:
         specifier: catalog:prod-inlined
         version: 4.0.0
-      tinyglobby:
-        specifier: catalog:dev
-        version: 0.2.15
       tsx:
         specifier: catalog:dev
         version: 4.20.5

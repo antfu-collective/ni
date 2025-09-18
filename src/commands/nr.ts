@@ -1,9 +1,10 @@
 import type { Choice } from '@posva/prompts'
+import type { PackageScript } from '../package'
 import process from 'node:process'
 import prompts from '@posva/prompts'
 import { byLengthAsc, Fzf } from 'fzf'
 import { getCompletionSuggestions, rawBashCompletionScript, rawZshCompletionScript } from '../completion'
-import { readPackageScripts } from '../package'
+import { readPackageScripts, readWorkspaceScripts } from '../package'
 import { parseNr } from '../parse'
 import { runCli } from '../runner'
 import { dump, load } from '../storage'
@@ -11,6 +12,50 @@ import { limitText } from '../utils'
 
 runCli(async (agent, args, ctx) => {
   const storage = await load()
+
+  const promptSelectScript = async (raw: PackageScript[]) => {
+    const terminalColumns = process.stdout?.columns || 80
+
+    const last = storage.lastRunCommand
+    const choices = raw.reduce<Choice[]>((acc, { key, description }) => {
+      const item = {
+        title: key,
+        value: key,
+        description: limitText(description, terminalColumns - 15),
+      }
+      if (last && key === last) {
+        return [item, ...acc]
+      }
+      return [...acc, item]
+    }, [])
+
+    const fzf = new Fzf(raw, {
+      selector: item => `${item.key} ${item.description}`,
+      casing: 'case-insensitive',
+      tiebreakers: [byLengthAsc],
+    })
+
+    try {
+      const { fn } = await prompts({
+        name: 'fn',
+        message: 'script to run',
+        type: 'autocomplete',
+        choices,
+        async suggest(input: string, choices: Choice[]) {
+          if (!input)
+            return choices
+          const results = fzf.find(input)
+          return results.map(r => choices.find(c => c.value === r.item.key))
+        },
+      })
+      if (!fn)
+        process.exit(1)
+      args.push(fn)
+    }
+    catch {
+      process.exit(1)
+    }
+  }
 
   // Use --completion to generate completion script and do completion logic
   // (No package manager would have an argument named --completion)
@@ -53,6 +98,15 @@ runCli(async (agent, args, ctx) => {
     return
   }
 
+  // -p is a flag attempt to read scripts from monorepo
+  if (args[0] === '-p') {
+    const raw = await readWorkspaceScripts(ctx, args)
+    // Show prompt if there are multiple scripts
+    if (raw.length > 1) {
+      await promptSelectScript(raw)
+    }
+  }
+
   if (args[0] === '-') {
     if (!storage.lastRunCommand) {
       if (!ctx?.programmatic) {
@@ -67,48 +121,7 @@ runCli(async (agent, args, ctx) => {
 
   if (args.length === 0 && !ctx?.programmatic) {
     const raw = readPackageScripts(ctx)
-
-    const terminalColumns = process.stdout?.columns || 80
-
-    const last = storage.lastRunCommand
-    const choices = raw.reduce<Choice[]>((acc, { key, description }) => {
-      const item = {
-        title: key,
-        value: key,
-        description: limitText(description, terminalColumns - 15),
-      }
-      if (last && key === last) {
-        return [item, ...acc]
-      }
-      return [...acc, item]
-    }, [])
-
-    const fzf = new Fzf(raw, {
-      selector: item => `${item.key} ${item.description}`,
-      casing: 'case-insensitive',
-      tiebreakers: [byLengthAsc],
-    })
-
-    try {
-      const { fn } = await prompts({
-        name: 'fn',
-        message: 'script to run',
-        type: 'autocomplete',
-        choices,
-        async suggest(input: string, choices: Choice[]) {
-          if (!input)
-            return choices
-          const results = fzf.find(input)
-          return results.map(r => choices.find(c => c.value === r.item.key))
-        },
-      })
-      if (!fn)
-        return
-      args.push(fn)
-    }
-    catch {
-      process.exit(1)
-    }
+    await promptSelectScript(raw)
   }
 
   if (storage.lastRunCommand !== args[0]) {
@@ -116,5 +129,5 @@ runCli(async (agent, args, ctx) => {
     dump()
   }
 
-  return parseNr(agent, args)
+  return parseNr(agent, args, ctx)
 })

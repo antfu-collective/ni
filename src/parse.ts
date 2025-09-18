@@ -1,5 +1,5 @@
 import type { Agent, Command, ResolvedCommand } from 'package-manager-detector'
-import type { Runner } from './runner'
+import type { ExtendedResolvedCommand, Runner } from './runner'
 import { COMMANDS, constructCommand } from '.'
 import { exclude } from './utils'
 
@@ -13,7 +13,7 @@ export function getCommand(
   agent: Agent,
   command: Command,
   args: string[] = [],
-): ResolvedCommand {
+): ExtendedResolvedCommand {
   if (!COMMANDS[agent])
     throw new Error(`Unsupported agent "${agent}"`)
   if (!COMMANDS[agent][command])
@@ -51,7 +51,7 @@ export const parseNi = <Runner>((agent, args, ctx) => {
   return getCommand(agent, 'add', args)
 })
 
-export const parseNr = <Runner>((agent, args) => {
+export const parseNr = <Runner>((agent, args, ctx) => {
   if (args.length === 0)
     args.push('start')
 
@@ -61,7 +61,15 @@ export const parseNr = <Runner>((agent, args) => {
     hasIfPresent = true
   }
 
+  if (args.includes('-p')) {
+    args = exclude(args, '-p')
+  }
+
   const cmd = getCommand(agent, 'run', args)
+  if (ctx?.cwd) {
+    cmd.cwd = ctx.cwd
+  }
+
   if (!cmd)
     return cmd
 
