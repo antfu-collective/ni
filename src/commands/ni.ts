@@ -66,10 +66,10 @@ runCli(async (agent, args, ctx) => {
     args = exclude(args, '-d', '-p', '-i')
 
     /**
-     * yarn and bun do not support
+     * deno does not support
      * the installation of peers programmatically
      */
-    const canInstallPeers = ['npm', 'pnpm'].includes(agent)
+    const canInstallPeers = ['npm', 'pnpm', 'yarn', 'bun'].includes(agent)
 
     const { mode } = await prompts({
       type: 'select',
