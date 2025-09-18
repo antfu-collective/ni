@@ -40,6 +40,9 @@
     "bin",
     "dist"
   ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "prepublishOnly": "npm run build",
     "dev": "tsx src/commands/ni.ts",
