@@ -1,5 +1,5 @@
 import type { Agent, Command, ResolvedCommand } from 'package-manager-detector'
-import type { Runner } from './runner'
+import type { ExtendedResolvedCommand, Runner } from './runner'
 import { COMMANDS, constructCommand } from '.'
 import { exclude } from './utils'
 
@@ -13,7 +13,7 @@ export function getCommand(
   agent: Agent,
   command: Command,
   args: string[] = [],
-): ResolvedCommand {
+): ExtendedResolvedCommand {
   if (!COMMANDS[agent])
     throw new Error(`Unsupported agent "${agent}"`)
   if (!COMMANDS[agent][command])

@@ -23,7 +23,11 @@ export interface RunnerContext {
   cwd?: string
 }
 
-export type Runner = (agent: Agent, args: string[], ctx?: RunnerContext) => Promise<ResolvedCommand | undefined> | ResolvedCommand | undefined
+export interface ExtendedResolvedCommand extends ResolvedCommand {
+  cwd?: string
+}
+
+export type Runner = (agent: Agent, args: string[], ctx?: RunnerContext) => Promise<ExtendedResolvedCommand | undefined> | ExtendedResolvedCommand | undefined
 
 export async function runCli(fn: Runner, options: DetectOptions & { args?: string[] } = {}) {
   options = {
