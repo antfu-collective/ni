@@ -13,7 +13,7 @@ import { getDefaultAgent, getGlobalAgent } from './config'
 import { detect } from './detect'
 import { getEnvironmentOptions } from './environment'
 import { getCommand, UnsupportedCommand } from './parse'
-import { cmdExists, remove } from './utils'
+import { cmdExists, remove, treeKill } from './utils'
 
 const DEBUG_SIGN = '?'
 
@@ -176,7 +176,14 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   )
 
   process.once('SIGINT', () => {
-    proc.kill('SIGINT')
+    if (proc.pid) {
+      treeKill(proc.pid, 'SIGINT')
+    }
+    else {
+      proc.kill('SIGINT')
+    }
+
+    process.exit(130)
   })
 
   await proc
