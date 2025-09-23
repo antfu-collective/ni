@@ -163,7 +163,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     return
   }
 
-  await x(
+  const proc = x(
     command.command,
     command.args,
     {
@@ -174,4 +174,10 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
       throwOnError: true,
     },
   )
+
+  process.once('SIGINT', () => {
+    proc.kill('SIGINT')
+  })
+
+  await proc
 }
