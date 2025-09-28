@@ -1,6 +1,4 @@
 import type { Buffer } from 'node:buffer'
-import type { KillSignal } from 'tinyexec'
-import { execSync, spawnSync } from 'node:child_process'
 import { existsSync, promises as fs } from 'node:fs'
 import os from 'node:os'
 import { dirname, join } from 'node:path'
@@ -107,30 +105,4 @@ export function formatPackageWithUrl(pkg: string, url?: string, limits = 80) {
         },
       )
     : pkg
-}
-
-export function treeKill(pid: number, signal: KillSignal) {
-  if (process.platform === 'win32') {
-    // use `taskkill` command for Windows
-    execSync(`taskkill /pid ${pid} /T /F`)
-  }
-  else {
-    // Unix-like os
-    const result = process.platform === 'darwin' ? spawnSync('pgrep', ['-P', `${pid}`]) : spawnSync('ps', ['-o', 'pid', '--no-headers', '--ppid', `${pid}`])
-
-    if (result.status === 0 && result.stdout) {
-      const output = result.stdout.toString()
-      const childPids = output.match(/\d+/g)?.map(Number) || []
-      childPids.forEach(childPid => treeKill(childPid, signal))
-    }
-
-    try {
-      process.kill(pid, signal)
-    }
-    catch (err: any) {
-      // ignore if process already dead
-      if (err.code !== 'ESRCH')
-        throw err
-    }
-  }
 }
