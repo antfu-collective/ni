@@ -178,7 +178,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
   process.once('SIGINT', async () => {
     // Ensure the proc finishes cleanup before exiting
     await proc
-    process.exit(130)
+    process.exit(proc.exitCode)
   })
 
   await proc
