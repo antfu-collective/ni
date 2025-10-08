@@ -18,11 +18,13 @@ const rcPath = customRcPath || defaultRcPath
 interface Config {
   defaultAgent: Agent | 'prompt'
   globalAgent: Agent
+  useSfw: boolean
 }
 
 const defaultConfig: Config = {
   defaultAgent: 'prompt',
   globalAgent: 'npm',
+  useSfw: false,
 }
 
 let config: Config | undefined
@@ -43,6 +45,9 @@ export async function getConfig(): Promise<Config> {
     if (process.env.NI_GLOBAL_AGENT)
       config.globalAgent = process.env.NI_GLOBAL_AGENT as Agent
 
+    if (process.env.NI_USE_SFW !== undefined)
+      config.useSfw = process.env.NI_USE_SFW === 'true'
+
     const agent = await detect({ programmatic: true })
     if (agent)
       config.defaultAgent = agent
@@ -61,4 +66,9 @@ export async function getDefaultAgent(programmatic?: boolean) {
 export async function getGlobalAgent() {
   const { globalAgent } = await getConfig()
   return globalAgent
+}
+
+export async function getUseSfw() {
+  const { useSfw } = await getConfig()
+  return useSfw
 }

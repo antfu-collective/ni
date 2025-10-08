@@ -1,2 +1,4 @@
 defaultAgent=npm
 globalAgent=pnpm
+useSfw=true
+

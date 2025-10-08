@@ -285,6 +285,9 @@ defaultAgent=npm # default "prompt"
 
 ; for global installs
 globalAgent=npm
+
+; prefix commands with sfw
+useSfw=true
 ```
 
 ```bash
@@ -296,6 +299,7 @@ export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 # environment variables have higher priority than config file if presented
 export NI_DEFAULT_AGENT="npm" # default "prompt"
 export NI_GLOBAL_AGENT="npm"
+export NI_USE_SFW="true"
 ```
 
 ```ps
