@@ -228,8 +228,6 @@ nci
 # deno cache --reload
 ```
 
-if the corresponding node manager is not present, this command will install it globally along the way.
-
 <br>
 
 ### `na` - agent alias
@@ -306,6 +304,11 @@ $Env:NI_CONFIG_FILE = 'C:\to\your\config\location'
 ```
 
 <br>
+
+### Automatic installation
+
+Before executing any command (**ni**, **nr**, **nlx**, etc.), **ni** detects your active package manager.
+If the corresponding package manager (**npm**, **yarn**, **pnpm**, **bun**, or **deno**) is not installed, it will install it globally before running the command.
 
 ### Integrations
 
