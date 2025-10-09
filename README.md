@@ -98,7 +98,7 @@ ni -i
 ```bash
 nr dev --port=3000
 
-# npm run dev -- --port=3000
+# npm run dev --port=3000
 # yarn run dev --port=3000
 # pnpm run dev --port=3000
 # bun run dev --port=3000
