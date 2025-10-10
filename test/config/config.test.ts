@@ -20,6 +20,7 @@ it('has correct defaults', async () => {
   expect(config).toEqual({
     defaultAgent: 'prompt',
     globalAgent: 'npm',
+    useSfw: false,
   })
 })
 
@@ -32,12 +33,14 @@ it('loads .nirc', async () => {
   expect(config).toEqual({
     defaultAgent: 'npm',
     globalAgent: 'pnpm',
+    useSfw: true,
   })
 })
 
 it('reads environment variable config', async () => {
   vi.stubEnv('NI_DEFAULT_AGENT', 'npm')
   vi.stubEnv('NI_GLOBAL_AGENT', 'pnpm')
+  vi.stubEnv('NI_USE_SFW', 'true')
 
   const { getConfig } = await import('../../src/config')
   const config = await getConfig()
@@ -45,5 +48,6 @@ it('reads environment variable config', async () => {
   expect(config).toEqual({
     defaultAgent: 'npm',
     globalAgent: 'pnpm',
+    useSfw: true,
   })
 })

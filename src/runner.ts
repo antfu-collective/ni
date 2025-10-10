@@ -9,7 +9,7 @@ import c from 'ansis'
 import { AGENTS } from 'package-manager-detector'
 import { x } from 'tinyexec'
 import { version } from '../package.json'
-import { getDefaultAgent, getGlobalAgent } from './config'
+import { getDefaultAgent, getGlobalAgent, getUseSfw } from './config'
 import { detect } from './detect'
 import { getEnvironmentOptions } from './environment'
 import { getCommand, UnsupportedCommand } from './parse'
@@ -83,9 +83,7 @@ export async function getCliCommand(
 }
 
 export async function run(fn: Runner, args: string[], options: DetectOptions = {}) {
-  const {
-    detectVolta = true,
-  } = options
+  const { programmatic, detectVolta = true } = options
 
   const debug = args.includes(DEBUG_SIGN)
   if (debug)
@@ -151,6 +149,20 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
 
   if (!command)
     return
+
+  const useSfw = await getUseSfw()
+  if (useSfw && cmdExists('sfw')) {
+    command.args = [command.command, ...command.args]
+    command.command = 'sfw'
+  }
+  else if (useSfw) {
+    if (programmatic)
+      throw new Error('sfw is enabled but not installed')
+
+    console.error('[ni] sfw is enabled but not installed.')
+    console.error('[ni] Install it with: npm install -g sfw')
+    process.exit(1)
+  }
 
   if (detectVolta && cmdExists('volta')) {
     command.args = ['run', command.command, ...command.args]
