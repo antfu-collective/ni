@@ -12,6 +12,8 @@ function _(arg: string, expected: string | null) {
   }
 }
 
-it.fails('empty', _('', null))
-it.fails('interactive', _('-i', null))
-it.fails('interactive latest', _('-i --latest', null))
+it('empty', _('', 'bun update'))
+
+it('interactive', _('-i', 'bun update -i'))
+
+it('interactive latest', _('-i --latest', 'bun update -i --latest'))
