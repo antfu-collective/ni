@@ -22,7 +22,7 @@ exports[`lockfile > bun > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`lockfile > bun > nun foo 1`] = `"bun remove foo"`;
 
-exports[`lockfile > bun > nup -i 1`] = `"bun update"`;
+exports[`lockfile > bun > nup -i 1`] = `"bun update -i"`;
 
 exports[`lockfile > bun > nup 1`] = `"bun update"`;
 
@@ -214,7 +214,7 @@ exports[`packager > bun > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
 exports[`packager > bun > nun foo 1`] = `"bun remove foo"`;
 
-exports[`packager > bun > nup -i 1`] = `"bun update"`;
+exports[`packager > bun > nup -i 1`] = `"bun update -i"`;
 
 exports[`packager > bun > nup 1`] = `"bun update"`;
 

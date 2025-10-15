@@ -170,10 +170,12 @@ nup
 ```bash
 nup -i
 
-# (not available for npm & bun & deno)
+# (not available for npm)
 # yarn upgrade-interactive (Yarn 1)
 # yarn up -i (Yarn Berry)
 # pnpm update -i
+# bun update -i
+# deno outdated -u -i
 ```
 
 <br>
