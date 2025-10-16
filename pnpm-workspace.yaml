@@ -1,17 +1,17 @@
 packages: []
 catalogs:
   dev:
-    '@antfu/eslint-config': ^5.4.1
+    '@antfu/eslint-config': ^6.0.0
     '@types/ini': ^4.1.1
-    '@types/node': ^24.6.0
+    '@types/node': ^24.8.0
     '@types/which': ^3.0.4
-    bumpp: ^10.2.3
-    eslint: ^9.36.0
-    lint-staged: ^16.2.3
+    bumpp: ^10.3.1
+    eslint: ^9.37.0
+    lint-staged: ^16.2.4
     simple-git-hooks: ^2.13.1
     taze: ^19.7.0
     tsx: ^4.20.6
-    typescript: ^5.9.2
+    typescript: ^5.9.3
     unbuild: ^3.6.1
     vitest: ^3.2.4
   prod:

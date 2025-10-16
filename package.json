@@ -2,7 +2,7 @@
   "name": "@antfu/ni",
   "type": "module",
   "version": "26.1.0",
-  "packageManager": "pnpm@10.17.1",
+  "packageManager": "pnpm@10.18.3",
   "description": "Use the right package manager",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
