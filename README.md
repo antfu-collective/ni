@@ -103,6 +103,10 @@ nr dev --port=3000
 # pnpm run dev --port=3000
 # bun run dev --port=3000
 # deno task dev --port=3000
+
+nr dev --port=3000 --run
+
+# node --run dev --port=3000
 ```
 
 ```bash

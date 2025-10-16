@@ -1,5 +1,6 @@
 import type { Agent, Command, ResolvedCommand } from 'package-manager-detector'
 import type { ExtendedResolvedCommand, Runner } from './runner'
+import process from 'node:process'
 import { COMMANDS, constructCommand } from '.'
 import { exclude } from './utils'
 
@@ -55,25 +56,35 @@ export const parseNr = <Runner>((agent, args, ctx) => {
   if (args.length === 0)
     args.push('start')
 
+  let hasNodeRun = false
+  if (args.includes('--run')) {
+    const [majorNodeVersion] = process.versions.node.split('.').map(Number)
+    if (majorNodeVersion < 22) {
+      console.warn('The --run flag requires Node.js 22.0.0 or higher')
+      process.exit(1)
+    }
+    args = exclude(args, '--run')
+    hasNodeRun = true
+  }
+
   let hasIfPresent = false
   if (args.includes('--if-present')) {
     args = exclude(args, '--if-present')
     hasIfPresent = true
   }
 
-  if (args.includes('-p')) {
+  if (args.includes('-p'))
     args = exclude(args, '-p')
-  }
 
-  const cmd = getCommand(agent, 'run', args)
-  if (ctx?.cwd) {
+  const cmd = hasNodeRun ? { command: 'node --run', args } : getCommand(agent, 'run', args)
+
+  if (ctx?.cwd)
     cmd.cwd = ctx.cwd
-  }
 
   if (!cmd)
     return cmd
 
-  if (hasIfPresent)
+  if (hasIfPresent && !hasNodeRun)
     cmd.args.splice(1, 0, '--if-present')
 
   return cmd
