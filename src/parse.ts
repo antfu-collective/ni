@@ -1,6 +1,7 @@
 import type { Agent, Command, ResolvedCommand } from 'package-manager-detector'
 import type { ExtendedResolvedCommand, Runner } from './runner'
-import { COMMANDS, constructCommand } from '.'
+import process from 'node:process'
+import { COMMANDS, constructCommand, getRunAgent } from '.'
 import { exclude } from './utils'
 
 export class UnsupportedCommand extends Error {
@@ -51,9 +52,20 @@ export const parseNi = <Runner>((agent, args, ctx) => {
   return getCommand(agent, 'add', args)
 })
 
-export const parseNr = <Runner>((agent, args, ctx) => {
+export const parseNr = <Runner>(async (agent, args, ctx) => {
   if (args.length === 0)
     args.push('start')
+
+  const runAgent = await getRunAgent()
+
+  let runWithNode = false
+  if (runAgent === 'node') {
+    const [majorNodeVersion] = process.versions.node.split('.').map(Number)
+    if (majorNodeVersion < 22) {
+      throw new Error('The runAgent "node" requires Node.js 22.0.0 or higher')
+    }
+    runWithNode = true
+  }
 
   let hasIfPresent = false
   if (args.includes('--if-present')) {
@@ -61,19 +73,18 @@ export const parseNr = <Runner>((agent, args, ctx) => {
     hasIfPresent = true
   }
 
-  if (args.includes('-p')) {
+  if (args.includes('-p'))
     args = exclude(args, '-p')
-  }
 
-  const cmd = getCommand(agent, 'run', args)
-  if (ctx?.cwd) {
+  const cmd = runWithNode ? { command: 'node --run', args } : getCommand(agent, 'run', args)
+
+  if (ctx?.cwd)
     cmd.cwd = ctx.cwd
-  }
 
   if (!cmd)
     return cmd
 
-  if (hasIfPresent)
+  if (hasIfPresent && !runWithNode)
     cmd.args.splice(1, 0, '--if-present')
 
   return cmd
