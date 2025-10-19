@@ -232,6 +232,18 @@ nci
 
 <br>
 
+### `nd` - dedupe dependencies
+
+```bash
+nd
+
+# npm dedupe
+# yarn dedupe
+# pnpm dedupe
+```
+
+<br>
+
 ### `na` - agent alias
 
 ```bash
