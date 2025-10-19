@@ -86,6 +86,19 @@ export const parseNup = <Runner>((agent, args) => {
   return getCommand(agent, 'upgrade', args)
 })
 
+export const parseNd = <Runner>((agent, args) => {
+  // https://yarnpkg.com/cli/dedupe#options
+  // https://pnpm.io/cli/dedupe#--check
+  if (agent === 'pnpm')
+    args = args.map(i => i === '-c' ? '--check' : i)
+
+  // https://docs.npmjs.com/cli/v11/commands/npm-dedupe#dry-run
+  if (agent === 'npm')
+    args = args.map(i => i === '-c' ? '--dry-run' : i)
+
+  return getCommand(agent, 'dedupe', args)
+})
+
 export const parseNun = <Runner>((agent, args) => {
   if (args.includes('-g'))
     return getCommand(agent, 'global_uninstall', exclude(args, '-g'))
