@@ -20,6 +20,7 @@
     "./nci": "./dist/nci.mjs",
     "./nr": "./dist/nr.mjs",
     "./nup": "./dist/nup.mjs",
+    "./nd": "./dist/nd.mjs",
     "./nlx": "./dist/nlx.mjs",
     "./na": "./dist/na.mjs",
     "./nun": "./dist/nun.mjs"
@@ -32,6 +33,7 @@
     "nci": "bin/nci.mjs",
     "nr": "bin/nr.mjs",
     "nup": "bin/nup.mjs",
+    "nd": "bin/nd.mjs",
     "nlx": "bin/nlx.mjs",
     "na": "bin/na.mjs",
     "nun": "bin/nun.mjs"
