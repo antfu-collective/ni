@@ -93,6 +93,11 @@ runCli(async (agent, args, ctx) => {
       ],
     })
 
+    if (mode === undefined) {
+      process.exitCode = 1
+      return
+    }
+
     args.push(dependency.name, mode)
   }
 
