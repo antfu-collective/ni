@@ -35,6 +35,10 @@ runCli(async (agent, args, ctx) => {
       tiebreakers: [byLengthAsc],
     })
 
+    // Workaround for @posva/prompts autocomplete bug where ESC key submits instead of canceling
+    // https://github.com/terkelg/prompts/issues/362
+    let isExited = false
+
     try {
       const { fn } = await prompts({
         name: 'fn',
@@ -47,8 +51,12 @@ runCli(async (agent, args, ctx) => {
           const results = fzf.find(input)
           return results.map(r => choices.find(c => c.value === r.item.key))
         },
+        onState(state) {
+          if (state.exited)
+            isExited = true
+        },
       })
-      if (!fn)
+      if (!fn || isExited)
         process.exit(1)
       args.push(fn)
     }
