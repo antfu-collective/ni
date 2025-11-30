@@ -10,7 +10,8 @@
 npm i -g @antfu/ni
 ```
 
-### Homebrew (macOS)
+### Homebrew (macOS, Linux)
+
 ```
 brew install ni
 ```
