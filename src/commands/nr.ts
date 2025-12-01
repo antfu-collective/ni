@@ -3,7 +3,7 @@ import type { PackageScript } from '../package'
 import process from 'node:process'
 import prompts from '@posva/prompts'
 import { byLengthAsc, Fzf } from 'fzf'
-import { getCompletionSuggestions, rawBashCompletionScript, rawZshCompletionScript } from '../completion'
+import { getCompletionSuggestions, rawBashCompletionScript, rawFishCompletionScript, rawZshCompletionScript } from '../completion'
 import { readPackageScripts, readWorkspaceScripts } from '../package'
 import { parseNr } from '../parse'
 import { runCli } from '../runner'
@@ -103,6 +103,13 @@ runCli(async (agent, args, ctx) => {
   if (args[0] === '--completion-bash') {
     // eslint-disable-next-line no-console
     console.log(rawBashCompletionScript)
+    return
+  }
+
+  // Print Fish completion script
+  if (args[0] === '--completion-fish') {
+    // eslint-disable-next-line no-console
+    console.log(rawFishCompletionScript)
     return
   }
 
