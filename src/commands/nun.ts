@@ -8,11 +8,12 @@ import { runCli } from '../runner'
 import { exclude } from '../utils'
 
 runCli(async (agent, args, ctx) => {
-  const isMultiple = args[0] === '-m'
+  const isMultiple = args[0] === '-m' // Compatible with issue/311
+  const isGlobal = args.includes('-g')
 
   const isInteractive = !args.length && !ctx?.programmatic
 
-  if (isInteractive || isMultiple) {
+  if ((isInteractive || isMultiple) && !isGlobal) {
     const pkg = getPackageJSON(ctx)
 
     const allDependencies = { ...pkg.dependencies, ...pkg.devDependencies }
