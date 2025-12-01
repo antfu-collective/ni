@@ -196,15 +196,8 @@ nun webpack
 ```bash
 nun
 
-# interactively select
-# the dependency to remove
-```
-
-```bash
-nun -m
-
-# interactive select,
-# but with multiple dependencies
+# interactively multi-select
+# the dependencies to remove
 ```
 
 ```bash
