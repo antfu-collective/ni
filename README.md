@@ -137,6 +137,10 @@ mkdir -p ~/.zim/custom/ni-completions
 nr --completion-zsh > ~/.zim/custom/ni-completions/_ni
 echo "zmodule $HOME/.zim/custom/ni-completions --fpath ." >> ~/.zimrc
 zimfw install
+
+# Add completion script for fish
+mkdir -p ~/.config/fish/completions
+nr --completion-fish > ~/.config/fish/completions/nr.fish
 ```
 
 <br>
