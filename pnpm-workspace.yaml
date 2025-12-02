@@ -1,24 +1,24 @@
 packages: []
 catalogs:
   dev:
-    '@antfu/eslint-config': ^6.0.0
+    '@antfu/eslint-config': ^6.2.0
     '@types/ini': ^4.1.1
-    '@types/node': ^24.9.1
+    '@types/node': ^24.10.1
     '@types/which': ^3.0.4
-    bumpp: ^10.3.1
-    eslint: ^9.38.0
-    lint-staged: ^16.2.6
+    bumpp: ^10.3.2
+    eslint: ^9.39.1
+    lint-staged: ^16.2.7
     simple-git-hooks: ^2.13.1
-    taze: ^19.8.1
-    tsx: ^4.20.6
+    taze: ^19.9.2
+    tsx: ^4.21.0
     typescript: ^5.9.3
     unbuild: ^3.6.1
-    vitest: ^4.0.3
+    vitest: ^4.0.14
   prod:
     ansis: ^4.2.0
     fzf: ^0.5.2
-    package-manager-detector: ^1.5.0
-    tinyexec: ^1.0.1
+    package-manager-detector: ^1.6.0
+    tinyexec: ^1.0.2
     tinyglobby: ^0.2.15
   prod-inlined:
     '@posva/prompts': ^2.4.4

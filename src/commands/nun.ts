@@ -1,4 +1,4 @@
-import type { Choice, PromptType } from '@posva/prompts'
+import type { Choice } from '@posva/prompts'
 import process from 'node:process'
 import prompts from '@posva/prompts'
 import { Fzf } from 'fzf'
@@ -8,9 +8,12 @@ import { runCli } from '../runner'
 import { exclude } from '../utils'
 
 runCli(async (agent, args, ctx) => {
+  const isMultiple = args[0] === '-m' // Compatible with issue/311
+  const isGlobal = args.includes('-g')
+
   const isInteractive = !args.length && !ctx?.programmatic
 
-  if (isInteractive || args[0] === '-m') {
+  if ((isInteractive || isMultiple) && !isGlobal) {
     const pkg = getPackageJSON(ctx)
 
     const allDependencies = { ...pkg.dependencies, ...pkg.devDependencies }
@@ -33,38 +36,25 @@ runCli(async (agent, args, ctx) => {
       description: version,
     }))
 
-    const isMultiple = args[0] === '-m'
-
-    const type: PromptType = isMultiple
-      ? 'autocompleteMultiselect'
-      : 'autocomplete'
-
     if (isMultiple)
       args = exclude(args, '-m')
 
     try {
       const { depsToRemove } = await prompts({
-        type,
+        type: 'autocompleteMultiselect',
         name: 'depsToRemove',
         choices,
+        min: 1,
         instructions: false,
-        message: `remove ${isMultiple ? 'dependencies' : 'dependency'}`,
+        message: 'remove dependencies',
         async suggest(input: string, choices: Choice[]) {
           const results = fzf.find(input)
           return results.map(r => choices.find(c => c.value === r.item[0]))
         },
       })
 
-      if (!depsToRemove) {
-        process.exitCode = 1
-        return
-      }
-
-      const isSingleDependency = typeof depsToRemove === 'string'
-
-      if (isSingleDependency)
-        args.push(depsToRemove)
-      else args.push(...depsToRemove)
+      if (Array.isArray(depsToRemove))
+        args.push(...depsToRemove)
     }
     catch {
       process.exit(1)
