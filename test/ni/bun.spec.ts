@@ -18,6 +18,8 @@ it('single add', _('axios', 'bun add axios'))
 
 it('add dev', _('vite -D', 'bun add vite -d'))
 
+it('add peer', _('vite -p', 'bun add vite --peer'))
+
 it('multiple', _('eslint @types/node', 'bun add eslint @types/node'))
 
 it('global', _('eslint -g', 'bun add -g eslint'))

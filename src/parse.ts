@@ -35,6 +35,14 @@ export const parseNi = <Runner>((agent, args, ctx) => {
   if (args.includes('-P'))
     args = args.map(i => i === '-P' ? '--production' : i)
 
+  if (['npm', 'pnpm'].includes(agent)) {
+    args = args.map(i => i === '-p' ? '--save-peer' : i)
+  }
+
+  if (['bun', 'yarn', 'yarn@berry'].includes(agent)) {
+    args = args.map(i => i === '-p' ? '--peer' : i)
+  }
+
   if (args.includes('-g'))
     return getCommand(agent, 'global', exclude(args, '-g'))
 
