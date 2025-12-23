@@ -27,7 +27,7 @@ export interface ExtendedResolvedCommand extends ResolvedCommand {
   cwd?: string
 }
 
-export interface RunOptions {
+interface RunOptions {
   /**
    * Called before agent detection and command execution.
    *
