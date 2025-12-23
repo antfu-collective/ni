@@ -51,4 +51,18 @@ describe('runCli', () => {
     await runCli(mocks.baseRunFnSpy, { autoInstall: false, programmatic: true })
     expect(mocks.detectSpy).toHaveBeenCalledWith({ autoInstall: false, programmatic: true, cwd: expect.any(String) })
   })
+
+  describe('onBeforeCommand', () => {
+    it('skips running the command when exit() is called', async () => {
+      await runCli(mocks.baseRunFnSpy, { onBeforeCommand: (_args, ctx) => ctx.exit() })
+      expect(mocks.baseRunFnSpy).not.toHaveBeenCalled()
+      // https://github.com/antfu-collective/ni/issues/308
+      expect(mocks.detectSpy).not.toHaveBeenCalled()
+    })
+
+    it('continues to run the command when exit() is not called', async () => {
+      await runCli(mocks.baseRunFnSpy, { onBeforeCommand: () => Promise.resolve() })
+      expect(mocks.baseRunFnSpy).toHaveBeenCalledOnce()
+    })
+  })
 })
