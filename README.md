@@ -326,7 +326,8 @@ $Env:NI_CONFIG_FILE = 'C:\to\your\config\location'
 
 ### Automatic installation
 
-Before executing any command (**ni**, **nr**, **nlx**, etc.), **ni** detects your active package manager.
+You can set `NI_AUTO_INSTALL=true` to enable automatic installation.
+
 If the corresponding package manager (**npm**, **yarn**, **pnpm**, **bun**, or **deno**) is not installed, it will install it globally before running the command.
 
 ### Integrations
