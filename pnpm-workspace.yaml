@@ -1,19 +1,23 @@
+shellEmulator: true
+
+trustPolicy: no-downgrade
+
 packages: []
 catalogs:
   dev:
-    '@antfu/eslint-config': ^6.2.0
+    '@antfu/eslint-config': ^6.7.3
     '@types/ini': ^4.1.1
-    '@types/node': ^24.10.1
+    '@types/node': ^24.10.4
     '@types/which': ^3.0.4
     bumpp: ^10.3.2
-    eslint: ^9.39.1
+    eslint: ^9.39.2
     lint-staged: ^16.2.7
     simple-git-hooks: ^2.13.1
     taze: ^19.9.2
     tsx: ^4.21.0
     typescript: ^5.9.3
     unbuild: ^3.6.1
-    vitest: ^4.0.14
+    vitest: ^4.0.16
   prod:
     ansis: ^4.2.0
     fzf: ^0.5.2
