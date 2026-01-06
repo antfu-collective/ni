@@ -65,6 +65,7 @@ export const parseNr = <Runner>(async (agent, args, ctx) => {
       throw new Error('The runAgent "node" requires Node.js 22.0.0 or higher')
     }
     runWithNode = true
+    args = ['--run', ...args]
   }
 
   let hasIfPresent = false
@@ -76,7 +77,7 @@ export const parseNr = <Runner>(async (agent, args, ctx) => {
   if (args.includes('-p'))
     args = exclude(args, '-p')
 
-  const cmd = runWithNode ? { command: 'node --run', args } : getCommand(agent, 'run', args)
+  const cmd = runWithNode ? { command: 'node', args } : getCommand(agent, 'run', args)
 
   if (ctx?.cwd)
     cmd.cwd = ctx.cwd
