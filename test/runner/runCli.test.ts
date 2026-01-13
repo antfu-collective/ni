@@ -5,14 +5,11 @@ import { runCli } from '../../src'
 // Mock detect to see what options are passed to it
 const mocks = vi.hoisted(() => ({
   detectSpy: vi.fn(() => Promise.resolve('npm')),
+  baseRunFnSpy: vi.fn<Runner>(() => Promise.resolve(undefined)),
 }))
 vi.mock('../../src/detect', () => ({
   detect: mocks.detectSpy,
 }))
-
-const baseRunFn: Runner = async () => {
-  return undefined
-}
 
 describe('runCli', () => {
   afterEach(() => {
@@ -21,7 +18,7 @@ describe('runCli', () => {
   })
 
   it('run without errors', async () => {
-    const result = await runCli(baseRunFn, {})
+    const result = await runCli(mocks.baseRunFnSpy, {})
     expect(result).toBe(undefined)
   })
 
@@ -34,24 +31,38 @@ describe('runCli', () => {
   })
 
   it('calls detect with the correct options', async () => {
-    await runCli(baseRunFn)
+    await runCli(mocks.baseRunFnSpy)
     expect(mocks.detectSpy).toHaveBeenCalledWith({ autoInstall: false, cwd: expect.any(String) })
   })
 
   it('detects environment options', async () => {
     vi.stubEnv('NI_AUTO_INSTALL', 'true')
-    await runCli(baseRunFn)
+    await runCli(mocks.baseRunFnSpy)
     expect(mocks.detectSpy).toHaveBeenCalledWith({ autoInstall: true, cwd: expect.any(String) })
   })
 
   it('accept options as input', async () => {
-    await runCli(baseRunFn, { autoInstall: true, programmatic: true })
+    await runCli(mocks.baseRunFnSpy, { autoInstall: true, programmatic: true })
     expect(mocks.detectSpy).toHaveBeenCalledWith({ autoInstall: true, programmatic: true, cwd: expect.any(String) })
   })
 
   it('merges inputs and environment prioritizing inputs', async () => {
     vi.stubEnv('NI_AUTO_INSTALL', 'true')
-    await runCli(baseRunFn, { autoInstall: false, programmatic: true })
+    await runCli(mocks.baseRunFnSpy, { autoInstall: false, programmatic: true })
     expect(mocks.detectSpy).toHaveBeenCalledWith({ autoInstall: false, programmatic: true, cwd: expect.any(String) })
+  })
+
+  describe('onBeforeCommand', () => {
+    it('skips running the command when exit() is called', async () => {
+      await runCli(mocks.baseRunFnSpy, { onBeforeCommand: (_args, ctx) => ctx.exit() })
+      expect(mocks.baseRunFnSpy).not.toHaveBeenCalled()
+      // https://github.com/antfu-collective/ni/issues/308
+      expect(mocks.detectSpy).not.toHaveBeenCalled()
+    })
+
+    it('continues to run the command when exit() is not called', async () => {
+      await runCli(mocks.baseRunFnSpy, { onBeforeCommand: () => Promise.resolve() })
+      expect(mocks.baseRunFnSpy).toHaveBeenCalledOnce()
+    })
   })
 })

@@ -27,9 +27,25 @@ export interface ExtendedResolvedCommand extends ResolvedCommand {
   cwd?: string
 }
 
+interface RunOptions {
+  /**
+   * Called before agent detection and command execution.
+   *
+   * Useful for performing concrete, agent-agnostic operations.
+   */
+  onBeforeCommand?: (args: string[], ctx: Pick<RunnerContext, 'cwd' | 'programmatic'> & {
+    /**
+     * Skips subsequent command execution.
+     *
+     * This is useful for operations such as generating shell-completion scripts.
+     */
+    exit: () => void
+  }) => void | Promise<void>
+}
+
 export type Runner = (agent: Agent, args: string[], ctx?: RunnerContext) => Promise<ExtendedResolvedCommand | undefined> | ExtendedResolvedCommand | undefined
 
-export async function runCli(fn: Runner, options: DetectOptions & { args?: string[] } = {}) {
+export async function runCli(fn: Runner, options: DetectOptions & RunOptions & { args?: string[] } = {}) {
   options = {
     ...getEnvironmentOptions(),
     ...options,
@@ -82,7 +98,7 @@ export async function getCliCommand(
   })
 }
 
-export async function run(fn: Runner, args: string[], options: DetectOptions = {}) {
+export async function run(fn: Runner, args: string[], options: DetectOptions & RunOptions = {}) {
   const { programmatic, detectVolta = true } = options
 
   const debug = args.includes(DEBUG_SIGN)
@@ -144,6 +160,17 @@ export async function run(fn: Runner, args: string[], options: DetectOptions = {
     console.log(`ni -i ${dash}  interactive package management`)
     console.log(c.yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
     return
+  }
+
+  if (options.onBeforeCommand) {
+    let shouldExit = false
+    await options.onBeforeCommand(args, {
+      cwd,
+      programmatic,
+      exit: () => { shouldExit = true },
+    })
+    if (shouldExit)
+      return
   }
 
   const command = await getCliCommand(fn, args, options, cwd)
