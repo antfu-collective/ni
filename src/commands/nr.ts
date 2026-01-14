@@ -92,27 +92,6 @@ runCli(async (agent, args, ctx) => {
     return
   }
 
-  // Print ZSH completion script
-  if (args[0] === '--completion-zsh') {
-    // eslint-disable-next-line no-console
-    console.log(rawZshCompletionScript)
-    return
-  }
-
-  // Print Bash completion script
-  if (args[0] === '--completion-bash') {
-    // eslint-disable-next-line no-console
-    console.log(rawBashCompletionScript)
-    return
-  }
-
-  // Print Fish completion script
-  if (args[0] === '--completion-fish') {
-    // eslint-disable-next-line no-console
-    console.log(rawFishCompletionScript)
-    return
-  }
-
   // -p is a flag attempt to read scripts from monorepo
   if (args[0] === '-p') {
     const raw = await readWorkspaceScripts(ctx, args)
@@ -145,4 +124,27 @@ runCli(async (agent, args, ctx) => {
   }
 
   return parseNr(agent, args, ctx)
+}, {
+  onBeforeCommand: (args, ctx) => {
+    // Print ZSH completion script.
+    if (args[0] === '--completion-zsh') {
+    // eslint-disable-next-line no-console
+      console.log(rawZshCompletionScript)
+      return ctx.exit()
+    }
+
+    // Print Bash completion script
+    if (args[0] === '--completion-bash') {
+    // eslint-disable-next-line no-console
+      console.log(rawBashCompletionScript)
+      return ctx.exit()
+    }
+
+    // Print Fish completion script
+    if (args[0] === '--completion-fish') {
+    // eslint-disable-next-line no-console
+      console.log(rawFishCompletionScript)
+      return ctx.exit()
+    }
+  },
 })
