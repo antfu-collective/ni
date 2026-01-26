@@ -32,16 +32,16 @@ describe('runCli', () => {
 
   it('calls detect with the correct options', async () => {
     await runCli(mocks.baseRunFnSpy)
-    expect(mocks.detectSpy).toHaveBeenCalledWith({ autoInstall: false, cwd: expect.any(String) })
+    expect(mocks.detectSpy).toHaveBeenCalledWith(({ autoInstall: false, programmatic: false, cwd: expect.any(String) }))
   })
 
   it('detects environment options', async () => {
     vi.stubEnv('NI_AUTO_INSTALL', 'true')
     await runCli(mocks.baseRunFnSpy)
-    expect(mocks.detectSpy).toHaveBeenCalledWith({ autoInstall: true, cwd: expect.any(String) })
+    expect(mocks.detectSpy).toHaveBeenCalledWith({ autoInstall: true, programmatic: false, cwd: expect.any(String) })
   })
 
-  it('accept options as input', async () => {
+  it('accepts options as input', async () => {
     await runCli(mocks.baseRunFnSpy, { autoInstall: true, programmatic: true })
     expect(mocks.detectSpy).toHaveBeenCalledWith({ autoInstall: true, programmatic: true, cwd: expect.any(String) })
   })
@@ -50,6 +50,16 @@ describe('runCli', () => {
     vi.stubEnv('NI_AUTO_INSTALL', 'true')
     await runCli(mocks.baseRunFnSpy, { autoInstall: false, programmatic: true })
     expect(mocks.detectSpy).toHaveBeenCalledWith({ autoInstall: false, programmatic: true, cwd: expect.any(String) })
+  })
+
+  it('parses --programmatic flag from args', async () => {
+    await runCli(mocks.baseRunFnSpy, { args: ['--programmatic'] })
+    expect(mocks.detectSpy).toHaveBeenCalledWith(expect.objectContaining({ autoInstall: false, programmatic: true, cwd: expect.any(String) }))
+  })
+
+  it('removes --programmatic from args before passing to runner', async () => {
+    await runCli(mocks.baseRunFnSpy, { args: ['--programmatic', 'foo'] })
+    expect(mocks.baseRunFnSpy).toHaveBeenCalledWith('npm', ['foo'], { programmatic: true, hasLock: true, cwd: expect.any(String) })
   })
 
   describe('onBeforeCommand', () => {
