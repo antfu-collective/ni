@@ -16,6 +16,7 @@ import { getCommand, UnsupportedCommand } from './parse'
 import { cmdExists, remove } from './utils'
 
 const DEBUG_SIGN = '?'
+const PROGRAMMATIC_SIGN = '--programmatic'
 
 export interface RunnerContext {
   programmatic?: boolean
@@ -99,11 +100,17 @@ export async function getCliCommand(
 }
 
 export async function run(fn: Runner, args: string[], options: DetectOptions & RunOptions = {}) {
-  const { programmatic, detectVolta = true } = options
+  const { detectVolta = true } = options
 
   const debug = args.includes(DEBUG_SIGN)
   if (debug)
     remove(args, DEBUG_SIGN)
+
+  const programmaticFromArgs = args.includes(PROGRAMMATIC_SIGN)
+  if (programmaticFromArgs)
+    remove(args, PROGRAMMATIC_SIGN)
+
+  const programmatic = options.programmatic || programmaticFromArgs
 
   let cwd = options.cwd ?? process.cwd()
   if (args[0] === '-C') {
@@ -173,7 +180,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
       return
   }
 
-  const command = await getCliCommand(fn, args, options, cwd)
+  const command = await getCliCommand(fn, args, { ...options, programmatic }, cwd)
 
   if (!command)
     return
