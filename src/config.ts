@@ -33,13 +33,9 @@ let config: Config | undefined
 
 export async function getConfig(): Promise<Config> {
   if (!config) {
-    config = Object.assign(
-      {},
-      defaultConfig,
-      fs.existsSync(rcPath)
-        ? ini.parse(fs.readFileSync(rcPath, 'utf-8'))
-        : null,
-    )
+    config = { ...defaultConfig, ...fs.existsSync(rcPath)
+      ? ini.parse(fs.readFileSync(rcPath, 'utf-8'))
+      : null }
 
     if (process.env.NI_DEFAULT_AGENT)
       config.defaultAgent = process.env.NI_DEFAULT_AGENT as Agent
