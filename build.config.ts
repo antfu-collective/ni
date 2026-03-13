@@ -17,6 +17,9 @@ export default defineBuildConfig({
       'which',
       'ini',
       '@posva/prompts',
+      'pnpm-workspace-yaml',
+      'yaml',
+      'fast-npm-meta',
 
       'terminal-link',
       'ansi-escapes',

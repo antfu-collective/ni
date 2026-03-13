@@ -20,6 +20,7 @@ interface Config {
   globalAgent: Agent
   runAgent: 'node' | undefined
   useSfw: boolean
+  catalog: boolean
 }
 
 const defaultConfig: Config = {
@@ -27,6 +28,7 @@ const defaultConfig: Config = {
   globalAgent: 'npm',
   runAgent: undefined,
   useSfw: false,
+  catalog: true,
 }
 
 let config: Config | undefined
@@ -48,6 +50,9 @@ export async function getConfig(): Promise<Config> {
 
     if (process.env.NI_USE_SFW !== undefined)
       config.useSfw = process.env.NI_USE_SFW === 'true'
+
+    if (process.env.NI_CATALOG !== undefined)
+      config.catalog = process.env.NI_CATALOG !== 'false'
 
     const agent = await detect({ programmatic: true })
     if (agent)
@@ -77,4 +82,9 @@ export async function getRunAgent() {
 export async function getUseSfw() {
   const { useSfw } = await getConfig()
   return useSfw
+}
+
+export async function getCatalog() {
+  const { catalog } = await getConfig()
+  return catalog
 }

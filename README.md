@@ -6,15 +6,11 @@
 
 <br>
 
-```
-npm i -g @antfu/ni
-```
-
-### Homebrew (macOS, Linux)
-
-```
-brew install ni
-```
+<pre>
+<code>
+npm i -g <b>@antfu/ni</b>
+</code>
+</pre>
 
 <a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.io/'>pnpm</a> · <a href='https://bun.sh/'>bun</a> · <a href='https://deno.land/'>deno</a>
 
@@ -92,6 +88,52 @@ ni -i
 # search for packages by name
 ```
 
+<details>
+<summary>catalogs support</summary>
+
+> Since v29.0.0
+
+When working in a pnpm workspace with [catalogs](https://pnpm.io/catalogs) configured in `pnpm-workspace.yaml`, `ni` automatically enters **catalog mode**. Instead of adding packages with pinned versions, it writes `catalog:` references into `package.json` and updates the workspace catalog.
+
+```bash
+# Given pnpm-workspace.yaml with:
+#   catalogs:
+#     prod:
+#       react: ^18.3.0
+
+ni react
+# → detects react in "prod" catalog
+# → writes "react": "catalog:prod" to package.json
+# → runs pnpm install
+
+ni lodash
+# → lodash not in any catalog
+# → prompts to select a catalog (or skip)
+# → fetches latest version, updates pnpm-workspace.yaml
+# → writes "lodash": "catalog:prod" to package.json
+# → runs pnpm install
+```
+
+When only a default catalog (`catalog:` top-level) is used, new packages are added directly without prompting. When only named catalogs exist, the default catalog is never offered.
+
+Flags like `-D` are respected — the catalog ref is written to the correct `package.json` section:
+
+```bash
+ni typescript -D
+# → writes "typescript": "catalog:dev" to devDependencies
+```
+
+Use `-w` / `--workspace` to target the workspace root `package.json`:
+
+```bash
+ni react -w
+# → writes catalog ref to workspace root package.json
+```
+
+To disable catalog mode, set `catalog=false` in `~/.nirc` or `NI_CATALOG=false` environment variable.
+
+</details>
+
 <br>
 
 ### `nr` - run
@@ -114,18 +156,20 @@ nr
 ```
 
 ```bash
-nr -p
-nr -p dev
-
-# interactively select the package and script to run
-# supports https://www.npmjs.com/package/npm-scripts-info convention
-```
-
-```bash
 nr -
 
 # rerun the last command
 ```
+
+```bash
+nr -p
+nr -p dev
+
+# interactively select the package and script to run
+```
+
+<details>
+<summary>shell completion scripts</summary>
 
 ```bash
 # Add completion script for bash
@@ -142,6 +186,8 @@ zimfw install
 mkdir -p ~/.config/fish/completions
 nr --completion-fish > ~/.config/fish/completions/nr.fish
 ```
+
+</details>
 
 <br>
 
@@ -301,6 +347,9 @@ runAgent=node
 
 ; prefix commands with sfw
 useSfw=true
+
+; use catalog mode when catalogs are detected (default true)
+catalog=true
 ```
 
 ```bash
@@ -313,6 +362,7 @@ export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 export NI_DEFAULT_AGENT="npm" # default "prompt"
 export NI_GLOBAL_AGENT="npm"
 export NI_USE_SFW="true"
+export NI_CATALOG="false" # disable catalog mode
 ```
 
 ```ps
@@ -331,6 +381,14 @@ You can set `NI_AUTO_INSTALL=true` to enable automatic installation.
 If the corresponding package manager (**npm**, **yarn**, **pnpm**, **bun**, or **deno**) is not installed, it will install it globally before running the command.
 
 ### Integrations
+
+#### Homebrew
+
+You can install ni with [Homebrew](https://brew.sh/):
+
+```bash
+brew install ni
+```
 
 #### asdf
 

@@ -26,7 +26,9 @@ catalogs:
     tinyglobby: ^0.2.15
   prod-inlined:
     '@posva/prompts': ^2.4.4
+    fast-npm-meta: ^1.4.2
     ini: ^5.0.0
+    pnpm-workspace-yaml: ^1.6.0
     terminal-link: ^4.0.0
     which: ^5.0.0
 onlyBuiltDependencies:
