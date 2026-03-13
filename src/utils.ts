@@ -4,7 +4,6 @@ import os from 'node:os'
 import { dirname, join } from 'node:path'
 import process from 'node:process'
 import c from 'ansis'
-import terminalLink from 'terminal-link'
 import which from 'which'
 
 export const CLI_TEMP_DIR = join(os.tmpdir(), 'antfu-ni')
@@ -91,6 +90,20 @@ export function limitText(text: string, maxWidth: number) {
   if (text.length <= maxWidth)
     return text
   return `${text.slice(0, maxWidth)}${c.dim('…')}`
+}
+
+export function terminalLink(text: string, url: string, options?: { fallback?: (text: string, url: string) => string }): string {
+  // Use OSC 8 hyperlink escape sequence
+  // See https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda
+  if (
+    process.env.FORCE_HYPERLINK
+    || (process.stdout.isTTY && !process.env.NO_HYPERLINK)
+  ) {
+    return `\u001B]8;;${url}\u0007${text}\u001B]8;;\u0007`
+  }
+  if (options?.fallback)
+    return options.fallback(text, url)
+  return `${text} (${url})`
 }
 
 export function formatPackageWithUrl(pkg: string, url?: string, limits = 80) {

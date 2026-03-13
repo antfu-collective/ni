@@ -20,11 +20,6 @@ export default defineBuildConfig({
       'pnpm-workspace-yaml',
       'yaml',
       'fast-npm-meta',
-
-      'terminal-link',
-      'ansi-escapes',
-      'environment',
-      'supports-hyperlinks',
       'isexe',
       'supports-color',
       'has-flag',
