@@ -16,17 +16,16 @@
   },
   "exports": {
     ".": "./dist/index.mjs",
-    "./ni": "./dist/ni.mjs",
-    "./nci": "./dist/nci.mjs",
-    "./nr": "./dist/nr.mjs",
-    "./nup": "./dist/nup.mjs",
-    "./nd": "./dist/nd.mjs",
-    "./nlx": "./dist/nlx.mjs",
     "./na": "./dist/na.mjs",
-    "./nun": "./dist/nun.mjs"
+    "./nci": "./dist/nci.mjs",
+    "./nd": "./dist/nd.mjs",
+    "./ni": "./dist/ni.mjs",
+    "./nlx": "./dist/nlx.mjs",
+    "./nr": "./dist/nr.mjs",
+    "./nun": "./dist/nun.mjs",
+    "./nup": "./dist/nup.mjs",
+    "./package.json": "./package.json"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "bin": {
     "ni": "bin/ni.mjs",
@@ -49,8 +48,7 @@
     "prepublishOnly": "npm run build",
     "dev": "tsx src/commands/ni.ts",
     "nr": "tsx src/commands/nr.ts",
-    "build": "unbuild",
-    "stub": "unbuild --stub",
+    "build": "tsdown",
     "release": "bumpp",
     "typecheck": "tsc --noEmit",
     "prepare": "npx simple-git-hooks",
@@ -78,9 +76,9 @@
     "pnpm-workspace-yaml": "catalog:prod-inlined",
     "simple-git-hooks": "catalog:dev",
     "taze": "catalog:dev",
+    "tsdown": "catalog:dev",
     "tsx": "catalog:dev",
     "typescript": "catalog:dev",
-    "unbuild": "catalog:dev",
     "vitest": "catalog:dev",
     "which": "catalog:prod-inlined"
   },
@@ -89,5 +87,16 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
+  },
+  "inlinedDependencies": {
+    "fast-npm-meta": "1.4.2",
+    "yaml": "2.8.2",
+    "pnpm-workspace-yaml": "1.6.0",
+    "ini": "6.0.0",
+    "kleur": "4.1.5",
+    "@posva/prompts": "2.4.4",
+    "sisteransi": "1.0.5",
+    "isexe": "4.0.0",
+    "which": "6.0.1"
   }
 }
