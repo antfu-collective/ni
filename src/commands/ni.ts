@@ -3,6 +3,7 @@ import process from 'node:process'
 import prompts from '@posva/prompts'
 import c from 'ansis'
 import { Fzf } from 'fzf'
+import { handleCatalogInstall } from '../catalog/handler'
 import { fetchNpmPackages } from '../fetch'
 import { parseNi } from '../parse'
 import { runCli } from '../runner'
@@ -99,6 +100,13 @@ runCli(async (agent, args, ctx) => {
     }
 
     args.push(dependency.name, mode)
+  }
+
+  // Catalog mode: intercept before normal add
+  if (!args.includes('-g')) {
+    const catalogCmd = await handleCatalogInstall(agent, args, ctx)
+    if (catalogCmd !== undefined)
+      return catalogCmd
   }
 
   return parseNi(agent, args, ctx)

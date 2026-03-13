@@ -20,7 +20,9 @@ it('has correct defaults', async () => {
   expect(config).toEqual({
     defaultAgent: 'prompt',
     globalAgent: 'npm',
+    runAgent: undefined,
     useSfw: false,
+    catalog: true,
   })
 })
 
@@ -33,7 +35,9 @@ it('loads .nirc', async () => {
   expect(config).toEqual({
     defaultAgent: 'npm',
     globalAgent: 'pnpm',
+    runAgent: undefined,
     useSfw: true,
+    catalog: true,
   })
 })
 
@@ -48,6 +52,8 @@ it('reads environment variable config', async () => {
   expect(config).toEqual({
     defaultAgent: 'npm',
     globalAgent: 'pnpm',
+    runAgent: undefined,
     useSfw: true,
+    catalog: true,
   })
 })

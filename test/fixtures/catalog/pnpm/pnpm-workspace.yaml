@@ -1,0 +1,11 @@
+packages:
+  - packages/*
+
+# Named catalogs
+catalogs:
+  prod:
+    react: ^18.3.0
+    express: ^4.21.0
+  dev:
+    typescript: ^5.6.0
+    vitest: ^2.1.0
