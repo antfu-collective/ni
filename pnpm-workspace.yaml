@@ -19,7 +19,6 @@ catalogs:
     typescript: ^5.9.3
     vitest: ^4.1.0
   prod:
-    ansis: ^4.2.0
     fzf: ^0.5.2
     package-manager-detector: ^1.6.0
     tinyexec: ^1.0.2

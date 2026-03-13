@@ -3,7 +3,7 @@ import { existsSync, promises as fs } from 'node:fs'
 import os from 'node:os'
 import { dirname, join } from 'node:path'
 import process from 'node:process'
-import c from 'ansis'
+import { styleText } from 'node:util'
 import which from 'which'
 
 export const CLI_TEMP_DIR = join(os.tmpdir(), 'antfu-ni')
@@ -89,7 +89,7 @@ export async function writeFileSafe(
 export function limitText(text: string, maxWidth: number) {
   if (text.length <= maxWidth)
     return text
-  return `${text.slice(0, maxWidth)}${c.dim('…')}`
+  return `${text.slice(0, maxWidth)}${styleText('dim', '…')}`
 }
 
 export function terminalLink(text: string, url: string, options?: { fallback?: (text: string, url: string) => string }): string {
@@ -114,7 +114,7 @@ export function formatPackageWithUrl(pkg: string, url?: string, limits = 80) {
         {
           fallback: (_, url) => (pkg.length + url.length > limits)
             ? pkg
-            : pkg + c.dim` - ${url}`,
+            : `${pkg} ${styleText('dim', `- ${url}`)}`,
         },
       )
     : pkg

@@ -42,7 +42,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=20"
+    "node": ">=20.12.0"
   },
   "scripts": {
     "prepublishOnly": "npm run build",
@@ -56,7 +56,6 @@
     "test": "vitest"
   },
   "dependencies": {
-    "ansis": "catalog:prod",
     "fzf": "catalog:prod",
     "package-manager-detector": "catalog:prod",
     "tinyexec": "catalog:prod",

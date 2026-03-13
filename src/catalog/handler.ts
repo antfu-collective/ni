@@ -4,7 +4,7 @@ import type { DepType } from './package-json'
 import type { CatalogConfig, CatalogProvider } from './types'
 import path from 'node:path'
 import process from 'node:process'
-import c from 'ansis'
+import { styleText } from 'node:util'
 import { getLatestVersion } from 'fast-npm-meta'
 import { getCatalog } from '../config'
 import { getCommand } from '../parse'
@@ -101,13 +101,13 @@ export async function handleCatalogInstall(
         await provider.addPackage(config, result.catalogName, pkg, result.version)
         if (!ctx?.programmatic) {
           // eslint-disable-next-line no-console
-          console.log(`${c.green('+')} ${c.cyan(pkg)} ${c.dim(`→ ${result.catalogName} catalog (${result.version})`)}`)
+          console.log(`${styleText('green', '+')} ${styleText('cyan', pkg)} ${styleText('dim', `→ ${result.catalogName} catalog (${result.version})`)}`)
         }
       }
       else if (!ctx?.programmatic) {
         const existingCatalog = provider.findPackage(config, pkg)
         // eslint-disable-next-line no-console
-        console.log(`${c.green('✓')} ${c.cyan(pkg)} ${c.dim(`→ found in ${existingCatalog!.name} catalog`)}`)
+        console.log(`${styleText('green', '✓')} ${styleText('cyan', pkg)} ${styleText('dim', `→ found in ${existingCatalog!.name} catalog`)}`)
       }
       catalogEntries.push({ name: pkg, catalogRef: getCatalogRef(result.catalogName) })
     }
@@ -130,7 +130,7 @@ export async function handleCatalogInstall(
 
   if (!pkgJsonPath) {
     if (!ctx?.programmatic) {
-      console.error(c.red('✗ No package.json found'))
+      console.error(styleText('red', '✗ No package.json found'))
       process.exit(1)
     }
     throw new Error('No package.json found')

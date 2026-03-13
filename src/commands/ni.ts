@@ -1,7 +1,7 @@
 import type { Choice } from '@posva/prompts'
 import process from 'node:process'
+import { styleText } from 'node:util'
 import prompts from '@posva/prompts'
-import c from 'ansis'
 import { Fzf } from 'fzf'
 import { handleCatalogInstall } from '../catalog/handler'
 import { fetchNpmPackages } from '../fetch'
@@ -75,7 +75,7 @@ runCli(async (agent, args, ctx) => {
     const { mode } = await prompts({
       type: 'select',
       name: 'mode',
-      message: `install ${c.yellow(dependency.name)} as`,
+      message: `install ${styleText('yellow', dependency.name)} as`,
       choices: [
         {
           title: 'prod',
