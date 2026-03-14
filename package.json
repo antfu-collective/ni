@@ -51,7 +51,7 @@
     "build": "tsdown",
     "release": "bumpp",
     "typecheck": "tsc --noEmit",
-    "prepare": "npx simple-git-hooks",
+    "prepare": "simple-git-hooks",
     "lint": "eslint",
     "test": "vitest"
   },
@@ -60,6 +60,17 @@
     "package-manager-detector": "catalog:prod",
     "tinyexec": "catalog:prod",
     "tinyglobby": "catalog:prod"
+  },
+  "inlinedDependencies": {
+    "fast-npm-meta": "1.4.2",
+    "yaml": "2.8.2",
+    "pnpm-workspace-yaml": "1.6.0",
+    "ini": "6.0.0",
+    "kleur": "4.1.5",
+    "@posva/prompts": "2.4.4",
+    "sisteransi": "1.0.5",
+    "isexe": "4.0.0",
+    "which": "6.0.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:dev",
@@ -86,16 +97,6 @@
   },
   "lint-staged": {
     "*": "eslint --fix"
-  },
-  "inlinedDependencies": {
-    "fast-npm-meta": "1.4.2",
-    "yaml": "2.8.2",
-    "pnpm-workspace-yaml": "1.6.0",
-    "ini": "6.0.0",
-    "kleur": "4.1.5",
-    "@posva/prompts": "2.4.4",
-    "sisteransi": "1.0.5",
-    "isexe": "4.0.0",
-    "which": "6.0.1"
   }
+
 }

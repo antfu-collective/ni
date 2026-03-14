@@ -1,6 +1,7 @@
 shellEmulator: true
 
 trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 604800 # 7 days
 
 packages: []
 catalogs:
@@ -28,7 +29,6 @@ catalogs:
     fast-npm-meta: ^1.4.2
     ini: ^6.0.0
     pnpm-workspace-yaml: ^1.6.0
-
     which: ^6.0.1
 onlyBuiltDependencies:
   - esbuild
