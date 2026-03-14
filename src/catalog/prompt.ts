@@ -1,6 +1,6 @@
 import type { CatalogConfig } from './types'
+import { styleText } from 'node:util'
 import prompts from '@posva/prompts'
-import c from 'ansis'
 
 const SKIP = '__skip__'
 const CREATE_NEW = '__create_new__'
@@ -31,11 +31,11 @@ export async function promptSelectCatalog(
   const { catalog } = await prompts({
     type: 'select',
     name: 'catalog',
-    message: `select catalog for ${c.yellow(pkgName)}`,
+    message: `select catalog for ${styleText('yellow', pkgName)}`,
     choices: [
       ...catalogChoices,
-      { title: c.dim('create new catalog'), value: CREATE_NEW },
-      { title: c.dim('skip (install without catalog)'), value: SKIP },
+      { title: styleText('dim', 'create new catalog'), value: CREATE_NEW },
+      { title: styleText('dim', 'skip (install without catalog)'), value: SKIP },
     ],
   })
 

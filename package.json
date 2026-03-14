@@ -56,7 +56,6 @@
     "test": "vitest"
   },
   "dependencies": {
-    "ansis": "catalog:prod",
     "fzf": "catalog:prod",
     "package-manager-detector": "catalog:prod",
     "tinyexec": "catalog:prod",

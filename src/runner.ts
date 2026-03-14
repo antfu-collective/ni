@@ -4,8 +4,8 @@ import type { DetectOptions } from './detect'
 /* eslint-disable no-console */
 import { resolve } from 'node:path'
 import process from 'node:process'
+import { styleText } from 'node:util'
 import prompts from '@posva/prompts'
-import c from 'ansis'
 import { AGENTS } from 'package-manager-detector'
 import { x } from 'tinyexec'
 import { version } from '../package.json'
@@ -59,7 +59,7 @@ export async function runCli(fn: Runner, options: DetectOptions & RunOptions & {
   }
   catch (error) {
     if (error instanceof UnsupportedCommand && !options.programmatic)
-      console.log(c.red(`\u2717 ${error.message}`))
+      console.log(styleText('red', `\u2717 ${error.message}`))
 
     if (!options.programmatic)
       process.exit(1)
@@ -140,21 +140,21 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
     const agentVersionPromise = agentPromise.then(a => a && getV(a))
     const nodeVersionPromise = getV('node')
 
-    console.log(`@antfu/ni  ${c.cyan`v${version}`}`)
-    console.log(`node       ${c.green(await nodeVersionPromise)}`)
+    console.log(`@antfu/ni  ${styleText('cyan', `v${version}`)}`)
+    console.log(`node       ${styleText('green', await nodeVersionPromise)}`)
     const [agent, agentVersion] = await Promise.all([agentPromise, agentVersionPromise])
     if (agent)
-      console.log(`${agent.padEnd(10)} ${c.blue(agentVersion)}`)
+      console.log(`${agent.padEnd(10)} ${styleText('blue', agentVersion)}`)
     else
       console.log('agent      no lock file')
     const [globalAgent, globalAgentVersion] = await Promise.all([globalAgentPromise, globalAgentVersionPromise])
-    console.log(`${(`${globalAgent} -g`).padEnd(10)} ${c.blue(globalAgentVersion)}`)
+    console.log(`${(`${globalAgent} -g`).padEnd(10)} ${styleText('blue', globalAgentVersion)}`)
     return
   }
 
   if (args.length === 1 && ['-h', '--help'].includes(args[0])) {
-    const dash = c.dim('-')
-    console.log(c.green.bold('@antfu/ni') + c.dim` use the right package manager v${version}\n`)
+    const dash = styleText('dim', '-')
+    console.log(`${styleText(['green', 'bold'], '@antfu/ni')} ${styleText('dim', `use the right package manager v${version}`)}\n`)
     console.log(`ni    ${dash}  install`)
     console.log(`nr    ${dash}  run`)
     console.log(`nlx   ${dash}  execute`)
@@ -165,7 +165,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
     console.log(`nd    ${dash}  dedupe dependencies`)
     console.log(`ni -v ${dash}  show used agent`)
     console.log(`ni -i ${dash}  interactive package management`)
-    console.log(c.yellow('\ncheck https://github.com/antfu/ni for more documentation.'))
+    console.log(styleText('yellow', '\ncheck https://github.com/antfu/ni for more documentation.'))
     return
   }
 
