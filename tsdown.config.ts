@@ -6,7 +6,7 @@ export default defineConfig({
   dts: true,
   exports: true,
   deps: {
-    alwaysBundle: [
+    onlyBundle: [
       'which',
       'ini',
       '@posva/prompts',
@@ -14,8 +14,6 @@ export default defineConfig({
       'yaml',
       'fast-npm-meta',
       'isexe',
-      'supports-color',
-      'has-flag',
       'kleur',
       'sisteransi',
     ],
