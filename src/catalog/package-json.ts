@@ -37,5 +37,11 @@ export function updatePackageJsonCatalogRefs(
     data[depType][entry.name] = entry.catalogRef
   }
 
+  const sorted: Record<string, string> = {}
+  for (const key of Object.keys(data[depType]).sort((a, b) => a.localeCompare(b))) {
+    sorted[key] = data[depType][key]
+  }
+  data[depType] = sorted
+
   fs.writeFileSync(pkgJsonPath, `${JSON.stringify(data, null, indent)}\n`)
 }
