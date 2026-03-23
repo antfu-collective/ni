@@ -6,16 +6,16 @@ trustPolicyIgnoreAfter: 604800 # 7 days
 packages: []
 catalogs:
   dev:
-    '@antfu/eslint-config': ^7.7.2
+    '@antfu/eslint-config': ^7.7.3
     '@types/ini': ^4.1.1
     '@types/node': ^25.5.0
     '@types/which': ^3.0.4
-    bumpp: ^10.4.1
-    eslint: ^10.0.3
+    bumpp: ^11.0.1
+    eslint: ^10.1.0
     lint-staged: ^16.4.0
     simple-git-hooks: ^2.13.1
     taze: ^19.10.0
-    tsdown: ^0.21.2
+    tsdown: ^0.21.4
     tsx: ^4.21.0
     typescript: ^5.9.3
     vitest: ^4.1.0
