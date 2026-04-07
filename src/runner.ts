@@ -165,6 +165,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
     console.log(`nd    ${dash}  dedupe dependencies`)
     console.log(`ni -v ${dash}  show used agent`)
     console.log(`ni -i ${dash}  interactive package management`)
+    console.log(`ni ?  ${dash}  dry run (print the resolved command)`)
     console.log(styleText('yellow', '\ncheck https://github.com/antfu/ni for more documentation.'))
     return
   }
