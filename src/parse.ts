@@ -77,6 +77,23 @@ export const parseNr = <Runner>(async (agent, args, ctx) => {
   if (args.includes('-p'))
     args = exclude(args, '-p')
 
+  // Fix workspace flag parsing: merge `-w value` or `--workspace value` into `-w=value` or `--workspace=value`
+  // to prevent npm from interpreting the flag as boolean true
+  const processedArgs: string[] = []
+  let i = 0
+  while (i < args.length) {
+    const arg = args[i]
+    if ((arg === '-w' || arg === '--workspace') && i + 1 < args.length && !args[i + 1].startsWith('-')) {
+      processedArgs.push(`${arg}=${args[i + 1]}`)
+      i += 2
+    }
+    else {
+      processedArgs.push(arg)
+      i++
+    }
+  }
+  args = processedArgs
+
   const cmd = runWithNode ? { command: 'node', args } : getCommand(agent, 'run', args)
 
   if (ctx?.cwd)
