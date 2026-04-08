@@ -152,6 +152,18 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
     return
   }
 
+  if (args.length === 1 && args[0] === '--agent') {
+    const isGlobal = args.includes('-g')
+    const agent = isGlobal
+      ? await getGlobalAgent()
+      : (await detect({ ...options, cwd })) || (await getDefaultAgent(programmatic))
+    if (agent && agent !== 'prompt')
+      process.stdout.write(`${agent}\n`)
+    else
+      process.stdout.write('unknown\n')
+    return
+  }
+
   if (args.length === 1 && ['-h', '--help'].includes(args[0])) {
     const dash = styleText('dim', '-')
     console.log(`${styleText(['green', 'bold'], '@antfu/ni')} ${styleText('dim', `use the right package manager v${version}`)}\n`)
@@ -163,7 +175,8 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
     console.log(`nci   ${dash}  clean install`)
     console.log(`na    ${dash}  agent alias`)
     console.log(`nd    ${dash}  dedupe dependencies`)
-    console.log(`ni -v ${dash}  show used agent`)
+    console.log(`ni -v       ${dash}  show used agent`)
+    console.log(`ni --agent  ${dash}  print detected agent name (for scripting)`)
     console.log(`ni -i ${dash}  interactive package management`)
     console.log(`ni ?  ${dash}  dry run (print the resolved command)`)
     console.log(styleText('yellow', '\ncheck https://github.com/antfu/ni for more documentation.'))
