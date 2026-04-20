@@ -23,6 +23,7 @@ it('has correct defaults', async () => {
     runAgent: undefined,
     useSfw: false,
     catalog: true,
+    hideLastCommand: false,
   })
 })
 
@@ -38,6 +39,7 @@ it('loads .nirc', async () => {
     runAgent: undefined,
     useSfw: true,
     catalog: true,
+    hideLastCommand: false,
   })
 })
 
@@ -55,5 +57,24 @@ it('reads environment variable config', async () => {
     runAgent: undefined,
     useSfw: true,
     catalog: true,
+    hideLastCommand: false,
   })
+})
+
+it('enables hideLastCommand via NI_HIDE_LAST_COMMAND env var', async () => {
+  vi.stubEnv('NI_HIDE_LAST_COMMAND', 'true')
+
+  const { getConfig } = await import('../../src/config')
+  const config = await getConfig()
+
+  expect(config.hideLastCommand).toBe(true)
+})
+
+it('keeps hideLastCommand false when NI_HIDE_LAST_COMMAND is not "true"', async () => {
+  vi.stubEnv('NI_HIDE_LAST_COMMAND', 'false')
+
+  const { getConfig } = await import('../../src/config')
+  const config = await getConfig()
+
+  expect(config.hideLastCommand).toBe(false)
 })

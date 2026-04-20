@@ -7,6 +7,7 @@ import { getCompletionSuggestions, rawBashCompletionScript, rawFishCompletionScr
 import { readPackageScripts, readWorkspaceScripts } from '../package'
 import { parseNr } from '../parse'
 import { runCli } from '../runner'
+import { getConfig } from '../config'
 import { dump, load } from '../storage'
 import { limitText } from '../utils'
 
@@ -17,13 +18,14 @@ runCli(async (agent, args, ctx) => {
     const terminalColumns = process.stdout?.columns || 80
 
     const last = storage.lastRunCommand
+    const { hideLastCommand } = await getConfig()
     const choices = raw.reduce<Choice[]>((acc, { key, description }) => {
       const item = {
         title: key,
         value: key,
         description: limitText(description, terminalColumns - 15),
       }
-      if (last && key === last) {
+      if (!hideLastCommand && last && key === last) {
         return [item, ...acc]
       }
       return [...acc, item]
