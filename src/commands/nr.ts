@@ -4,10 +4,10 @@ import process from 'node:process'
 import prompts from '@posva/prompts'
 import { byLengthAsc, Fzf } from 'fzf'
 import { getCompletionSuggestions, rawBashCompletionScript, rawFishCompletionScript, rawZshCompletionScript } from '../completion'
+import { getConfig } from '../config'
 import { readPackageScripts, readWorkspaceScripts } from '../package'
 import { parseNr } from '../parse'
 import { runCli } from '../runner'
-import { getConfig } from '../config'
 import { dump, load } from '../storage'
 import { limitText } from '../utils'
 
@@ -18,14 +18,14 @@ runCli(async (agent, args, ctx) => {
     const terminalColumns = process.stdout?.columns || 80
 
     const last = storage.lastRunCommand
-    const { hideLastCommand } = await getConfig()
+    const { noLastCommand } = await getConfig()
     const choices = raw.reduce<Choice[]>((acc, { key, description }) => {
       const item = {
         title: key,
         value: key,
         description: limitText(description, terminalColumns - 15),
       }
-      if (!hideLastCommand && last && key === last) {
+      if (!noLastCommand && last && key === last) {
         return [item, ...acc]
       }
       return [...acc, item]
