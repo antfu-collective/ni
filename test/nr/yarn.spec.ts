@@ -21,3 +21,6 @@ it('script', _('dev', 'yarn run dev'))
 it('script with arguments', _('build --watch -o', 'yarn run build --watch -o'))
 
 it('colon', _('build:dev', 'yarn run build:dev'))
+
+// https://github.com/antfu-collective/ni/issues/322
+it('workspace flag before script', _('-w packages/foo test', 'yarn run -w=packages/foo test'))

@@ -21,3 +21,8 @@ it('script', _('dev', 'pnpm run dev'))
 it('script with arguments', _('build --watch -o', 'pnpm run build --watch -o'))
 
 it('colon', _('build:dev', 'pnpm run build:dev'))
+
+// https://github.com/antfu-collective/ni/issues/322
+it('workspace flag before script', _('-w packages/foo test', 'pnpm run -w=packages/foo test'))
+
+it('workspace long flag after script', _('test --workspace packages/foo', 'pnpm run test --workspace=packages/foo'))
