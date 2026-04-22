@@ -56,6 +56,9 @@ export const parseNr = <Runner>(async (agent, args, ctx) => {
   if (args.length === 0)
     args.push('start')
 
+  if (args[0] === '-p')
+    args = args.slice(1)
+
   const runAgent = await getRunAgent()
 
   let runWithNode = false
@@ -73,9 +76,6 @@ export const parseNr = <Runner>(async (agent, args, ctx) => {
     args = exclude(args, '--if-present')
     hasIfPresent = true
   }
-
-  if (args.includes('-p'))
-    args = exclude(args, '-p')
 
   // Fix workspace flag parsing: merge `-w value` or `--workspace value` into `-w=value` or `--workspace=value`
   // to prevent npm from interpreting the flag as boolean true
