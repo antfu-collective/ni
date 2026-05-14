@@ -41,6 +41,23 @@ runCli(async (agent, args, ctx) => {
     // https://github.com/terkelg/prompts/issues/362
     let isExited = false
 
+    // Add fzf-style Ctrl+J/Ctrl+K navigation. Mutates the key object before the
+    // prompt's own keypress handler runs, so the library sees a regular up/down.
+    // Ctrl+J arrives as { name: 'enter' } (terminals send \r for Enter, so this
+    // doesn't conflict). Ctrl+K arrives as { name: 'k', ctrl: true }.
+    const fzfKeyHandler = (_str: string, key: { name?: string, ctrl?: boolean }) => {
+      if (!key)
+        return
+      if (key.ctrl && key.name === 'k') {
+        key.ctrl = false
+        key.name = 'up'
+      }
+      else if (!key.ctrl && key.name === 'enter') {
+        key.name = 'down'
+      }
+    }
+    process.stdin.prependListener('keypress', fzfKeyHandler)
+
     try {
       const { fn } = await prompts({
         name: 'fn',
@@ -64,6 +81,9 @@ runCli(async (agent, args, ctx) => {
     }
     catch {
       process.exit(1)
+    }
+    finally {
+      process.stdin.removeListener('keypress', fzfKeyHandler)
     }
   }
 
