@@ -1,3 +1,6 @@
+minimumReleaseAgeExclude:
+  - '@types/node@26.0.1'
+  - fast-npm-meta@2.1.0
 shellEmulator: true
 
 trustPolicy: no-downgrade
@@ -6,31 +9,34 @@ trustPolicyIgnoreAfter: 604800 # 7 days
 packages: []
 catalogs:
   dev:
-    '@antfu/eslint-config': ^7.7.3
+    '@antfu/eslint-config': ^9.1.0
     '@types/ini': ^4.1.1
-    '@types/node': ^25.5.0
+    '@types/node': ^26.0.1
     '@types/which': ^3.0.4
-    bumpp: ^11.0.1
-    eslint: ^10.1.0
-    lint-staged: ^16.4.0
+    bumpp: ^11.1.0
+    eslint: ^10.5.0
+    lint-staged: ^17.0.8
     simple-git-hooks: ^2.13.1
-    taze: ^19.10.0
-    tsdown: ^0.21.4
-    tsx: ^4.21.0
-    typescript: ^5.9.3
-    vitest: ^4.1.0
+    taze: ^19.14.1
+    tsdown: ^0.22.3
+    tsx: ^4.22.4
+    typescript: ^6.0.3
+    vitest: ^4.1.9
   prod:
     fzf: ^0.5.2
     package-manager-detector: ^1.6.0
-    tinyexec: ^1.0.4
-    tinyglobby: ^0.2.15
+    tinyexec: ^1.2.4
+    tinyglobby: ^0.2.17
   prod-inlined:
     '@posva/prompts': ^2.4.4
-    fast-npm-meta: ^1.4.2
-    ini: ^6.0.0
-    pnpm-workspace-yaml: ^1.6.0
-    which: ^6.0.1
+    fast-npm-meta: ^2.1.0
+    ini: ^7.0.0
+    pnpm-workspace-yaml: ^1.6.1
+    which: ^7.0.0
 onlyBuiltDependencies:
   - esbuild
   - simple-git-hooks
   - unrs-resolver
+allowBuilds:
+  esbuild: true
+  simple-git-hooks: true

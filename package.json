@@ -2,7 +2,7 @@
   "name": "@antfu/ni",
   "type": "module",
   "version": "30.1.0",
-  "packageManager": "pnpm@10.32.1",
+  "packageManager": "pnpm@11.9.0",
   "description": "Use the right package manager",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -62,15 +62,15 @@
     "tinyglobby": "catalog:prod"
   },
   "inlinedDependencies": {
-    "fast-npm-meta": "1.4.2",
-    "yaml": "2.8.2",
-    "pnpm-workspace-yaml": "1.6.0",
-    "ini": "6.0.0",
-    "kleur": "4.1.5",
     "@posva/prompts": "2.4.4",
-    "sisteransi": "1.0.5",
+    "fast-npm-meta": "2.1.0",
+    "ini": "7.0.0",
     "isexe": "4.0.0",
-    "which": "6.0.1"
+    "kleur": "4.1.5",
+    "pnpm-workspace-yaml": "1.6.1",
+    "sisteransi": "1.0.5",
+    "which": "7.0.0",
+    "yaml": "2.9.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:dev",
