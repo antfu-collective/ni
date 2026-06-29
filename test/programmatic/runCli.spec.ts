@@ -7,6 +7,18 @@ import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 
 import { AGENTS, parseNa, parseNi, parseNlx, parseNun, parseNup, runCli } from '../../src'
 
+vi.mock('tinyexec', async (importOriginal) => {
+  const mod = await importOriginal() as any
+  return {
+    ...mod,
+    x: (cmd: string, args?: string[]) => {
+      // break execution flow for easier snapshotting
+      // eslint-disable-next-line no-throw-literal
+      throw { command: [cmd, ...(args ?? [])].join(' ') }
+    },
+  }
+})
+
 let basicLog: MockInstance, errorLog: MockInstance, warnLog: MockInstance, infoLog: MockInstance
 
 function runCliTest(fixtureName: string, agent: string, runner: Runner, args: string[]) {
@@ -40,18 +52,6 @@ beforeAll(() => {
   warnLog = vi.spyOn(console, 'warn')
   errorLog = vi.spyOn(console, 'error')
   infoLog = vi.spyOn(console, 'info')
-
-  vi.mock('tinyexec', async (importOriginal) => {
-    const mod = await importOriginal() as any
-    return {
-      ...mod,
-      x: (cmd: string, args?: string[]) => {
-        // break execution flow for easier snapshotting
-        // eslint-disable-next-line no-throw-literal
-        throw { command: [cmd, ...(args ?? [])].join(' ') }
-      },
-    }
-  })
 })
 
 afterAll(() => {
@@ -106,5 +106,13 @@ describe('debug mode', () => {
     expect(basicLog).toHaveBeenCalled()
 
     expect(basicLog.mock.calls[0][0]).toMatchSnapshot()
+  })
+
+  it('quotes arguments with spaces', async () => {
+    basicLog.mockClear()
+
+    await runCliTest('lockfile', 'pnpm', parseNi, ['pkg with space', '?'])()
+
+    expect(basicLog.mock.calls[0][0]).toBe('pnpm add "pkg with space"')
   })
 })

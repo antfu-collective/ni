@@ -12,7 +12,7 @@ import { version } from '../package.json'
 import { getDefaultAgent, getGlobalAgent, getUseSfw } from './config'
 import { detect } from './detect'
 import { getEnvironmentOptions } from './environment'
-import { getCommand, UnsupportedCommand } from './parse'
+import { getCommand, serializeCommand, UnsupportedCommand } from './parse'
 import { cmdExists, remove } from './utils'
 
 const DEBUG_SIGN = '?'
@@ -156,7 +156,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
     const isGlobal = args.includes('-g')
     const agent = isGlobal
       ? await getGlobalAgent()
-      : (await detect({ ...options, cwd })) || (await getDefaultAgent(programmatic))
+      : (await detect({ ...options, cwd, programmatic: true })) || (await getDefaultAgent(programmatic))
     if (agent && agent !== 'prompt')
       process.stdout.write(`${agent}\n`)
     else
@@ -219,8 +219,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
   }
 
   if (debug) {
-    const commandStr = [command.command, ...command.args].join(' ')
-    console.log(commandStr)
+    console.log(serializeCommand(command))
     return
   }
 
