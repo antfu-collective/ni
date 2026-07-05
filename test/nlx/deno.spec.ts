@@ -12,7 +12,7 @@ function _(arg: string, expected: string) {
   }
 }
 
-it('single uninstall', _('esbuild', 'deno run npm:esbuild'))
-it('multiple', _('esbuild --version', 'deno run npm:esbuild --version'))
-it('vitest', _('vitest', 'deno run npm:vitest'))
-it('with args', _('typescript --version', 'deno run npm:typescript --version'))
+it('single uninstall', _('esbuild', 'deno x esbuild'))
+it('multiple', _('esbuild --version', 'deno x esbuild --version'))
+it('vitest', _('vitest', 'deno x vitest'))
+it('with args', _('typescript --version', 'deno x typescript --version'))
