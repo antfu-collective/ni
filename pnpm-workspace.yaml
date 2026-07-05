@@ -24,7 +24,7 @@ catalogs:
     vitest: ^4.1.9
   prod:
     fzf: ^0.5.2
-    package-manager-detector: ^1.6.0
+    package-manager-detector: ^1.7.0
     tinyexec: ^1.2.4
     tinyglobby: ^0.2.17
   prod-inlined:
