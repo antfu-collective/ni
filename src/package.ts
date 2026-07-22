@@ -39,7 +39,11 @@ export function readPackageScripts(ctx: RunnerContext | undefined): PackageScrip
     .map(([key, cmd]) => ({
       key,
       cmd,
-      description: scriptsInfo[key] || rawScripts[`?${key}`] || cmd,
+      // when `scripts-info` provides a description, show it alongside the
+      // actual command on a second line, so nothing gets hidden
+      description: scriptsInfo[key]
+        ? `${scriptsInfo[key]}\n${cmd}`
+        : (rawScripts[`?${key}`] || cmd),
     }))
 
   if (scripts.length === 0 && !ctx?.programmatic) {

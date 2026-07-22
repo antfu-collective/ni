@@ -153,6 +153,7 @@ nr
 
 # interactively select the script to run
 # supports https://www.npmjs.com/package/npm-scripts-info convention
+# (the info text is shown above the command it runs)
 ```
 
 ```bash

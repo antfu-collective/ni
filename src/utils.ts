@@ -92,6 +92,16 @@ export function limitText(text: string, maxWidth: number) {
   return `${text.slice(0, maxWidth)}${styleText('dim', '…')}`
 }
 
+// Same as `limitText`, but limits each line independently so a multi-line
+// description (e.g. `scripts-info` text + command) doesn't get truncated
+// mid-way through an earlier line.
+export function limitMultilineText(text: string, maxWidth: number) {
+  return text
+    .split('\n')
+    .map(line => limitText(line, maxWidth))
+    .join('\n')
+}
+
 export function terminalLink(text: string, url: string, options?: { fallback?: (text: string, url: string) => string }): string {
   // Use OSC 8 hyperlink escape sequence
   // See https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda

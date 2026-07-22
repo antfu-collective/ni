@@ -9,7 +9,7 @@ import { readPackageScripts, readWorkspaceScripts } from '../package'
 import { parseNr } from '../parse'
 import { runCli } from '../runner'
 import { dump, load } from '../storage'
-import { limitText } from '../utils'
+import { limitMultilineText } from '../utils'
 
 runCli(async (agent, args, ctx) => {
   const storage = await load()
@@ -23,7 +23,7 @@ runCli(async (agent, args, ctx) => {
       const item = {
         title: key,
         value: key,
-        description: limitText(description, terminalColumns - 15),
+        description: limitMultilineText(description, terminalColumns - 15),
       }
       if (!noLastCommand && last && key === last) {
         return [item, ...acc]
