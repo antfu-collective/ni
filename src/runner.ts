@@ -232,6 +232,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
         stdio: 'inherit',
         cwd: command.cwd ?? cwd,
       },
+      nodePath: false,
       throwOnError: true,
     },
   )

@@ -1,4 +1,8 @@
 import type { Runner } from '../../src'
+import fs from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import path from 'node:path'
+import process from 'node:process'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { runCli } from '../../src'
 
@@ -10,6 +14,18 @@ const mocks = vi.hoisted(() => ({
 vi.mock('../../src/detect', () => ({
   detect: mocks.detectSpy,
 }))
+
+async function writeFixtureCommand(directory: string, selectedBinary: string) {
+  const isWindows = process.platform === 'win32'
+  const commandPath = path.join(directory, `fixture-pm${isWindows ? '.cmd' : ''}`)
+  const command = isWindows
+    ? `@echo ${selectedBinary}>"%NI_PATH_TEST_MARKER%"\r\n`
+    : `#!/bin/sh\nprintf '${selectedBinary}' > "$NI_PATH_TEST_MARKER"\n`
+
+  await fs.writeFile(commandPath, command)
+  if (!isWindows)
+    await fs.chmod(commandPath, 0o755)
+}
 
 describe('runCli', () => {
   afterEach(() => {
@@ -44,6 +60,56 @@ describe('runCli', () => {
   it('accepts options as input', async () => {
     await runCli(mocks.baseRunFnSpy, { autoInstall: true, programmatic: true })
     expect(mocks.detectSpy).toHaveBeenCalledWith({ autoInstall: true, programmatic: true, cwd: expect.any(String) })
+  })
+
+  it('uses the system PATH for package manager commands', async () => {
+    const fixture = await fs.mkdtemp(path.join(tmpdir(), 'ni-path-'))
+    const localBin = path.join(fixture, 'node_modules', '.bin')
+    const systemBin = path.join(fixture, 'system-bin')
+    const marker = path.join(fixture, 'selected.txt')
+    const previousCwd = process.cwd()
+    const previousPath = process.env.PATH
+    const previousMarker = process.env.NI_PATH_TEST_MARKER
+    let selectedBinary: string | undefined
+
+    try {
+      await Promise.all([
+        fs.mkdir(localBin, { recursive: true }),
+        fs.mkdir(systemBin, { recursive: true }),
+      ])
+      await Promise.all([
+        writeFixtureCommand(localBin, 'local'),
+        writeFixtureCommand(systemBin, 'system'),
+      ])
+
+      process.chdir(fixture)
+      process.env.PATH = `${systemBin}${path.delimiter}${previousPath ?? ''}`
+      process.env.NI_PATH_TEST_MARKER = marker
+
+      await runCli(
+        () => ({ command: 'fixture-pm', args: [] }),
+        { cwd: fixture, detectVolta: false, programmatic: true },
+      )
+      selectedBinary = (await fs.readFile(marker, 'utf8')).trim()
+    }
+    finally {
+      process.chdir(previousCwd)
+      if (previousPath === undefined)
+        delete process.env.PATH
+      else
+        process.env.PATH = previousPath
+      if (previousMarker === undefined)
+        delete process.env.NI_PATH_TEST_MARKER
+      else
+        process.env.NI_PATH_TEST_MARKER = previousMarker
+      await fs.rm(fixture, { force: true, recursive: true })
+    }
+
+    expect(selectedBinary).toBe('system')
+    expect(process.cwd()).toBe(previousCwd)
+    expect(process.env.PATH).toBe(previousPath)
+    expect(process.env.NI_PATH_TEST_MARKER).toBe(previousMarker)
+    await expect(fs.access(fixture)).rejects.toThrow()
   })
 
   it('merges inputs and environment prioritizing inputs', async () => {
