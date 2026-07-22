@@ -34,6 +34,8 @@ it('if-present', supportsNodeRun ? _('test --if-present', { command: 'node', arg
 
 it('script', supportsNodeRun ? _('dev', { command: 'node', args: ['--run', 'dev'] }) : expectError('dev'))
 
+it('leading monorepo flag is stripped', supportsNodeRun ? _('-p dev', { command: 'node', args: ['--run', 'dev'] }) : expectError('-p dev'))
+
 it('script with arguments', supportsNodeRun ? _('build --watch -o', { command: 'node', args: ['--run', 'build', '--watch', '-o'] }) : expectError('build --watch -o'))
 
 it('colon', supportsNodeRun ? _('build:dev', { command: 'node', args: ['--run', 'build:dev'] }) : expectError('build:dev'))
