@@ -40,7 +40,7 @@ exports[`lockfile > deno > ni foo -D 1`] = `"deno add foo -D"`;
 
 exports[`lockfile > deno > ni foo 1`] = `"deno add foo"`;
 
-exports[`lockfile > deno > nlx 1`] = `"deno run npm:foo"`;
+exports[`lockfile > deno > nlx 1`] = `"deno x foo"`;
 
 exports[`lockfile > deno > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
@@ -232,7 +232,7 @@ exports[`packager > deno > ni foo -D 1`] = `"deno add foo -D"`;
 
 exports[`packager > deno > ni foo 1`] = `"deno add foo"`;
 
-exports[`packager > deno > nlx 1`] = `"deno run npm:foo"`;
+exports[`packager > deno > nlx 1`] = `"deno x foo"`;
 
 exports[`packager > deno > nun -g foo 1`] = `"npm uninstall -g foo"`;
 

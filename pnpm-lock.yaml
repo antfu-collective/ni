@@ -50,8 +50,8 @@ catalogs:
       specifier: ^0.5.2
       version: 0.5.2
     package-manager-detector:
-      specifier: ^1.6.0
-      version: 1.6.0
+      specifier: ^1.7.0
+      version: 1.7.0
     tinyexec:
       specifier: ^1.2.4
       version: 1.2.4
@@ -84,7 +84,7 @@ importers:
         version: 0.5.2
       package-manager-detector:
         specifier: catalog:prod
-        version: 1.6.0
+        version: 1.7.0
       tinyexec:
         specifier: catalog:prod
         version: 1.2.4
@@ -2133,8 +2133,8 @@ packages:
     resolution: {integrity: sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==}
     engines: {node: '>=10'}
 
-  package-manager-detector@1.6.0:
-    resolution: {integrity: sha512-61A5ThoTiDG/C8s8UMZwSorAGwMJ0ERVGj2OjoW5pAalsNOg15+iQiPzrLJ4jhZ1HJzmC2PIHT2oEiH3R5fzNA==}
+  package-manager-detector@1.7.0:
+    resolution: {integrity: sha512-xg1eHpwYL/D/HEdWw2goFZP6vV0FH7W+PZ5rFkGjdIDLtxq7EkzBUeT3m+lndYCt8wKbmofUu1MUdMCXkCk9ZQ==}
 
   parse-gitignore@2.0.0:
     resolution: {integrity: sha512-RmVuCHWsfu0QPNW+mraxh/xjQVw/lhUCUru8Zni3Ctq3AoMhpDTq0OVdKS6iesd6Kqb7viCV3isAL43dciOSog==}
@@ -2676,13 +2676,13 @@ snapshots:
 
   '@antfu/install-pkg@1.1.0':
     dependencies:
-      package-manager-detector: 1.6.0
+      package-manager-detector: 1.7.0
       tinyexec: 1.2.4
 
   '@antfu/ni@30.1.0':
     dependencies:
       fzf: 0.5.2
-      package-manager-detector: 1.6.0
+      package-manager-detector: 1.7.0
       tinyexec: 1.2.4
       tinyglobby: 0.2.17
 
@@ -3585,7 +3585,7 @@ snapshots:
       args-tokenizer: 0.3.0
       cac: 7.0.0
       jsonc-parser: 3.3.1
-      package-manager-detector: 1.6.0
+      package-manager-detector: 1.7.0
       semver: 7.8.5
       tinyexec: 1.2.4
       tinyglobby: 0.2.17
@@ -4616,7 +4616,7 @@ snapshots:
     dependencies:
       p-limit: 3.1.0
 
-  package-manager-detector@1.6.0: {}
+  package-manager-detector@1.7.0: {}
 
   parse-gitignore@2.0.0: {}
 
@@ -4863,7 +4863,7 @@ snapshots:
       '@henrygd/queue': 1.2.0
       cac: 7.0.0
       ofetch: 1.5.1
-      package-manager-detector: 1.6.0
+      package-manager-detector: 1.7.0
       pathe: 2.0.3
       pnpm-workspace-yaml: 1.6.1
       restore-cursor: 5.1.0
