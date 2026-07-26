@@ -2,6 +2,30 @@
 
 exports[`debug mode > should return command results in plain text format 1`] = `"npm i @antfu/ni"`;
 
+exports[`lockfile > aube > na 1`] = `"aube"`;
+
+exports[`lockfile > aube > na run foo 1`] = `"aube run foo"`;
+
+exports[`lockfile > aube > ni --frozen 1`] = `"aube install --frozen-lockfile"`;
+
+exports[`lockfile > aube > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`lockfile > aube > ni 1`] = `"aube install"`;
+
+exports[`lockfile > aube > ni foo -D 1`] = `"aube add foo -D"`;
+
+exports[`lockfile > aube > ni foo 1`] = `"aube add foo"`;
+
+exports[`lockfile > aube > nlx 1`] = `"aube dlx foo"`;
+
+exports[`lockfile > aube > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`lockfile > aube > nun foo 1`] = `"aube remove foo"`;
+
+exports[`lockfile > aube > nup -i 1`] = `"aube update -i"`;
+
+exports[`lockfile > aube > nup 1`] = `"aube update"`;
+
 exports[`lockfile > bun > na 1`] = `"bun"`;
 
 exports[`lockfile > bun > na run foo 1`] = `"bun run foo"`;
@@ -193,6 +217,30 @@ exports[`lockfile > yarn@berry > nun foo 1`] = `"yarn remove foo"`;
 exports[`lockfile > yarn@berry > nup -i 1`] = `"yarn upgrade-interactive"`;
 
 exports[`lockfile > yarn@berry > nup 1`] = `"yarn upgrade"`;
+
+exports[`packager > aube > na 1`] = `"aube"`;
+
+exports[`packager > aube > na run foo 1`] = `"aube run foo"`;
+
+exports[`packager > aube > ni --frozen 1`] = `"aube install --frozen-lockfile"`;
+
+exports[`packager > aube > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`packager > aube > ni 1`] = `"aube install"`;
+
+exports[`packager > aube > ni foo -D 1`] = `"aube add foo -D"`;
+
+exports[`packager > aube > ni foo 1`] = `"aube add foo"`;
+
+exports[`packager > aube > nlx 1`] = `"aube dlx foo"`;
+
+exports[`packager > aube > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`packager > aube > nun foo 1`] = `"aube remove foo"`;
+
+exports[`packager > aube > nup -i 1`] = `"aube update -i"`;
+
+exports[`packager > aube > nup 1`] = `"aube update"`;
 
 exports[`packager > bun > na 1`] = `"bun"`;
 

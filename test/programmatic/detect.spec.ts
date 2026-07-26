@@ -30,7 +30,7 @@ afterAll(() => {
 
 const agents = [...AGENTS, 'unknown']
 const fixtures = ['lockfile', 'packager']
-const skippedAgents: string[] = ['aube', 'nub']
+const skippedAgents: string[] = ['nub']
 
 // matrix testing of: fixtures x agents
 fixtures.forEach(fixture => describe(fixture, () => agents.forEach((agent) => {

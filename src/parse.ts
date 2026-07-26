@@ -118,7 +118,8 @@ export const parseNup = <Runner>((agent, args) => {
 export const parseNd = <Runner>((agent, args) => {
   // https://yarnpkg.com/cli/dedupe#options
   // https://pnpm.io/cli/dedupe#--check
-  if (agent === 'pnpm')
+  // https://aube.jdx.dev/cli/dedupe
+  if (agent === 'pnpm' || agent === 'aube')
     args = args.map(i => i === '-c' ? '--check' : i)
 
   // https://docs.npmjs.com/cli/v11/commands/npm-dedupe#dry-run
