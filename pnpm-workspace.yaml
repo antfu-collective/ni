@@ -4,7 +4,7 @@ minimumReleaseAgeExclude:
 shellEmulator: true
 
 trustPolicy: no-downgrade
-trustPolicyIgnoreAfter: 604800 # 7 days
+trustPolicyIgnoreAfter: 10080 # 1 week
 
 packages: []
 catalogs:
