@@ -12,6 +12,8 @@ exports[`lockfile > pnpm 1`] = `"pnpm"`;
 
 exports[`lockfile > pnpm@6 1`] = `"pnpm"`;
 
+exports[`lockfile > pnpm-rush 1`] = `"pnpm-rush"`;
+
 exports[`lockfile > unknown 1`] = `undefined`;
 
 exports[`lockfile > yarn 1`] = `"yarn"`;
@@ -29,6 +31,8 @@ exports[`packager > npm 1`] = `"npm"`;
 exports[`packager > pnpm 1`] = `"pnpm"`;
 
 exports[`packager > pnpm@6 1`] = `"pnpm@6"`;
+
+exports[`packager > pnpm-rush 1`] = `"pnpm-rush"`;
 
 exports[`packager > unknown 1`] = `undefined`;
 

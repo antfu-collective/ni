@@ -158,6 +158,32 @@ exports[`lockfile > pnpm@6 > nup -i 1`] = `"pnpm update -i"`;
 
 exports[`lockfile > pnpm@6 > nup 1`] = `"pnpm update"`;
 
+exports[`lockfile > pnpm-rush > na 1`] = `"rush-pnpm"`;
+
+exports[`lockfile > pnpm-rush > na run foo 1`] = `"rush-pnpm run foo"`;
+
+exports[`lockfile > pnpm-rush > ni --frozen 1`] = `"rush-pnpm i --frozen-lockfile"`;
+
+exports[`lockfile > pnpm-rush > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`lockfile > pnpm-rush > ni 1`] = `"rush-pnpm i"`;
+
+exports[`lockfile > pnpm-rush > ni foo -D 1`] = `"rush-pnpm add foo -D"`;
+
+exports[`lockfile > pnpm-rush > ni foo 1`] = `"rush-pnpm add foo"`;
+
+exports[`lockfile > pnpm-rush > nlx --local 1`] = `"rush-pnpm exec foo"`;
+
+exports[`lockfile > pnpm-rush > nlx 1`] = `"rush-pnpm dlx foo"`;
+
+exports[`lockfile > pnpm-rush > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`lockfile > pnpm-rush > nun foo 1`] = `"rush-pnpm remove foo"`;
+
+exports[`lockfile > pnpm-rush > nup -i 1`] = `"rush-pnpm update -i"`;
+
+exports[`lockfile > pnpm-rush > nup 1`] = `"rush-pnpm update"`;
+
 exports[`lockfile > unknown > na 1`] = `"pnpm"`;
 
 exports[`lockfile > unknown > na run foo 1`] = `"pnpm run foo"`;
@@ -391,6 +417,32 @@ exports[`packager > pnpm@6 > nun foo 1`] = `"pnpm remove foo"`;
 exports[`packager > pnpm@6 > nup -i 1`] = `"pnpm update -i"`;
 
 exports[`packager > pnpm@6 > nup 1`] = `"pnpm update"`;
+
+exports[`packager > pnpm-rush > na 1`] = `"rush-pnpm"`;
+
+exports[`packager > pnpm-rush > na run foo 1`] = `"rush-pnpm run foo"`;
+
+exports[`packager > pnpm-rush > ni --frozen 1`] = `"rush-pnpm i --frozen-lockfile"`;
+
+exports[`packager > pnpm-rush > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`packager > pnpm-rush > ni 1`] = `"rush-pnpm i"`;
+
+exports[`packager > pnpm-rush > ni foo -D 1`] = `"rush-pnpm add foo -D"`;
+
+exports[`packager > pnpm-rush > ni foo 1`] = `"rush-pnpm add foo"`;
+
+exports[`packager > pnpm-rush > nlx --local 1`] = `"rush-pnpm exec foo"`;
+
+exports[`packager > pnpm-rush > nlx 1`] = `"rush-pnpm dlx foo"`;
+
+exports[`packager > pnpm-rush > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`packager > pnpm-rush > nun foo 1`] = `"rush-pnpm remove foo"`;
+
+exports[`packager > pnpm-rush > nup -i 1`] = `"rush-pnpm update -i"`;
+
+exports[`packager > pnpm-rush > nup 1`] = `"rush-pnpm update"`;
 
 exports[`packager > unknown > na 1`] = `"pnpm"`;
 
