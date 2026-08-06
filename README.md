@@ -12,7 +12,7 @@ npm i -g <b>@antfu/ni</b>
 </code>
 </pre>
 
-<a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.io/'>pnpm</a> · <a href='https://bun.sh/'>bun</a> · <a href='https://deno.land/'>deno</a>
+<a href='https://docs.npmjs.com/cli/v6/commands/npm'>npm</a> · <a href='https://yarnpkg.com'>yarn</a> · <a href='https://pnpm.io/'>pnpm</a> · <a href='https://bun.sh/'>bun</a> · <a href='https://deno.land/'>deno</a> · <a href='https://aube.jdx.dev/'>aube</a>
 
 <br>
 
@@ -26,6 +26,7 @@ ni
 # pnpm install
 # bun install
 # deno install
+# aube install
 ```
 
 ```bash
@@ -36,6 +37,7 @@ ni vite
 # pnpm add vite
 # bun add vite
 # deno add vite
+# aube add vite
 ```
 
 ```bash
@@ -46,6 +48,7 @@ ni @types/node -D
 # pnpm add -D @types/node
 # bun add -d @types/node
 # deno add -D @types/node
+# aube add -D @types/node
 ```
 
 ```bash
@@ -56,6 +59,7 @@ ni -P
 # pnpm i --production
 # bun install --production
 # (deno not supported)
+# aube install --production
 ```
 
 ```bash
@@ -67,6 +71,7 @@ ni --frozen
 # pnpm install --frozen-lockfile
 # bun install --frozen-lockfile
 # deno install --frozen
+# aube install --frozen-lockfile
 ```
 
 ```bash
@@ -77,6 +82,7 @@ ni -g eslint
 # pnpm add -g eslint
 # bun add -g eslint
 # deno install eslint
+# aube add -g eslint
 
 # this uses default agent, regardless your current working directory
 ```
@@ -146,6 +152,7 @@ nr dev --port=3000
 # pnpm run dev --port=3000
 # bun run dev --port=3000
 # deno task dev --port=3000
+# aube run dev --port=3000
 ```
 
 ```bash
@@ -201,6 +208,7 @@ nlx vitest
 # pnpm dlx vitest
 # bunx vitest
 # deno run npm:vitest
+# aube dlx vitest
 ```
 
 <br>
@@ -216,6 +224,7 @@ nup
 # pnpm update
 # bun update
 # deno upgrade
+# aube update
 ```
 
 ```bash
@@ -227,6 +236,7 @@ nup -i
 # pnpm update -i
 # bun update -i
 # deno outdated -u -i
+# aube update -i
 ```
 
 <br>
@@ -241,6 +251,7 @@ nun webpack
 # pnpm remove webpack
 # bun remove webpack
 # deno remove webpack
+# aube remove webpack
 ```
 
 ```bash
@@ -258,6 +269,7 @@ nun -g silent
 # pnpm remove -g silent
 # bun remove -g silent
 # deno uninstall -g silent
+# aube remove -g silent
 ```
 
 <br>
@@ -272,6 +284,7 @@ nci
 # pnpm install --frozen-lockfile
 # bun install --frozen-lockfile
 # deno cache --reload
+# aube install --frozen-lockfile
 ```
 
 <br>
@@ -284,6 +297,7 @@ nd
 # npm dedupe
 # yarn dedupe
 # pnpm dedupe
+# aube dedupe
 ```
 
 <br>
@@ -298,6 +312,7 @@ na
 # pnpm
 # bun
 # deno
+# aube
 ```
 
 ```bash
@@ -308,6 +323,7 @@ na run foo
 # pnpm run foo
 # bun run foo
 # deno task foo
+# aube run foo
 ```
 
 <br>
@@ -378,7 +394,7 @@ $Env:NI_CONFIG_FILE = 'C:\to\your\config\location'
 
 You can set `NI_AUTO_INSTALL=true` to enable automatic installation.
 
-If the corresponding package manager (**npm**, **yarn**, **pnpm**, **bun**, or **deno**) is not installed, it will install it globally before running the command.
+If the corresponding package manager (**npm**, **yarn**, **pnpm**, **bun**, **deno**, or **aube**) is not installed, it will install it globally before running the command.
 
 ### Integrations
 
@@ -409,7 +425,7 @@ asdf global ni latest
 
 **ni** assumes that you work with lock-files (and you should).
 
-Before `ni` runs the command, it detects your `yarn.lock` / `pnpm-lock.yaml` / `package-lock.json` / `bun.lock` / `bun.lockb` / `deno.json` / `deno.jsonc` to know the current package manager (or `packageManager` field in your packages.json if specified) using the [package-manager-detector](https://github.com/antfu-collective/package-manager-detector) package and then runs the corresponding [package-manager-detector command](https://github.com/antfu-collective/package-manager-detector/blob/main/src/commands.ts).
+Before `ni` runs the command, it detects your `yarn.lock` / `pnpm-lock.yaml` / `pnpm-workspace.yaml` / `package-lock.json` / `bun.lock` / `bun.lockb` / `deno.json` / `deno.jsonc` / `aube-lock.yaml` / `aube-workspace.yaml` to know the current package manager (or `packageManager` field in your packages.json if specified) using the [package-manager-detector](https://github.com/antfu-collective/package-manager-detector) package and then runs the corresponding [package-manager-detector command](https://github.com/antfu-collective/package-manager-detector/blob/main/src/commands.ts).
 
 ### Trouble shooting
 

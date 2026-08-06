@@ -1,3 +1,4 @@
+import type { AgentName } from 'package-manager-detector'
 import { existsSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
@@ -6,6 +7,10 @@ import { detect as detectPM } from 'package-manager-detector'
 import { INSTALL_PAGE } from 'package-manager-detector/constants'
 import { x } from 'tinyexec'
 import { cmdExists, terminalLink } from './utils'
+
+const INSTALL_PACKAGES: Partial<Record<AgentName, string>> = {
+  aube: '@endevco/aube',
+}
 
 export interface DetectOptions {
   autoInstall?: boolean
@@ -61,9 +66,10 @@ export async function detect({ autoInstall, programmatic, cwd }: DetectOptions =
         process.exit(1)
     }
 
+    const installPackage = INSTALL_PACKAGES[name] ?? name
     await x(
       'npm',
-      ['i', '-g', `${name}${version ? `@${version}` : ''}`],
+      ['i', '-g', `${installPackage}${version ? `@${version}` : ''}`],
       {
         nodeOptions: {
           stdio: 'inherit',
