@@ -166,7 +166,9 @@ export async function handleCatalogInstall(
 
   // If some packages were skipped, add them normally alongside install
   if (skippedPackages.length > 0) {
-    return getCommand(agent, 'add', [...skippedPackages, ...flags])
+    // bun uses `-d` instead of `-D`, #90
+    const addFlags = agent === 'bun' ? flags.map(f => f === '-D' ? '-d' : f) : flags
+    return getCommand(agent, 'add', [...skippedPackages, ...addFlags])
   }
 
   // All packages handled via catalogs, just run install

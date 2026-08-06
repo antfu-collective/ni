@@ -14,7 +14,7 @@ export function findClosestPackageJson(cwd: string): string | null {
   }
 }
 
-function detectIndent(content: string): string {
+export function detectIndent(content: string): string {
   const match = content.match(/^(\s+)"/m)
   return match?.[1] ?? '  '
 }

@@ -99,7 +99,7 @@ ni -i
 
 > Since v29.0.0
 
-When working in a pnpm workspace with [catalogs](https://pnpm.io/catalogs) configured in `pnpm-workspace.yaml`, `ni` automatically enters **catalog mode**. Instead of adding packages with pinned versions, it writes `catalog:` references into `package.json` and updates the workspace catalog.
+When working in a pnpm workspace with [catalogs](https://pnpm.io/catalogs) configured in `pnpm-workspace.yaml`, a Yarn Berry workspace with catalogs in `.yarnrc.yml`, or a [Bun workspace with catalogs](https://bun.com/docs/pm/catalogs) in `package.json`, `ni` automatically enters **catalog mode**. Instead of adding packages with pinned versions, it writes `catalog:` references into `package.json` and updates the workspace catalog.
 
 ```bash
 # Given pnpm-workspace.yaml with:
@@ -118,6 +118,21 @@ ni lodash
 # → fetches latest version, updates pnpm-workspace.yaml
 # → writes "lodash": "catalog:prod" to package.json
 # → runs pnpm install
+```
+
+For Bun, catalogs live in the root `package.json` instead, either nested under `workspaces` or at the top level:
+
+```bash
+# Given root package.json with:
+#   "workspaces": {
+#     "packages": ["packages/*"],
+#     "catalogs": { "prod": { "react": "^18.3.0" } }
+#   }
+
+ni react
+# → detects react in "prod" catalog
+# → writes "react": "catalog:prod" to package.json
+# → runs bun install
 ```
 
 When only a default catalog (`catalog:` top-level) is used, new packages are added directly without prompting. When only named catalogs exist, the default catalog is never offered.
