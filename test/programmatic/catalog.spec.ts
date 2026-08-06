@@ -226,3 +226,155 @@ describe('catalog handler - subdirectory', () => {
     expect(subPkg.dependencies.react).toBeUndefined()
   })
 })
+
+describe('catalog handler - bun named catalogs', () => {
+  it('package found in catalog → updates package.json, returns bun install', async () => {
+    const cwd = await createTempDir('bun')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('bun', ['react'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    expect(result!.command).toBe('bun')
+    expect(result!.args).toEqual(['install'])
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.dependencies.react).toBe('catalog:prod')
+  })
+
+  it('-D flag → writes to devDependencies', async () => {
+    const cwd = await createTempDir('bun')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('bun', ['react', '-D'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.devDependencies.react).toBe('catalog:prod')
+    expect(pkg.dependencies?.react).toBeUndefined()
+  })
+
+  it('unknown package in programmatic mode → skips catalog', async () => {
+    const cwd = await createTempDir('bun')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('bun', ['unknown-pkg'], { cwd, programmatic: true })
+
+    // In programmatic mode, unknown packages are skipped → falls through
+    expect(result).toBeUndefined()
+  })
+
+  it('mixed known/unknown packages with -D → normalizes to bun\'s -d flag', async () => {
+    const cwd = await createTempDir('bun')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('bun', ['react', 'unknown-pkg', '-D'], { cwd, programmatic: true })
+
+    // react is cataloged, unknown-pkg is skipped → add command for skipped ones
+    expect(result).toBeDefined()
+    expect(result!.command).toBe('bun')
+    expect(result!.args).toContain('unknown-pkg')
+    expect(result!.args).toContain('-d')
+    expect(result!.args).not.toContain('-D')
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.devDependencies.react).toBe('catalog:prod')
+  })
+})
+
+describe('catalog handler - bun default catalog only', () => {
+  it('package found → uses catalog: ref (no name)', async () => {
+    const cwd = await createTempDir('bun-default-only')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('bun', ['react'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    expect(result!.args).toEqual(['install'])
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.dependencies.react).toBe('catalog:')
+  })
+
+  it('new package → adds to default catalog without prompt', async () => {
+    const cwd = await createTempDir('bun-default-only')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('bun', ['lodash'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    expect(result!.args).toEqual(['install'])
+
+    // Check root package.json's nested workspaces.catalog was updated
+    const rootPkg = readJson(path.join(cwd, 'package.json'))
+    expect(rootPkg.workspaces.catalog.lodash).toBe('^1.0.0')
+
+    // Check package.json uses catalog:
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.dependencies.lodash).toBe('catalog:')
+  })
+})
+
+describe('catalog handler - bun top-level catalog fields', () => {
+  it('detects and writes catalogs defined at the top level of package.json', async () => {
+    const cwd = await createTempDir('bun-top-level')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('bun', ['lodash'], { cwd, programmatic: true })
+
+    expect(result).toBeUndefined()
+
+    const result2 = await handleCatalogInstall('bun', ['react'], { cwd, programmatic: true })
+    expect(result2).toBeDefined()
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.dependencies.react).toBe('catalog:')
+  })
+})
+
+describe('catalog handler - bun skip conditions', () => {
+  it('returns undefined when catalog config disabled', async () => {
+    const { getCatalog } = await import('../../src/config')
+    vi.mocked(getCatalog).mockResolvedValueOnce(false)
+
+    const cwd = await createTempDir('bun')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('bun', ['react'], { cwd, programmatic: true })
+    expect(result).toBeUndefined()
+  })
+})
+
+describe('catalog handler - bun subdirectory', () => {
+  it('finds closest package.json from subdirectory', async () => {
+    const cwd = await createTempDir('bun')
+    const subDir = path.join(cwd, 'packages', 'app')
+
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+    const result = await handleCatalogInstall('bun', ['react'], { cwd: subDir, programmatic: true })
+
+    expect(result).toBeDefined()
+
+    // Should write to the subdirectory's package.json (closest)
+    const pkg = readJson(path.join(subDir, 'package.json'))
+    expect(pkg.dependencies.react).toBe('catalog:prod')
+  })
+
+  it('-w flag targets workspace root package.json', async () => {
+    const cwd = await createTempDir('bun')
+    const subDir = path.join(cwd, 'packages', 'app')
+
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+    const result = await handleCatalogInstall('bun', ['react', '-w'], { cwd: subDir, programmatic: true })
+
+    expect(result).toBeDefined()
+
+    // Should write to root package.json, not subdirectory
+    const rootPkg = readJson(path.join(cwd, 'package.json'))
+    expect(rootPkg.dependencies.react).toBe('catalog:prod')
+
+    // Subdirectory package.json should be unchanged
+    const subPkg = readJson(path.join(subDir, 'package.json'))
+    expect(subPkg.dependencies.react).toBeUndefined()
+  })
+})

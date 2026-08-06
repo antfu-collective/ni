@@ -1,0 +1,16 @@
+{
+  "name": "test-workspace-top-level",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "catalog": {
+    "react": "^18.3.0"
+  },
+  "catalogs": {
+    "dev": {
+      "typescript": "^5.6.0"
+    }
+  },
+  "dependencies": {}
+}

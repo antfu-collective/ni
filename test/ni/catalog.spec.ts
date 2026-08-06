@@ -1,12 +1,16 @@
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
+import { bunCatalogProvider } from '../../src/catalog/bun'
 import { pnpmCatalogProvider } from '../../src/catalog/pnpm'
 import { getCatalogRef } from '../../src/catalog/types'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const fixtureDir = join(__dirname, '..', 'fixtures', 'catalog', 'pnpm')
 const defaultOnlyFixtureDir = join(__dirname, '..', 'fixtures', 'catalog', 'pnpm-default-only')
+const bunFixtureDir = join(__dirname, '..', 'fixtures', 'catalog', 'bun')
+const bunDefaultOnlyFixtureDir = join(__dirname, '..', 'fixtures', 'catalog', 'bun-default-only')
+const bunTopLevelFixtureDir = join(__dirname, '..', 'fixtures', 'catalog', 'bun-top-level')
 
 describe('getCatalogRef', () => {
   it('returns "catalog:" for default', () => {
@@ -75,6 +79,75 @@ describe('pnpmCatalogProvider.findPackage', () => {
   it('finds package in default catalog', async () => {
     const config = (await pnpmCatalogProvider.detect(defaultOnlyFixtureDir))!
     const result = pnpmCatalogProvider.findPackage(config, 'react')
+    expect(result).not.toBeUndefined()
+    expect(result!.name).toBe('default')
+  })
+})
+
+describe('bunCatalogProvider.detect', () => {
+  it('detects named catalogs nested under workspaces', async () => {
+    const config = await bunCatalogProvider.detect(bunFixtureDir)
+    expect(config).not.toBeNull()
+    expect(config!.hasDefaultCatalog).toBe(false)
+    expect(config!.hasNamedCatalogs).toBe(true)
+    expect(config!.catalogs).toHaveLength(2)
+    expect(config!.catalogs.map(c => c.name)).toEqual(['prod', 'dev'])
+  })
+
+  it('detects default catalog only nested under workspaces', async () => {
+    const config = await bunCatalogProvider.detect(bunDefaultOnlyFixtureDir)
+    expect(config).not.toBeNull()
+    expect(config!.hasDefaultCatalog).toBe(true)
+    expect(config!.hasNamedCatalogs).toBe(false)
+    expect(config!.catalogs).toHaveLength(1)
+    expect(config!.catalogs[0].name).toBe('default')
+  })
+
+  it('detects catalogs defined at the top level of package.json', async () => {
+    const config = await bunCatalogProvider.detect(bunTopLevelFixtureDir)
+    expect(config).not.toBeNull()
+    expect(config!.hasDefaultCatalog).toBe(true)
+    expect(config!.hasNamedCatalogs).toBe(true)
+    expect(config!.catalogs.map(c => c.name)).toEqual(['default', 'dev'])
+  })
+
+  it('detects from subdirectory', async () => {
+    const subDir = join(bunFixtureDir, 'packages', 'app')
+    const config = await bunCatalogProvider.detect(subDir)
+    expect(config).not.toBeNull()
+    expect(config!.catalogs).toHaveLength(2)
+  })
+
+  it('returns null when no workspace root found', async () => {
+    const config = await bunCatalogProvider.detect('/tmp')
+    expect(config).toBeNull()
+  })
+})
+
+describe('bunCatalogProvider.findPackage', () => {
+  it('finds package in named catalog', async () => {
+    const config = (await bunCatalogProvider.detect(bunFixtureDir))!
+    const result = bunCatalogProvider.findPackage(config, 'react')
+    expect(result).not.toBeUndefined()
+    expect(result!.name).toBe('prod')
+  })
+
+  it('finds package in dev catalog', async () => {
+    const config = (await bunCatalogProvider.detect(bunFixtureDir))!
+    const result = bunCatalogProvider.findPackage(config, 'typescript')
+    expect(result).not.toBeUndefined()
+    expect(result!.name).toBe('dev')
+  })
+
+  it('returns undefined for unknown package', async () => {
+    const config = (await bunCatalogProvider.detect(bunFixtureDir))!
+    const result = bunCatalogProvider.findPackage(config, 'unknown-pkg')
+    expect(result).toBeUndefined()
+  })
+
+  it('finds package in default catalog', async () => {
+    const config = (await bunCatalogProvider.detect(bunDefaultOnlyFixtureDir))!
+    const result = bunCatalogProvider.findPackage(config, 'react')
     expect(result).not.toBeUndefined()
     expect(result!.name).toBe('default')
   })

@@ -1,0 +1,14 @@
+{
+  "name": "test-workspace-default",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "catalog": {
+      "express": "^4.21.0",
+      "react": "^18.3.0"
+    }
+  },
+  "dependencies": {}
+}
