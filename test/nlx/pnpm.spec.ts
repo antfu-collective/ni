@@ -14,3 +14,5 @@ function _(arg: string, expected: string) {
 
 it('single uninstall', _('esbuild', 'pnpm dlx esbuild'))
 it('multiple', _('esbuild --version', 'pnpm dlx esbuild --version'))
+it('local', _('--local esbuild', 'pnpm exec esbuild'))
+it('local with arguments', _('--local esbuild --version', 'pnpm exec esbuild --version'))

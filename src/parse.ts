@@ -136,6 +136,10 @@ export const parseNun = <Runner>((agent, args) => {
 })
 
 export const parseNlx = <Runner>((agent, args) => {
+  // https://github.com/antfu-collective/ni/issues/340
+  if (args.includes('--local'))
+    return getCommand(agent, 'execute-local', exclude(args, '--local'))
+
   return getCommand(agent, 'execute', args)
 })
 

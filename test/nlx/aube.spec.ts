@@ -14,3 +14,5 @@ function _(arg: string, expected: string) {
 
 it('single', _('esbuild', 'aube dlx esbuild'))
 it('with arguments', _('esbuild --version', 'aube dlx esbuild --version'))
+it('local', _('--local esbuild', 'aube exec esbuild'))
+it('local with arguments', _('--local esbuild --version', 'aube exec esbuild --version'))

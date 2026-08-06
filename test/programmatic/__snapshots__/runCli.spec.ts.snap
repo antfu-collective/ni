@@ -16,6 +16,8 @@ exports[`lockfile > aube > ni foo -D 1`] = `"aube add foo -D"`;
 
 exports[`lockfile > aube > ni foo 1`] = `"aube add foo"`;
 
+exports[`lockfile > aube > nlx --local 1`] = `"aube exec foo"`;
+
 exports[`lockfile > aube > nlx 1`] = `"aube dlx foo"`;
 
 exports[`lockfile > aube > nun -g foo 1`] = `"npm uninstall -g foo"`;
@@ -39,6 +41,8 @@ exports[`lockfile > bun > ni 1`] = `"bun install"`;
 exports[`lockfile > bun > ni foo -D 1`] = `"bun add foo -d"`;
 
 exports[`lockfile > bun > ni foo 1`] = `"bun add foo"`;
+
+exports[`lockfile > bun > nlx --local 1`] = `"bun x foo"`;
 
 exports[`lockfile > bun > nlx 1`] = `"bun x foo"`;
 
@@ -64,6 +68,8 @@ exports[`lockfile > deno > ni foo -D 1`] = `"deno add foo -D"`;
 
 exports[`lockfile > deno > ni foo 1`] = `"deno add foo"`;
 
+exports[`lockfile > deno > nlx --local 1`] = `"deno task --eval foo"`;
+
 exports[`lockfile > deno > nlx 1`] = `"deno x foo"`;
 
 exports[`lockfile > deno > nun -g foo 1`] = `"npm uninstall -g foo"`;
@@ -87,6 +93,8 @@ exports[`lockfile > npm > ni 1`] = `"npm i"`;
 exports[`lockfile > npm > ni foo -D 1`] = `"npm i foo -D"`;
 
 exports[`lockfile > npm > ni foo 1`] = `"npm i foo"`;
+
+exports[`lockfile > npm > nlx --local 1`] = `"npx foo"`;
 
 exports[`lockfile > npm > nlx 1`] = `"npx foo"`;
 
@@ -112,6 +120,8 @@ exports[`lockfile > pnpm > ni foo -D 1`] = `"pnpm add foo -D"`;
 
 exports[`lockfile > pnpm > ni foo 1`] = `"pnpm add foo"`;
 
+exports[`lockfile > pnpm > nlx --local 1`] = `"pnpm exec foo"`;
+
 exports[`lockfile > pnpm > nlx 1`] = `"pnpm dlx foo"`;
 
 exports[`lockfile > pnpm > nun -g foo 1`] = `"npm uninstall -g foo"`;
@@ -135,6 +145,8 @@ exports[`lockfile > pnpm@6 > ni 1`] = `"pnpm i"`;
 exports[`lockfile > pnpm@6 > ni foo -D 1`] = `"pnpm add foo -D"`;
 
 exports[`lockfile > pnpm@6 > ni foo 1`] = `"pnpm add foo"`;
+
+exports[`lockfile > pnpm@6 > nlx --local 1`] = `"pnpm exec foo"`;
 
 exports[`lockfile > pnpm@6 > nlx 1`] = `"pnpm dlx foo"`;
 
@@ -160,6 +172,8 @@ exports[`lockfile > unknown > ni foo -D 1`] = `"pnpm add foo -D"`;
 
 exports[`lockfile > unknown > ni foo 1`] = `"pnpm add foo"`;
 
+exports[`lockfile > unknown > nlx --local 1`] = `"pnpm exec foo"`;
+
 exports[`lockfile > unknown > nlx 1`] = `"pnpm dlx foo"`;
 
 exports[`lockfile > unknown > nun -g foo 1`] = `"npm uninstall -g foo"`;
@@ -183,6 +197,8 @@ exports[`lockfile > yarn > ni 1`] = `"yarn install"`;
 exports[`lockfile > yarn > ni foo -D 1`] = `"yarn add foo -D"`;
 
 exports[`lockfile > yarn > ni foo 1`] = `"yarn add foo"`;
+
+exports[`lockfile > yarn > nlx --local 1`] = `"yarn exec foo"`;
 
 exports[`lockfile > yarn > nlx 1`] = `"npx foo"`;
 
@@ -208,6 +224,8 @@ exports[`lockfile > yarn@berry > ni foo -D 1`] = `"yarn add foo -D"`;
 
 exports[`lockfile > yarn@berry > ni foo 1`] = `"yarn add foo"`;
 
+exports[`lockfile > yarn@berry > nlx --local 1`] = `"yarn exec foo"`;
+
 exports[`lockfile > yarn@berry > nlx 1`] = `"npx foo"`;
 
 exports[`lockfile > yarn@berry > nun -g foo 1`] = `"npm uninstall -g foo"`;
@@ -231,6 +249,8 @@ exports[`packager > aube > ni 1`] = `"aube install"`;
 exports[`packager > aube > ni foo -D 1`] = `"aube add foo -D"`;
 
 exports[`packager > aube > ni foo 1`] = `"aube add foo"`;
+
+exports[`packager > aube > nlx --local 1`] = `"aube exec foo"`;
 
 exports[`packager > aube > nlx 1`] = `"aube dlx foo"`;
 
@@ -256,6 +276,8 @@ exports[`packager > bun > ni foo -D 1`] = `"bun add foo -d"`;
 
 exports[`packager > bun > ni foo 1`] = `"bun add foo"`;
 
+exports[`packager > bun > nlx --local 1`] = `"bun x foo"`;
+
 exports[`packager > bun > nlx 1`] = `"bun x foo"`;
 
 exports[`packager > bun > nun -g foo 1`] = `"npm uninstall -g foo"`;
@@ -279,6 +301,8 @@ exports[`packager > deno > ni 1`] = `"deno install"`;
 exports[`packager > deno > ni foo -D 1`] = `"deno add foo -D"`;
 
 exports[`packager > deno > ni foo 1`] = `"deno add foo"`;
+
+exports[`packager > deno > nlx --local 1`] = `"deno task --eval foo"`;
 
 exports[`packager > deno > nlx 1`] = `"deno x foo"`;
 
@@ -304,6 +328,8 @@ exports[`packager > npm > ni foo -D 1`] = `"npm i foo -D"`;
 
 exports[`packager > npm > ni foo 1`] = `"npm i foo"`;
 
+exports[`packager > npm > nlx --local 1`] = `"npx foo"`;
+
 exports[`packager > npm > nlx 1`] = `"npx foo"`;
 
 exports[`packager > npm > nun -g foo 1`] = `"npm uninstall -g foo"`;
@@ -327,6 +353,8 @@ exports[`packager > pnpm > ni 1`] = `"pnpm i"`;
 exports[`packager > pnpm > ni foo -D 1`] = `"pnpm add foo -D"`;
 
 exports[`packager > pnpm > ni foo 1`] = `"pnpm add foo"`;
+
+exports[`packager > pnpm > nlx --local 1`] = `"pnpm exec foo"`;
 
 exports[`packager > pnpm > nlx 1`] = `"pnpm dlx foo"`;
 
@@ -352,6 +380,8 @@ exports[`packager > pnpm@6 > ni foo -D 1`] = `"pnpm add foo -D"`;
 
 exports[`packager > pnpm@6 > ni foo 1`] = `"pnpm add foo"`;
 
+exports[`packager > pnpm@6 > nlx --local 1`] = `"pnpm exec foo"`;
+
 exports[`packager > pnpm@6 > nlx 1`] = `"pnpm dlx foo"`;
 
 exports[`packager > pnpm@6 > nun -g foo 1`] = `"npm uninstall -g foo"`;
@@ -375,6 +405,8 @@ exports[`packager > unknown > ni 1`] = `"pnpm i"`;
 exports[`packager > unknown > ni foo -D 1`] = `"pnpm add foo -D"`;
 
 exports[`packager > unknown > ni foo 1`] = `"pnpm add foo"`;
+
+exports[`packager > unknown > nlx --local 1`] = `"pnpm exec foo"`;
 
 exports[`packager > unknown > nlx 1`] = `"pnpm dlx foo"`;
 
@@ -400,6 +432,8 @@ exports[`packager > yarn > ni foo -D 1`] = `"yarn add foo -D"`;
 
 exports[`packager > yarn > ni foo 1`] = `"yarn add foo"`;
 
+exports[`packager > yarn > nlx --local 1`] = `"yarn exec foo"`;
+
 exports[`packager > yarn > nlx 1`] = `"npx foo"`;
 
 exports[`packager > yarn > nun -g foo 1`] = `"npm uninstall -g foo"`;
@@ -423,6 +457,8 @@ exports[`packager > yarn@berry > ni 1`] = `"yarn install"`;
 exports[`packager > yarn@berry > ni foo -D 1`] = `"yarn add foo -D"`;
 
 exports[`packager > yarn@berry > ni foo 1`] = `"yarn add foo"`;
+
+exports[`packager > yarn@berry > nlx --local 1`] = `"yarn exec foo"`;
 
 exports[`packager > yarn@berry > nlx 1`] = `"yarn dlx foo"`;
 

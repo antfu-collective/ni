@@ -80,6 +80,7 @@ fixtures.forEach(fixture => describe(fixture, () => agents.forEach(agent => desc
 
   /** nlx */
   it('nlx', runCliTest(fixture, agent, parseNlx, ['foo']))
+  it('nlx --local', runCliTest(fixture, agent, parseNlx, ['--local', 'foo']))
 
   /** nup */
   it('nup', runCliTest(fixture, agent, parseNup, []))
