@@ -1,6 +1,7 @@
 import type { Agent } from 'package-manager-detector'
 import type { ExtendedResolvedCommand, RunnerContext } from '../runner'
 import type { DepType } from './package-json'
+import type { PreviousSelection } from './prompt'
 import type { CatalogConfig, CatalogProvider } from './types'
 import path from 'node:path'
 import process from 'node:process'
@@ -38,26 +39,20 @@ async function resolveVersion(pkgName: string): Promise<string> {
   return `^${meta.version}`
 }
 
-async function resolveCatalogForPackage(
+// Whether any package after `currentIndex` is not yet in a catalog and would
+// therefore still trigger a prompt — used to decide if the "apply to all
+// remaining" shortcut is worth offering.
+function hasRemainingNewPackages(
   provider: CatalogProvider,
   config: CatalogConfig,
-  pkgName: string,
-  programmatic?: boolean,
-): Promise<{ catalogName: string | undefined, version?: string }> {
-  // Check if already in a catalog
-  const existing = provider.findPackage(config, pkgName)
-  if (existing) {
-    return { catalogName: existing.name }
+  packages: string[],
+  currentIndex: number,
+): boolean {
+  for (let i = currentIndex + 1; i < packages.length; i++) {
+    if (!provider.findPackage(config, packages[i]))
+      return true
   }
-
-  // Prompt user to select catalog
-  const { catalogName } = await promptSelectCatalog(config, pkgName, programmatic)
-  if (!catalogName)
-    return { catalogName: undefined }
-
-  // Fetch latest version for new catalog entry
-  const version = await resolveVersion(pkgName)
-  return { catalogName, version }
+  return false
 }
 
 export async function handleCatalogInstall(
@@ -92,24 +87,54 @@ export async function handleCatalogInstall(
   const catalogEntries: { name: string, catalogRef: string }[] = []
   const skippedPackages: string[] = []
 
-  for (const pkg of packages) {
-    const result = await resolveCatalogForPackage(provider, config, pkg, ctx?.programmatic)
+  // The last catalog chosen through a prompt, powering the "same as previous"
+  // shortcut for subsequent packages.
+  let previous: PreviousSelection | undefined
+  // Set once the user picks "apply to all remaining": every subsequent new
+  // package reuses this catalog without prompting.
+  let applyToRest: PreviousSelection | undefined
 
-    if (result.catalogName) {
-      // Add to catalog file if it's a new entry
-      if (result.version) {
-        await provider.addPackage(config, result.catalogName, pkg, result.version)
-        if (!ctx?.programmatic) {
-          // eslint-disable-next-line no-console
-          console.log(`${styleText('green', '+')} ${styleText('cyan', pkg)} ${styleText('dim', `→ ${result.catalogName} catalog (${result.version})`)}`)
-        }
-      }
-      else if (!ctx?.programmatic) {
-        const existingCatalog = provider.findPackage(config, pkg)
+  for (let i = 0; i < packages.length; i++) {
+    const pkg = packages[i]
+
+    // Already in a catalog: reuse it, never prompt.
+    const existing = provider.findPackage(config, pkg)
+    if (existing) {
+      if (!ctx?.programmatic) {
         // eslint-disable-next-line no-console
-        console.log(`${styleText('green', '✓')} ${styleText('cyan', pkg)} ${styleText('dim', `→ found in ${existingCatalog!.name} catalog`)}`)
+        console.log(`${styleText('green', '✓')} ${styleText('cyan', pkg)} ${styleText('dim', `→ found in ${existing.name} catalog`)}`)
       }
-      catalogEntries.push({ name: pkg, catalogRef: getCatalogRef(result.catalogName) })
+      catalogEntries.push({ name: pkg, catalogRef: getCatalogRef(existing.name) })
+      continue
+    }
+
+    let catalogName: string | undefined
+    if (applyToRest) {
+      catalogName = applyToRest.catalogName
+    }
+    else {
+      const selection = await promptSelectCatalog(config, pkg, {
+        programmatic: ctx?.programmatic,
+        previous,
+        hasRemaining: hasRemainingNewPackages(provider, config, packages, i),
+      })
+      catalogName = selection.catalogName
+      if (!ctx?.programmatic) {
+        previous = { catalogName }
+        if (selection.applyToRest)
+          applyToRest = { catalogName }
+      }
+    }
+
+    if (catalogName) {
+      // New catalog entry: record the resolved version.
+      const version = await resolveVersion(pkg)
+      await provider.addPackage(config, catalogName, pkg, version)
+      if (!ctx?.programmatic) {
+        // eslint-disable-next-line no-console
+        console.log(`${styleText('green', '+')} ${styleText('cyan', pkg)} ${styleText('dim', `→ ${catalogName} catalog (${version})`)}`)
+      }
+      catalogEntries.push({ name: pkg, catalogRef: getCatalogRef(catalogName) })
     }
     else {
       skippedPackages.push(pkg)
