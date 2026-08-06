@@ -14,3 +14,4 @@ function _(arg: string, expected: string) {
 
 it('single uninstall', _('esbuild', 'bun x esbuild'))
 it('multiple', _('esbuild --version', 'bun x esbuild --version'))
+it('local', _('--local esbuild', 'bun x esbuild'))

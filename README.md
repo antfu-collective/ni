@@ -211,6 +211,18 @@ nlx vitest
 # aube dlx vitest
 ```
 
+Pass `--local` to prefer an already-installed local binary over downloading it (equivalent to `pnpm exec` / `yarn exec`). `npm`, `bun` and `aube` already resolve local binaries first, so this flag mainly matters for `pnpm` and `yarn`:
+
+```bash
+nlx --local vitest
+
+# npx vitest
+# yarn exec vitest
+# pnpm exec vitest
+# bunx vitest
+# aube exec vitest
+```
+
 <br>
 
 ### `nup` - upgrade
