@@ -116,7 +116,7 @@ runCli(async (agent, args, ctx) => {
   }
 
   if (args.length === 0 && !ctx?.programmatic) {
-    const raw = readPackageScripts(ctx)
+    const raw = readPackageScripts(ctx, { closest: true })
     await promptSelectScript(raw)
   }
 

@@ -1,5 +1,5 @@
 import type { RunnerContext } from '.'
-import { getPackageJSON } from './fs'
+import { getClosestPackageJSON, getPackageJSON } from './fs'
 import { promptSelectPackage } from './monorepo'
 
 export interface PackageScript {
@@ -28,9 +28,10 @@ export async function readWorkspaceScripts(ctx: RunnerContext | undefined, args:
   return scripts
 }
 
-export function readPackageScripts(ctx: RunnerContext | undefined): PackageScript[] {
+export function readPackageScripts(ctx: RunnerContext | undefined, options: { closest?: boolean } = {}): PackageScript[] {
+  const { closest = false } = options
   // support https://www.npmjs.com/package/npm-scripts-info conventions
-  const pkg = getPackageJSON(ctx)
+  const pkg = closest ? getClosestPackageJSON(ctx) : getPackageJSON(ctx)
   const rawScripts = pkg.scripts || {}
   const scriptsInfo = pkg['scripts-info'] || {}
 
