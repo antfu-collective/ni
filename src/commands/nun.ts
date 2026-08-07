@@ -2,7 +2,7 @@ import type { Choice } from '@posva/prompts'
 import process from 'node:process'
 import prompts from '@posva/prompts'
 import { Fzf } from 'fzf'
-import { getPackageJSON } from '../fs'
+import { getClosestPackageJSON } from '../fs'
 import { parseNun } from '../parse'
 import { runCli } from '../runner'
 import { exclude } from '../utils'
@@ -14,7 +14,7 @@ runCli(async (agent, args, ctx) => {
   const isInteractive = !args.length && !ctx?.programmatic
 
   if ((isInteractive || isMultiple) && !isGlobal) {
-    const pkg = getPackageJSON(ctx)
+    const pkg = getClosestPackageJSON(ctx)
 
     const allDependencies = { ...pkg.dependencies, ...pkg.devDependencies }
 

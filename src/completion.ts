@@ -47,7 +47,7 @@ complete -c nr -f -a '(_nr_completion)' -d 'package.json scripts'
 `.trim()
 
 export function getCompletionSuggestions(args: string[], ctx: RunnerContext | undefined) {
-  const raw = readPackageScripts(ctx)
+  const raw = readPackageScripts(ctx, { closest: true })
   const fzf = new Fzf(raw, {
     selector: item => item.key,
     casing: 'case-insensitive',
