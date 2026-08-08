@@ -10,6 +10,7 @@ import { cmdExists, terminalLink } from './utils'
 
 const INSTALL_PACKAGES: Partial<Record<AgentName, string>> = {
   aube: '@endevco/aube',
+  nub: '@nubjs/nub',
 }
 
 export interface DetectOptions {
