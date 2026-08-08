@@ -106,6 +106,32 @@ exports[`lockfile > npm > nup -i 1`] = `"Command "upgrade-interactive" is not su
 
 exports[`lockfile > npm > nup 1`] = `"npm update"`;
 
+exports[`lockfile > nub > na 1`] = `"nub"`;
+
+exports[`lockfile > nub > na run foo 1`] = `"nub run foo"`;
+
+exports[`lockfile > nub > ni --frozen 1`] = `"nub install --frozen-lockfile"`;
+
+exports[`lockfile > nub > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`lockfile > nub > ni 1`] = `"nub install"`;
+
+exports[`lockfile > nub > ni foo -D 1`] = `"nub add foo -D"`;
+
+exports[`lockfile > nub > ni foo 1`] = `"nub add foo"`;
+
+exports[`lockfile > nub > nlx --local 1`] = `"nub exec foo"`;
+
+exports[`lockfile > nub > nlx 1`] = `"nubx foo"`;
+
+exports[`lockfile > nub > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`lockfile > nub > nun foo 1`] = `"nub remove foo"`;
+
+exports[`lockfile > nub > nup -i 1`] = `"nub update -i"`;
+
+exports[`lockfile > nub > nup 1`] = `"nub update"`;
+
 exports[`lockfile > pnpm > na 1`] = `"pnpm"`;
 
 exports[`lockfile > pnpm > na run foo 1`] = `"pnpm run foo"`;
@@ -365,6 +391,32 @@ exports[`packager > npm > nun foo 1`] = `"npm uninstall foo"`;
 exports[`packager > npm > nup -i 1`] = `"Command "upgrade-interactive" is not support by agent "npm""`;
 
 exports[`packager > npm > nup 1`] = `"npm update"`;
+
+exports[`packager > nub > na 1`] = `"nub"`;
+
+exports[`packager > nub > na run foo 1`] = `"nub run foo"`;
+
+exports[`packager > nub > ni --frozen 1`] = `"nub install --frozen-lockfile"`;
+
+exports[`packager > nub > ni -g foo 1`] = `"npm i -g foo"`;
+
+exports[`packager > nub > ni 1`] = `"nub install"`;
+
+exports[`packager > nub > ni foo -D 1`] = `"nub add foo -D"`;
+
+exports[`packager > nub > ni foo 1`] = `"nub add foo"`;
+
+exports[`packager > nub > nlx --local 1`] = `"nub exec foo"`;
+
+exports[`packager > nub > nlx 1`] = `"nubx foo"`;
+
+exports[`packager > nub > nun -g foo 1`] = `"npm uninstall -g foo"`;
+
+exports[`packager > nub > nun foo 1`] = `"nub remove foo"`;
+
+exports[`packager > nub > nup -i 1`] = `"nub update -i"`;
+
+exports[`packager > nub > nup 1`] = `"nub update"`;
 
 exports[`packager > pnpm > na 1`] = `"pnpm"`;
 

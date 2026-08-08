@@ -8,6 +8,8 @@ exports[`lockfile > deno 1`] = `"deno"`;
 
 exports[`lockfile > npm 1`] = `"npm"`;
 
+exports[`lockfile > nub 1`] = `"nub"`;
+
 exports[`lockfile > pnpm 1`] = `"pnpm"`;
 
 exports[`lockfile > pnpm@6 1`] = `"pnpm"`;
@@ -27,6 +29,8 @@ exports[`packager > bun 1`] = `"bun"`;
 exports[`packager > deno 1`] = `"deno"`;
 
 exports[`packager > npm 1`] = `"npm"`;
+
+exports[`packager > nub 1`] = `"nub"`;
 
 exports[`packager > pnpm 1`] = `"pnpm"`;
 

@@ -70,7 +70,7 @@ runCli(async (agent, args, ctx) => {
      * yarn and bun do not support
      * the installation of peers programmatically
      */
-    const canInstallPeers = ['npm', 'pnpm', 'aube'].includes(agent)
+    const canInstallPeers = ['npm', 'pnpm', 'nub', 'aube'].includes(agent)
 
     const { mode } = await prompts({
       type: 'select',
