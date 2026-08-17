@@ -16,6 +16,7 @@ export default defineConfig({
       'isexe',
       'kleur',
       'sisteransi',
+      'strip-json-comments',
     ],
   },
 })
