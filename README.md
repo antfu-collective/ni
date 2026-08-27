@@ -151,6 +151,20 @@ ni react -w
 # → writes catalog ref to workspace root package.json
 ```
 
+To only reuse catalog entries that already exist — never adding a new package to a catalog and never prompting for one — set `catalog=existing` in `~/.nirc` or `NI_CATALOG=existing` environment variable:
+
+```bash
+# with catalog=existing
+
+ni react
+# → react is already in the "prod" catalog
+# → writes "react": "catalog:prod" to package.json
+
+ni lodash
+# → lodash is in no catalog
+# → installed normally with a pinned version, catalogs are left untouched
+```
+
 To disable catalog mode, set `catalog=false` in `~/.nirc` or `NI_CATALOG=false` environment variable.
 
 </details>
@@ -392,6 +406,7 @@ runAgent=node
 useSfw=true
 
 ; use catalog mode when catalogs are detected (default true)
+; "existing" only reuses packages already in a catalog, never adds new ones
 catalog=true
 ```
 
@@ -405,7 +420,7 @@ export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 export NI_DEFAULT_AGENT="npm" # default "prompt"
 export NI_GLOBAL_AGENT="npm"
 export NI_USE_SFW="true"
-export NI_CATALOG="false" # disable catalog mode
+export NI_CATALOG="false" # disable catalog mode, "existing" to only reuse existing catalog entries
 ```
 
 ```ps

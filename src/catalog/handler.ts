@@ -108,6 +108,13 @@ export async function handleCatalogInstall(
       continue
     }
 
+    // `existing` mode: catalogs are only reused, never extended. Anything not
+    // already cataloged is installed normally.
+    if (catalogEnabled === 'existing') {
+      skippedPackages.push(pkg)
+      continue
+    }
+
     let catalogName: string | undefined
     if (applyToRest) {
       catalogName = applyToRest.catalogName

@@ -163,3 +163,26 @@ describe('catalog handler - interactive prompt reordering', () => {
     expect(pkg.dependencies.axios).toBe('catalog:dev')
   })
 })
+
+describe('catalog handler - existing-only mode', () => {
+  it('never prompts for packages that are not already cataloged', async () => {
+    const { getCatalog } = await import('../../src/config')
+    vi.mocked(getCatalog).mockResolvedValueOnce('existing')
+
+    const cwd = await createTempDir('pnpm')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('pnpm', ['react', 'lodash'], { cwd })
+
+    expect(promptState.calls).toHaveLength(0)
+    expect(result).toBeDefined()
+    expect(result!.args).toContain('lodash')
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.dependencies.react).toBe('catalog:prod')
+    expect(pkg.dependencies.lodash).toBeUndefined()
+
+    const yamlContent = fs.readFileSync(path.join(cwd, 'pnpm-workspace.yaml'), 'utf-8')
+    expect(yamlContent).not.toContain('lodash')
+  })
+})

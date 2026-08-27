@@ -378,3 +378,83 @@ describe('catalog handler - bun subdirectory', () => {
     expect(subPkg.dependencies.react).toBeUndefined()
   })
 })
+
+describe('catalog handler - existing-only mode', () => {
+  it('reuses cataloged package, installs new one normally', async () => {
+    const { getCatalog } = await import('../../src/config')
+    vi.mocked(getCatalog).mockResolvedValueOnce('existing')
+
+    const cwd = await createTempDir('pnpm')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('pnpm', ['react', 'lodash'], { cwd, programmatic: true })
+
+    // react comes from the catalog, lodash falls through to a normal add
+    expect(result).toBeDefined()
+    expect(result!.command).toBe('pnpm')
+    expect(result!.args).toContain('lodash')
+    expect(result!.args).not.toContain('react')
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.dependencies.react).toBe('catalog:prod')
+    expect(pkg.dependencies.lodash).toBeUndefined()
+
+    const yamlContent = fs.readFileSync(path.join(cwd, 'pnpm-workspace.yaml'), 'utf-8')
+    expect(yamlContent).not.toContain('lodash')
+  })
+
+  it('new package with only a default catalog → not added to the catalog', async () => {
+    const { getCatalog } = await import('../../src/config')
+    vi.mocked(getCatalog).mockResolvedValueOnce('existing')
+
+    const cwd = await createTempDir('pnpm-default-only')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('pnpm', ['lodash'], { cwd, programmatic: true })
+
+    // Nothing was cataloged → falls through to the regular install path
+    expect(result).toBeUndefined()
+
+    const yamlContent = fs.readFileSync(path.join(cwd, 'pnpm-workspace.yaml'), 'utf-8')
+    expect(yamlContent).not.toContain('lodash')
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.dependencies?.lodash).toBeUndefined()
+  })
+
+  it('respects -D for cataloged packages while skipping new ones', async () => {
+    const { getCatalog } = await import('../../src/config')
+    vi.mocked(getCatalog).mockResolvedValueOnce('existing')
+
+    const cwd = await createTempDir('pnpm')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('pnpm', ['typescript', 'lodash', '-D'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    expect(result!.args).toContain('lodash')
+    expect(result!.args).toContain('-D')
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.devDependencies.typescript).toBe('catalog:dev')
+    expect(pkg.devDependencies.lodash).toBeUndefined()
+  })
+
+  it('bun: new package is not added to the default catalog', async () => {
+    const { getCatalog } = await import('../../src/config')
+    vi.mocked(getCatalog).mockResolvedValueOnce('existing')
+
+    const cwd = await createTempDir('bun-default-only')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('bun', ['react', 'lodash'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    expect(result!.command).toBe('bun')
+    expect(result!.args).toContain('lodash')
+
+    const rootPkg = readJson(path.join(cwd, 'package.json'))
+    expect(rootPkg.dependencies.react).toBe('catalog:')
+    expect(rootPkg.workspaces.catalog.lodash).toBeUndefined()
+  })
+})
