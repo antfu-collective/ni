@@ -2,6 +2,7 @@ import type { Agent } from 'package-manager-detector'
 import type { ExtendedResolvedCommand, RunnerContext } from '../runner'
 import type { DepType } from './package-json'
 import type { PreviousSelection } from './prompt'
+import type { PackageSpec } from './spec'
 import type { CatalogConfig, CatalogProvider } from './types'
 import path from 'node:path'
 import process from 'node:process'
@@ -12,16 +13,18 @@ import { getCommand } from '../parse'
 import { getCatalogProvider } from './detect'
 import { findClosestPackageJson, updatePackageJsonCatalogRefs } from './package-json'
 import { promptSelectCatalog } from './prompt'
+import { getRangePrefix } from './range-prefix'
+import { isVerbatimSpec, parsePackageSpec } from './spec'
 import { getCatalogRef } from './types'
 
-function splitPackagesAndFlags(args: string[]): { packages: string[], flags: string[] } {
-  const packages: string[] = []
+function splitPackagesAndFlags(args: string[]): { packages: PackageSpec[], flags: string[] } {
+  const packages: PackageSpec[] = []
   const flags: string[] = []
   for (const arg of args) {
     if (arg.startsWith('-'))
       flags.push(arg)
     else
-      packages.push(arg)
+      packages.push(parsePackageSpec(arg))
   }
   return { packages, flags }
 }
@@ -34,9 +37,16 @@ function getDepType(flags: string[]): DepType {
   return 'dependencies'
 }
 
-async function resolveVersion(pkgName: string): Promise<string> {
-  const meta = await getLatestVersion(pkgName)
-  return `^${meta.version}`
+async function resolveVersion(pkg: PackageSpec, rangePrefix: string): Promise<string> {
+  // A range or exact pin the user typed is what they asked for: keep it as-is
+  // instead of overriding it with the latest published version.
+  if (pkg.spec && isVerbatimSpec(pkg.spec))
+    return pkg.spec
+
+  // Otherwise resolve the whole specifier, so dist-tags like `@latest` or
+  // `@next` still pick the version they point at.
+  const meta = await getLatestVersion(pkg.raw)
+  return `${rangePrefix}${meta.version}`
 }
 
 // Whether any package after `currentIndex` is not yet in a catalog and would
@@ -45,11 +55,11 @@ async function resolveVersion(pkgName: string): Promise<string> {
 function hasRemainingNewPackages(
   provider: CatalogProvider,
   config: CatalogConfig,
-  packages: string[],
+  packages: PackageSpec[],
   currentIndex: number,
 ): boolean {
   for (let i = currentIndex + 1; i < packages.length; i++) {
-    if (!provider.findPackage(config, packages[i]))
+    if (!provider.findPackage(config, packages[i].name))
       return true
   }
   return false
@@ -84,6 +94,7 @@ export async function handleCatalogInstall(
     return undefined
 
   const depType = getDepType(flags)
+  const rangePrefix = getRangePrefix(agent, cwd)
   const catalogEntries: { name: string, catalogRef: string }[] = []
   const skippedPackages: string[] = []
 
@@ -98,13 +109,19 @@ export async function handleCatalogInstall(
     const pkg = packages[i]
 
     // Already in a catalog: reuse it, never prompt.
-    const existing = provider.findPackage(config, pkg)
+    const existing = provider.findPackage(config, pkg.name)
     if (existing) {
       if (!ctx?.programmatic) {
+        // The catalog version wins over anything the user typed, since it is
+        // shared with every other package referencing this catalog.
+        const cataloged = existing.packages[pkg.name]
+        const note = pkg.spec && pkg.spec !== cataloged
+          ? `→ found in ${existing.name} catalog (${cataloged}, ignoring ${pkg.spec})`
+          : `→ found in ${existing.name} catalog`
         // eslint-disable-next-line no-console
-        console.log(`${styleText('green', '✓')} ${styleText('cyan', pkg)} ${styleText('dim', `→ found in ${existing.name} catalog`)}`)
+        console.log(`${styleText('green', '✓')} ${styleText('cyan', pkg.raw)} ${styleText('dim', note)}`)
       }
-      catalogEntries.push({ name: pkg, catalogRef: getCatalogRef(existing.name) })
+      catalogEntries.push({ name: pkg.name, catalogRef: getCatalogRef(existing.name) })
       continue
     }
 
@@ -113,7 +130,7 @@ export async function handleCatalogInstall(
       catalogName = applyToRest.catalogName
     }
     else {
-      const selection = await promptSelectCatalog(config, pkg, {
+      const selection = await promptSelectCatalog(config, pkg.name, {
         programmatic: ctx?.programmatic,
         previous,
         hasRemaining: hasRemainingNewPackages(provider, config, packages, i),
@@ -128,16 +145,17 @@ export async function handleCatalogInstall(
 
     if (catalogName) {
       // New catalog entry: record the resolved version.
-      const version = await resolveVersion(pkg)
-      await provider.addPackage(config, catalogName, pkg, version)
+      const version = await resolveVersion(pkg, rangePrefix)
+      await provider.addPackage(config, catalogName, pkg.name, version)
       if (!ctx?.programmatic) {
         // eslint-disable-next-line no-console
-        console.log(`${styleText('green', '+')} ${styleText('cyan', pkg)} ${styleText('dim', `→ ${catalogName} catalog (${version})`)}`)
+        console.log(`${styleText('green', '+')} ${styleText('cyan', pkg.name)} ${styleText('dim', `→ ${catalogName} catalog (${version})`)}`)
       }
-      catalogEntries.push({ name: pkg, catalogRef: getCatalogRef(catalogName) })
+      catalogEntries.push({ name: pkg.name, catalogRef: getCatalogRef(catalogName) })
     }
     else {
-      skippedPackages.push(pkg)
+      // Not cataloged: hand the untouched argument back to the agent.
+      skippedPackages.push(pkg.raw)
     }
   }
 
