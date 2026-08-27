@@ -76,9 +76,9 @@ export async function getCliCommand(
 ) {
   const isGlobal = args.includes('-g')
   if (isGlobal)
-    return await fn(await getGlobalAgent(), args)
+    return await fn(await getGlobalAgent(cwd), args)
 
-  let agent = (await detect({ ...options, cwd })) || (await getDefaultAgent(options.programmatic))
+  let agent = (await detect({ ...options, cwd })) || (await getDefaultAgent(options.programmatic, cwd))
   if (agent === 'prompt') {
     agent = (
       await prompts({
@@ -134,7 +134,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
         .then(e => e.stdout)
         .then(e => e.startsWith('v') ? e : `v${e}`)
     }
-    const globalAgentPromise = getGlobalAgent()
+    const globalAgentPromise = getGlobalAgent(cwd)
     const globalAgentVersionPromise = globalAgentPromise.then(getV)
     const agentPromise = detect({ ...options, cwd }).then(a => a || '')
     const agentVersionPromise = agentPromise.then(a => a && getV(a))
@@ -155,8 +155,8 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
   if (args.length === 1 && args[0] === '--agent') {
     const isGlobal = args.includes('-g')
     const agent = isGlobal
-      ? await getGlobalAgent()
-      : (await detect({ ...options, cwd, programmatic: true })) || (await getDefaultAgent(programmatic))
+      ? await getGlobalAgent(cwd)
+      : (await detect({ ...options, cwd, programmatic: true })) || (await getDefaultAgent(programmatic, cwd))
     if (agent && agent !== 'prompt')
       process.stdout.write(`${agent}\n`)
     else
@@ -200,7 +200,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
   if (!command)
     return
 
-  const useSfw = await getUseSfw()
+  const useSfw = await getUseSfw(cwd)
   if (useSfw && cmdExists('sfw')) {
     command.args = [command.command, ...command.args]
     command.command = 'sfw'

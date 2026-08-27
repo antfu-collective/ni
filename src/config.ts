@@ -1,19 +1,11 @@
 import type { Agent } from 'package-manager-detector'
 import fs from 'node:fs'
-import path from 'node:path'
 import process from 'node:process'
 import ini from 'ini'
 import { detect } from './detect'
+import { findConfigFiles } from './fs'
 
-const customRcPath = process.env.NI_CONFIG_FILE
-
-const home = process.platform === 'win32'
-  ? process.env.USERPROFILE
-  : process.env.HOME
-
-const defaultRcPath = path.join(home || '~/', '.nirc')
-
-const rcPath = customRcPath || defaultRcPath
+const RC_FILE_NAME = '.nirc'
 
 interface Config {
   defaultAgent: Agent | 'prompt'
@@ -91,11 +83,36 @@ function readRcFile(path: string): Partial<Config> {
   return known as Partial<Config>
 }
 
-let config: Config | undefined
+/**
+ * Every `.nirc` that applies to `cwd`, nearest last.
+ *
+ * `NI_CONFIG_FILE` keeps its original meaning: it names the one and only file
+ * to read, and no traversal happens.
+ */
+function resolveRcPaths(cwd: string): string[] {
+  const customRcPath = process.env.NI_CONFIG_FILE
+  if (customRcPath)
+    return fs.existsSync(customRcPath) ? [customRcPath] : []
 
-export async function getConfig(): Promise<Config> {
+  return findConfigFiles(cwd, RC_FILE_NAME).reverse()
+}
+
+function readRcFiles(cwd: string): Partial<Config> {
+  let merged: Partial<Config> = {}
+
+  for (const path of resolveRcPaths(cwd))
+    merged = { ...merged, ...readRcFile(path) }
+
+  return merged
+}
+
+const configs = new Map<string, Config>()
+
+export async function getConfig(cwd: string = process.cwd()): Promise<Config> {
+  let config = configs.get(cwd)
+
   if (!config) {
-    config = { ...defaultConfig, ...fs.existsSync(rcPath) ? readRcFile(rcPath) : null }
+    config = { ...defaultConfig, ...readRcFiles(cwd) }
 
     if (process.env.NI_DEFAULT_AGENT)
       config.defaultAgent = process.env.NI_DEFAULT_AGENT as Agent
@@ -118,37 +135,39 @@ export async function getConfig(): Promise<Config> {
     if (process.env.NI_NO_LAST_COMMAND !== undefined)
       config.noLastCommand = process.env.NI_NO_LAST_COMMAND === 'true'
 
-    const agent = await detect({ programmatic: true })
+    const agent = await detect({ programmatic: true, cwd })
     if (agent)
       config.defaultAgent = agent
+
+    configs.set(cwd, config)
   }
 
   return config
 }
 
-export async function getDefaultAgent(programmatic?: boolean) {
-  const { defaultAgent } = await getConfig()
+export async function getDefaultAgent(programmatic?: boolean, cwd?: string) {
+  const { defaultAgent } = await getConfig(cwd)
   if (defaultAgent === 'prompt' && (programmatic || process.env.CI))
     return 'npm'
   return defaultAgent
 }
 
-export async function getGlobalAgent() {
-  const { globalAgent } = await getConfig()
+export async function getGlobalAgent(cwd?: string) {
+  const { globalAgent } = await getConfig(cwd)
   return globalAgent
 }
 
-export async function getRunAgent() {
-  const { runAgent } = await getConfig()
+export async function getRunAgent(cwd?: string) {
+  const { runAgent } = await getConfig(cwd)
   return runAgent
 }
 
-export async function getUseSfw() {
-  const { useSfw } = await getConfig()
+export async function getUseSfw(cwd?: string) {
+  const { useSfw } = await getConfig(cwd)
   return useSfw
 }
 
-export async function getCatalog() {
-  const { catalog } = await getConfig()
+export async function getCatalog(cwd?: string) {
+  const { catalog } = await getConfig(cwd)
   return catalog
 }

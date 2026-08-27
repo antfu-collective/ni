@@ -210,31 +210,31 @@ exports[`lockfile > pnpm-rush > nup -i 1`] = `"rush-pnpm update -i"`;
 
 exports[`lockfile > pnpm-rush > nup 1`] = `"rush-pnpm update"`;
 
-exports[`lockfile > unknown > na 1`] = `"pnpm"`;
+exports[`lockfile > unknown > na 1`] = `"npm"`;
 
-exports[`lockfile > unknown > na run foo 1`] = `"pnpm run foo"`;
+exports[`lockfile > unknown > na run foo 1`] = `"npm run foo"`;
 
-exports[`lockfile > unknown > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
+exports[`lockfile > unknown > ni --frozen 1`] = `"npm ci"`;
 
 exports[`lockfile > unknown > ni -g foo 1`] = `"npm i -g foo"`;
 
-exports[`lockfile > unknown > ni 1`] = `"pnpm i"`;
+exports[`lockfile > unknown > ni 1`] = `"npm i"`;
 
-exports[`lockfile > unknown > ni foo -D 1`] = `"pnpm add foo -D"`;
+exports[`lockfile > unknown > ni foo -D 1`] = `"npm i foo -D"`;
 
-exports[`lockfile > unknown > ni foo 1`] = `"pnpm add foo"`;
+exports[`lockfile > unknown > ni foo 1`] = `"npm i foo"`;
 
-exports[`lockfile > unknown > nlx --local 1`] = `"pnpm exec foo"`;
+exports[`lockfile > unknown > nlx --local 1`] = `"npx foo"`;
 
-exports[`lockfile > unknown > nlx 1`] = `"pnpm dlx foo"`;
+exports[`lockfile > unknown > nlx 1`] = `"npx foo"`;
 
 exports[`lockfile > unknown > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
-exports[`lockfile > unknown > nun foo 1`] = `"pnpm remove foo"`;
+exports[`lockfile > unknown > nun foo 1`] = `"npm uninstall foo"`;
 
-exports[`lockfile > unknown > nup -i 1`] = `"pnpm update -i"`;
+exports[`lockfile > unknown > nup -i 1`] = `"Command "upgrade-interactive" is not support by agent "npm""`;
 
-exports[`lockfile > unknown > nup 1`] = `"pnpm update"`;
+exports[`lockfile > unknown > nup 1`] = `"npm update"`;
 
 exports[`lockfile > yarn > na 1`] = `"yarn"`;
 
@@ -496,31 +496,31 @@ exports[`packager > pnpm-rush > nup -i 1`] = `"rush-pnpm update -i"`;
 
 exports[`packager > pnpm-rush > nup 1`] = `"rush-pnpm update"`;
 
-exports[`packager > unknown > na 1`] = `"pnpm"`;
+exports[`packager > unknown > na 1`] = `"npm"`;
 
-exports[`packager > unknown > na run foo 1`] = `"pnpm run foo"`;
+exports[`packager > unknown > na run foo 1`] = `"npm run foo"`;
 
-exports[`packager > unknown > ni --frozen 1`] = `"pnpm i --frozen-lockfile"`;
+exports[`packager > unknown > ni --frozen 1`] = `"npm ci"`;
 
 exports[`packager > unknown > ni -g foo 1`] = `"npm i -g foo"`;
 
-exports[`packager > unknown > ni 1`] = `"pnpm i"`;
+exports[`packager > unknown > ni 1`] = `"npm i"`;
 
-exports[`packager > unknown > ni foo -D 1`] = `"pnpm add foo -D"`;
+exports[`packager > unknown > ni foo -D 1`] = `"npm i foo -D"`;
 
-exports[`packager > unknown > ni foo 1`] = `"pnpm add foo"`;
+exports[`packager > unknown > ni foo 1`] = `"npm i foo"`;
 
-exports[`packager > unknown > nlx --local 1`] = `"pnpm exec foo"`;
+exports[`packager > unknown > nlx --local 1`] = `"npx foo"`;
 
-exports[`packager > unknown > nlx 1`] = `"pnpm dlx foo"`;
+exports[`packager > unknown > nlx 1`] = `"npx foo"`;
 
 exports[`packager > unknown > nun -g foo 1`] = `"npm uninstall -g foo"`;
 
-exports[`packager > unknown > nun foo 1`] = `"pnpm remove foo"`;
+exports[`packager > unknown > nun foo 1`] = `"npm uninstall foo"`;
 
-exports[`packager > unknown > nup -i 1`] = `"pnpm update -i"`;
+exports[`packager > unknown > nup -i 1`] = `"Command "upgrade-interactive" is not support by agent "npm""`;
 
-exports[`packager > unknown > nup 1`] = `"pnpm update"`;
+exports[`packager > unknown > nup 1`] = `"npm update"`;
 
 exports[`packager > yarn > na 1`] = `"yarn"`;
 

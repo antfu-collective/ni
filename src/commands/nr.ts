@@ -18,7 +18,7 @@ runCli(async (agent, args, ctx) => {
     const terminalColumns = process.stdout?.columns || 80
 
     const last = storage.lastRunCommand
-    const { noLastCommand } = await getConfig()
+    const { noLastCommand } = await getConfig(ctx?.cwd)
     const choices = raw.reduce<Choice[]>((acc, { key, description }) => {
       const item = {
         title: key,

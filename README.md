@@ -408,7 +408,7 @@ ni -h
 ### Config
 
 ```ini
-; ~/.nirc
+; ~/.nirc, or a .nirc next to your project
 
 ; fallback when no lock found
 defaultAgent=npm # default "prompt"
@@ -427,10 +427,16 @@ useSfw=true
 catalog=true
 ```
 
+`ni` looks for a `.nirc` in the current directory and every directory above it,
+then falls back to `~/.nirc`. Files closer to the current directory win, key by
+key, so `~/.nirc` acts as your defaults and a project's `.nirc` overrides only
+the settings it names.
+
 ```bash
 # ~/.bashrc
 
 # custom configuration file path
+# when set, this file is used on its own and no directories are searched
 export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 
 # environment variables have higher priority than config file if presented
