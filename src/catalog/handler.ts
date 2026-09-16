@@ -128,7 +128,7 @@ export async function handleCatalogInstall(
     // `existing` mode: catalogs are only reused, never extended. Anything not
     // already cataloged is installed normally.
     if (catalogEnabled === 'existing') {
-      skippedPackages.push(pkg)
+      skippedPackages.push(pkg.raw)
       continue
     }
 
