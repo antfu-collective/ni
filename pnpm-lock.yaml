@@ -71,6 +71,9 @@ catalogs:
     pnpm-workspace-yaml:
       specifier: ^1.7.0
       version: 1.7.0
+    strip-json-comments:
+      specifier: ^5.0.3
+      version: 5.0.3
     which:
       specifier: ^7.0.0
       version: 7.0.0
@@ -128,6 +131,9 @@ importers:
       simple-git-hooks:
         specifier: catalog:dev
         version: 2.13.1
+      strip-json-comments:
+        specifier: catalog:prod-inlined
+        version: 5.0.3
       taze:
         specifier: catalog:dev
         version: 19.17.1
@@ -2345,6 +2351,10 @@ packages:
   strip-indent@4.1.1:
     resolution: {integrity: sha512-SlyRoSkdh1dYP0PzclLE7r0M9sgbFKKMFXpFRUMNuKhQSbC6VQIGzq3E0qsfvGJaUFJPGv6Ws1NZ/haTAjfbMA==}
     engines: {node: '>=12'}
+
+  strip-json-comments@5.0.3:
+    resolution: {integrity: sha512-1tB5mhVo7U+ETBKNf92xT4hrQa3pm0MZ0PQvuDnWgAAGHDsfp4lPSpiS6psrSiet87wyGPh9ft6wmhOMQ0hDiw==}
+    engines: {node: '>=14.16'}
 
   super-regex@1.1.0:
     resolution: {integrity: sha512-WHkws2ZflZe41zj6AolvvmaTrWds/VuyeYr9iPVv/oQeaIoVxMKaushfFWpOGDT+GuBrM/sVqF8KUCYQlSSTdQ==}
@@ -4795,6 +4805,8 @@ snapshots:
   string-argv@0.3.2: {}
 
   strip-indent@4.1.1: {}
+
+  strip-json-comments@5.0.3: {}
 
   super-regex@1.1.0:
     dependencies:

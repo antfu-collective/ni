@@ -458,3 +458,149 @@ describe('catalog handler - existing-only mode', () => {
     expect(rootPkg.workspaces.catalog.lodash).toBeUndefined()
   })
 })
+
+describe('catalog handler - versioned specifiers', () => {
+  it('splits `name@version` and catalogs the bare name, #358', async () => {
+    const cwd = await createTempDir('pnpm-default-only')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('pnpm', ['esbuild@0.28.1'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    expect(result!.args).toEqual(['i'])
+
+    const yaml = fs.readFileSync(path.join(cwd, 'pnpm-workspace.yaml'), 'utf-8')
+    expect(yaml).toContain('esbuild: 0.28.1')
+    expect(yaml).not.toContain('esbuild@0.28.1')
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.dependencies.esbuild).toBe('catalog:')
+    expect(pkg.dependencies['esbuild@0.28.1']).toBeUndefined()
+  })
+
+  it('keeps a range the user typed instead of resolving the latest version', async () => {
+    const cwd = await createTempDir('pnpm-default-only')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    await handleCatalogInstall('pnpm', ['esbuild@^0.27.0'], { cwd, programmatic: true })
+
+    const yaml = fs.readFileSync(path.join(cwd, 'pnpm-workspace.yaml'), 'utf-8')
+    expect(yaml).toContain('esbuild: ^0.27.0')
+  })
+
+  it('splits scoped packages on the second `@`', async () => {
+    const cwd = await createTempDir('pnpm-default-only')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    await handleCatalogInstall('pnpm', ['@vitejs/plugin-vue@6.0.0'], { cwd, programmatic: true })
+
+    const yaml = fs.readFileSync(path.join(cwd, 'pnpm-workspace.yaml'), 'utf-8')
+    expect(yaml).toContain('\'@vitejs/plugin-vue\': 6.0.0')
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.dependencies['@vitejs/plugin-vue']).toBe('catalog:')
+  })
+
+  it('resolves a dist-tag through the full specifier', async () => {
+    const cwd = await createTempDir('pnpm-default-only')
+    const { getLatestVersion } = await import('fast-npm-meta')
+    vi.mocked(getLatestVersion).mockClear()
+
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+    await handleCatalogInstall('pnpm', ['esbuild@latest'], { cwd, programmatic: true })
+
+    expect(vi.mocked(getLatestVersion)).toHaveBeenCalledWith('esbuild@latest')
+
+    const yaml = fs.readFileSync(path.join(cwd, 'pnpm-workspace.yaml'), 'utf-8')
+    expect(yaml).toContain('esbuild: ^1.0.0')
+  })
+
+  it('matches an existing catalog entry by name, ignoring the requested version', async () => {
+    const cwd = await createTempDir('pnpm')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('pnpm', ['react@19.0.0'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    expect(result!.args).toEqual(['i'])
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.dependencies.react).toBe('catalog:prod')
+  })
+
+  it('hands the untouched specifier back to the agent when skipped', async () => {
+    const cwd = await createTempDir('pnpm')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('pnpm', ['react', 'unknown-pkg@1.2.3'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    expect(result!.args).toContain('unknown-pkg@1.2.3')
+  })
+
+  it('catalogs the bare name for bun too', async () => {
+    const cwd = await createTempDir('bun-default-only')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    await handleCatalogInstall('bun', ['lodash@4.17.21'], { cwd, programmatic: true })
+
+    const rootPkg = readJson(path.join(cwd, 'package.json'))
+    expect(rootPkg.workspaces.catalog.lodash).toBe('4.17.21')
+    expect(rootPkg.dependencies.lodash).toBe('catalog:')
+  })
+})
+
+describe('catalog handler - yarn catalogs', () => {
+  it('splits `name@version` and writes to .yarnrc.yml, #358', async () => {
+    const cwd = await createTempDir('yarn-default-only')
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+
+    const result = await handleCatalogInstall('yarn@berry', ['esbuild@0.28.1'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    expect(result!.command).toBe('yarn')
+
+    const yarnrc = fs.readFileSync(path.join(cwd, '.yarnrc.yml'), 'utf-8')
+    expect(yarnrc).toContain('esbuild: 0.28.1')
+    expect(yarnrc).not.toContain('esbuild@0.28.1')
+
+    const pkg = readJson(path.join(cwd, 'package.json'))
+    expect(pkg.dependencies.esbuild).toBe('catalog:')
+  })
+})
+
+describe('catalog handler - range prefix', () => {
+  it('honours npm/pnpm save-prefix', async () => {
+    const cwd = await createTempDir('pnpm-default-only')
+    fs.writeFileSync(path.join(cwd, '.npmrc'), 'save-prefix=~\n')
+
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+    await handleCatalogInstall('pnpm', ['lodash'], { cwd, programmatic: true })
+
+    const yaml = fs.readFileSync(path.join(cwd, 'pnpm-workspace.yaml'), 'utf-8')
+    expect(yaml).toContain('lodash: ~1.0.0')
+  })
+
+  it('honours npm/pnpm save-exact', async () => {
+    const cwd = await createTempDir('pnpm-default-only')
+    fs.writeFileSync(path.join(cwd, '.npmrc'), 'save-exact=true\n')
+
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+    await handleCatalogInstall('pnpm', ['lodash'], { cwd, programmatic: true })
+
+    const yaml = fs.readFileSync(path.join(cwd, 'pnpm-workspace.yaml'), 'utf-8')
+    expect(yaml).toContain('lodash: 1.0.0')
+    expect(yaml).not.toContain('lodash: ^1.0.0')
+  })
+
+  it('honours yarn defaultSemverRangePrefix', async () => {
+    const cwd = await createTempDir('yarn-default-only')
+    fs.appendFileSync(path.join(cwd, '.yarnrc.yml'), '\ndefaultSemverRangePrefix: "~"\n')
+
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+    await handleCatalogInstall('yarn@berry', ['lodash'], { cwd, programmatic: true })
+
+    const yarnrc = fs.readFileSync(path.join(cwd, '.yarnrc.yml'), 'utf-8')
+    expect(yarnrc).toContain('lodash: ~1.0.0')
+  })
+})
