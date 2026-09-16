@@ -1,5 +1,6 @@
 import type { Agent } from 'package-manager-detector'
 import fs from 'node:fs'
+import { resolve } from 'node:path'
 import process from 'node:process'
 import ini from 'ini'
 import { detect } from './detect'
@@ -106,40 +107,48 @@ function readRcFiles(cwd: string): Partial<Config> {
   return merged
 }
 
-const configs = new Map<string, Config>()
+async function loadConfig(cwd: string): Promise<Config> {
+  const config: Config = { ...defaultConfig, ...readRcFiles(cwd) }
 
-export async function getConfig(cwd: string = process.cwd()): Promise<Config> {
-  let config = configs.get(cwd)
+  if (process.env.NI_DEFAULT_AGENT)
+    config.defaultAgent = process.env.NI_DEFAULT_AGENT as Agent
+
+  if (process.env.NI_GLOBAL_AGENT)
+    config.globalAgent = process.env.NI_GLOBAL_AGENT as Agent
+
+  if (process.env.NI_RUN_AGENT === 'node')
+    config.runAgent = process.env.NI_RUN_AGENT
+
+  if (process.env.NI_USE_SFW !== undefined)
+    config.useSfw = process.env.NI_USE_SFW === 'true'
+
+  if (process.env.NI_CATALOG !== undefined) {
+    config.catalog = process.env.NI_CATALOG === 'existing'
+      ? 'existing'
+      : process.env.NI_CATALOG !== 'false'
+  }
+
+  if (process.env.NI_NO_LAST_COMMAND !== undefined)
+    config.noLastCommand = process.env.NI_NO_LAST_COMMAND === 'true'
+
+  const agent = await detect({ programmatic: true, cwd })
+  if (agent)
+    config.defaultAgent = agent
+
+  return config
+}
+
+// Holds the pending promise rather than the result, so concurrent calls for
+// the same directory share one read and print any `.nirc` warnings once.
+const configs = new Map<string, Promise<Config>>()
+
+export function getConfig(cwd: string = process.cwd()): Promise<Config> {
+  const key = resolve(cwd)
+  let config = configs.get(key)
 
   if (!config) {
-    config = { ...defaultConfig, ...readRcFiles(cwd) }
-
-    if (process.env.NI_DEFAULT_AGENT)
-      config.defaultAgent = process.env.NI_DEFAULT_AGENT as Agent
-
-    if (process.env.NI_GLOBAL_AGENT)
-      config.globalAgent = process.env.NI_GLOBAL_AGENT as Agent
-
-    if (process.env.NI_RUN_AGENT === 'node')
-      config.runAgent = process.env.NI_RUN_AGENT
-
-    if (process.env.NI_USE_SFW !== undefined)
-      config.useSfw = process.env.NI_USE_SFW === 'true'
-
-    if (process.env.NI_CATALOG !== undefined) {
-      config.catalog = process.env.NI_CATALOG === 'existing'
-        ? 'existing'
-        : process.env.NI_CATALOG !== 'false'
-    }
-
-    if (process.env.NI_NO_LAST_COMMAND !== undefined)
-      config.noLastCommand = process.env.NI_NO_LAST_COMMAND === 'true'
-
-    const agent = await detect({ programmatic: true, cwd })
-    if (agent)
-      config.defaultAgent = agent
-
-    configs.set(cwd, config)
+    config = loadConfig(key)
+    configs.set(key, config)
   }
 
   return config
