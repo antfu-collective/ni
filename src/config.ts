@@ -20,7 +20,12 @@ interface Config {
   globalAgent: Agent
   runAgent: 'node' | undefined
   useSfw: boolean
-  catalog: boolean
+  /**
+   * `true` to use catalogs whenever they are detected, `false` to disable
+   * catalog mode, `'existing'` to only reuse catalog entries that already exist
+   * and install any other package normally.
+   */
+  catalog: boolean | 'existing'
   noLastCommand: boolean
 }
 
@@ -104,8 +109,11 @@ export async function getConfig(): Promise<Config> {
     if (process.env.NI_USE_SFW !== undefined)
       config.useSfw = process.env.NI_USE_SFW === 'true'
 
-    if (process.env.NI_CATALOG !== undefined)
-      config.catalog = process.env.NI_CATALOG !== 'false'
+    if (process.env.NI_CATALOG !== undefined) {
+      config.catalog = process.env.NI_CATALOG === 'existing'
+        ? 'existing'
+        : process.env.NI_CATALOG !== 'false'
+    }
 
     if (process.env.NI_NO_LAST_COMMAND !== undefined)
       config.noLastCommand = process.env.NI_NO_LAST_COMMAND === 'true'
