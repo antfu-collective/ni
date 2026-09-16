@@ -33,13 +33,64 @@ const defaultConfig: Config = {
   noLastCommand: false,
 }
 
+const configKeys = Object.keys(defaultConfig)
+
+/**
+ * The option `key` was probably meant to be, if any. `ini` lowercases nothing
+ * and validates nothing, so a `defaultagent=npm` parses cleanly and then does
+ * nothing at all.
+ */
+function suggestKey(key: string): string | undefined {
+  const lowerCased = key.toLowerCase()
+  return configKeys.find(known => known.toLowerCase() === lowerCased)
+}
+
+function readRcFile(path: string): Partial<Config> {
+  let contents: string
+
+  try {
+    contents = fs.readFileSync(path, 'utf-8')
+  }
+  catch (error) {
+    console.warn(`[ni] cannot read ${path}: ${(error as Error).message}`)
+    return {}
+  }
+
+  let parsed: Record<string, unknown>
+
+  // `ini` accepts almost anything, but it does throw: dotted sections are
+  // merged into the values already parsed, and a `null` value passes its
+  // `typeof === 'object'` check on the way in.
+  try {
+    parsed = ini.parse(contents)
+  }
+  catch (error) {
+    console.warn(`[ni] cannot parse ${path}: ${(error as Error).message}`)
+    return {}
+  }
+
+  const known: Record<string, unknown> = {}
+
+  for (const [key, value] of Object.entries(parsed)) {
+    if (configKeys.includes(key)) {
+      known[key] = value
+      continue
+    }
+
+    const suggestion = suggestKey(key)
+    console.warn(
+      `[ni] unknown option "${key}" in ${path}${suggestion ? ` (did you mean "${suggestion}"?)` : ''}`,
+    )
+  }
+
+  return known as Partial<Config>
+}
+
 let config: Config | undefined
 
 export async function getConfig(): Promise<Config> {
   if (!config) {
-    config = { ...defaultConfig, ...fs.existsSync(rcPath)
-      ? ini.parse(fs.readFileSync(rcPath, 'utf-8'))
-      : null }
+    config = { ...defaultConfig, ...fs.existsSync(rcPath) ? readRcFile(rcPath) : null }
 
     if (process.env.NI_DEFAULT_AGENT)
       config.defaultAgent = process.env.NI_DEFAULT_AGENT as Agent
