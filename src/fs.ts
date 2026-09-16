@@ -1,6 +1,6 @@
 import type { RunnerContext } from './runner'
 import fs from 'node:fs'
-import { resolve } from 'node:path'
+import { dirname, resolve } from 'node:path'
 import process from 'node:process'
 import stripJsonComments from 'strip-json-comments'
 
@@ -45,4 +45,40 @@ export function getPackageJSON(ctx?: RunnerContext): any {
       throw e
     }
   }
+}
+
+/**
+ * The home directory the current platform reports, if any.
+ */
+export function getHomeDir(): string | undefined {
+  return process.platform === 'win32'
+    ? process.env.USERPROFILE
+    : process.env.HOME
+}
+
+/**
+ * Every `fileName` from `cwd` up to the filesystem root, nearest first, with the
+ * one in the home directory appended last. This is how npm and yarn layer their
+ * own configuration files.
+ */
+export function findConfigFiles(cwd: string, fileName: string, home = getHomeDir()): string[] {
+  const found: string[] = []
+  let dir = resolve(cwd)
+  while (true) {
+    const filePath = resolve(dir, fileName)
+    if (fs.existsSync(filePath))
+      found.push(filePath)
+    const parent = dirname(dir)
+    if (parent === dir)
+      break
+    dir = parent
+  }
+
+  if (home) {
+    const homeConfig = resolve(home, fileName)
+    if (!found.includes(homeConfig) && fs.existsSync(homeConfig))
+      found.push(homeConfig)
+  }
+
+  return found
 }

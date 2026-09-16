@@ -59,7 +59,7 @@ export const parseNr = <Runner>(async (agent, args, ctx) => {
   if (args[0] === '-p')
     args = args.slice(1)
 
-  const runAgent = await getRunAgent()
+  const runAgent = await getRunAgent(ctx?.cwd)
 
   let runWithNode = false
   if (runAgent === 'node') {

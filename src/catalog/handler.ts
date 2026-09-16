@@ -70,7 +70,7 @@ export async function handleCatalogInstall(
   args: string[],
   ctx?: RunnerContext,
 ): Promise<ExtendedResolvedCommand | undefined> {
-  const catalogEnabled = await getCatalog()
+  const catalogEnabled = await getCatalog(ctx?.cwd)
   if (!catalogEnabled)
     return undefined
 
@@ -128,7 +128,7 @@ export async function handleCatalogInstall(
     // `existing` mode: catalogs are only reused, never extended. Anything not
     // already cataloged is installed normally.
     if (catalogEnabled === 'existing') {
-      skippedPackages.push(pkg)
+      skippedPackages.push(pkg.raw)
       continue
     }
 
