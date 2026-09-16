@@ -1,34 +1,11 @@
 import type { Agent } from 'package-manager-detector'
 import fs from 'node:fs'
-import os from 'node:os'
-import path from 'node:path'
 import process from 'node:process'
 import ini from 'ini'
 import { parsePnpmWorkspaceYaml } from 'pnpm-workspace-yaml'
+import { findConfigFiles } from '../fs'
 
 const DEFAULT_PREFIX = '^'
-
-// Nearest config first, falling back to the one in the home directory, which is
-// how both npm and yarn layer their own configuration files.
-function findConfigFiles(cwd: string, fileName: string): string[] {
-  const found: string[] = []
-  let dir = path.resolve(cwd)
-  while (true) {
-    const filePath = path.join(dir, fileName)
-    if (fs.existsSync(filePath))
-      found.push(filePath)
-    const parent = path.dirname(dir)
-    if (parent === dir)
-      break
-    dir = parent
-  }
-
-  const homeConfig = path.join(os.homedir(), fileName)
-  if (!found.includes(homeConfig) && fs.existsSync(homeConfig))
-    found.push(homeConfig)
-
-  return found
-}
 
 function isTrue(value: unknown): boolean {
   return value === true || value === 'true'
