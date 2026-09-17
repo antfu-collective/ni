@@ -431,6 +431,9 @@ catalog=true
 # ~/.bashrc
 
 # custom configuration file path
+# A relative path is resolved against the current working directory, not against
+# the directory passed to `-C`. `ni -C packages/app` with `NI_CONFIG_FILE=.nirc`
+# reads `./.nirc` from where you invoked ni, not `packages/app/.nirc`.
 export NI_CONFIG_FILE="$HOME/.config/ni/nirc"
 
 # environment variables have higher priority than config file if presented
