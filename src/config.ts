@@ -95,7 +95,12 @@ let config: Config | undefined
 
 export async function getConfig(): Promise<Config> {
   if (!config) {
-    config = { ...defaultConfig, ...fs.existsSync(rcPath) ? readRcFile(rcPath) : null }
+    const rcExists = fs.existsSync(rcPath)
+    if (customRcPath && !rcExists) {
+      console.warn(`[ni] NI_CONFIG_FILE points to ${path.resolve(rcPath)}, which does not exist`)
+    }
+
+    config = { ...defaultConfig, ...rcExists ? readRcFile(rcPath) : null }
 
     if (process.env.NI_DEFAULT_AGENT)
       config.defaultAgent = process.env.NI_DEFAULT_AGENT as Agent
