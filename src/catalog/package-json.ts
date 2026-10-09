@@ -1,18 +1,4 @@
 import fs from 'node:fs'
-import path from 'node:path'
-
-export function findClosestPackageJson(cwd: string): string | null {
-  let dir = path.resolve(cwd)
-  while (true) {
-    const filePath = path.join(dir, 'package.json')
-    if (fs.existsSync(filePath))
-      return filePath
-    const parent = path.dirname(dir)
-    if (parent === dir)
-      return null
-    dir = parent
-  }
-}
 
 export function detectIndent(content: string): string {
   const match = content.match(/^(\s+)"/m)

@@ -2,7 +2,7 @@ import fs from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { getPackageJSON } from '../src/fs'
+import { getPackageJSON, withPackageRoot } from '../src/fs'
 
 async function withManifest(contents: string) {
   const cwd = await fs.mkdtemp(path.join(tmpdir(), 'ni-pkg-'))
@@ -127,5 +127,26 @@ describe('getPackageJSON', () => {
     const cwd = await fs.mkdtemp(path.join(tmpdir(), 'ni-pkg-'))
 
     expect(getPackageJSON({ programmatic: true, cwd } as any)).toBeUndefined()
+  })
+})
+
+describe('withPackageRoot', () => {
+  it('points cwd at the closest package root', async () => {
+    const root = await withManifest(JSON.stringify({ scripts: { dev: 'vite' } }))
+    const nested = path.join(root, 'src', 'components')
+    await fs.mkdir(nested, { recursive: true })
+    const original = { programmatic: true, cwd: nested }
+    const ctx = withPackageRoot(original)
+
+    expect(ctx).toEqual({ programmatic: true, cwd: root })
+    expect(getPackageJSON(ctx).scripts).toEqual({ dev: 'vite' })
+    // The command still runs from the original cwd
+    expect(original.cwd).toBe(nested)
+  })
+
+  it('keeps cwd when there is no package root', async () => {
+    const cwd = await fs.mkdtemp(path.join(tmpdir(), 'ni-root-'))
+
+    expect(withPackageRoot({ programmatic: true, cwd })).toEqual({ programmatic: true, cwd })
   })
 })

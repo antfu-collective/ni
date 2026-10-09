@@ -5,6 +5,7 @@ import prompts from '@posva/prompts'
 import { byLengthAsc, Fzf } from 'fzf'
 import { getCompletionSuggestions, rawBashCompletionScript, rawFishCompletionScript, rawZshCompletionScript } from '../completion'
 import { getConfig } from '../config'
+import { withPackageRoot } from '../fs'
 import { readPackageScripts, readWorkspaceScripts } from '../package'
 import { parseNr } from '../parse'
 import { runCli } from '../runner'
@@ -70,6 +71,7 @@ runCli(async (agent, args, ctx) => {
   // Use --completion to generate completion script and do completion logic
   // (No package manager would have an argument named --completion)
   if (args[0] === '--completion') {
+    const rootCtx = withPackageRoot(ctx)
     const compLine = process.env.COMP_LINE
     const rawCompCword = process.env.COMP_CWORD
     // In bash
@@ -78,7 +80,7 @@ runCli(async (agent, args, ctx) => {
       const compWords = args.slice(1)
       // Only complete the second word (nr __here__ ...)
       if (compCword === 1) {
-        const suggestions = getCompletionSuggestions(compWords, ctx)
+        const suggestions = getCompletionSuggestions(compWords, rootCtx)
 
         // eslint-disable-next-line no-console
         console.log(suggestions.join('\n'))
@@ -86,7 +88,7 @@ runCli(async (agent, args, ctx) => {
     }
     // In other shells, return suggestions directly
     else {
-      const suggestions = getCompletionSuggestions(args, ctx)
+      const suggestions = getCompletionSuggestions(args, rootCtx)
 
       // eslint-disable-next-line no-console
       console.log(suggestions.join('\n'))
@@ -116,7 +118,7 @@ runCli(async (agent, args, ctx) => {
   }
 
   if (args.length === 0 && !ctx?.programmatic) {
-    const raw = readPackageScripts(ctx)
+    const raw = readPackageScripts(withPackageRoot(ctx))
     await promptSelectScript(raw)
   }
 
