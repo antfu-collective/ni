@@ -130,6 +130,10 @@ export const parseNd = <Runner>((agent, args) => {
   return getCommand(agent, 'dedupe', args)
 })
 
+export const parseNwhy = <Runner>((agent, args) => {
+  return getCommand(agent, 'why', args)
+})
+
 export const parseNun = <Runner>((agent, args) => {
   if (args.includes('-g'))
     return getCommand(agent, 'global_uninstall', exclude(args, '-g'))

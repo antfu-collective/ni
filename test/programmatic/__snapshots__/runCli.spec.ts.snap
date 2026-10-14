@@ -64,9 +64,9 @@ exports[`lockfile > deno > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`lockfile > deno > ni 1`] = `"deno install"`;
 
-exports[`lockfile > deno > ni foo -D 1`] = `"deno add foo -D"`;
+exports[`lockfile > deno > ni foo -D 1`] = `"deno add npm:foo -D"`;
 
-exports[`lockfile > deno > ni foo 1`] = `"deno add foo"`;
+exports[`lockfile > deno > ni foo 1`] = `"deno add npm:foo"`;
 
 exports[`lockfile > deno > nlx --local 1`] = `"deno task --eval foo"`;
 
@@ -350,9 +350,9 @@ exports[`packager > deno > ni -g foo 1`] = `"npm i -g foo"`;
 
 exports[`packager > deno > ni 1`] = `"deno install"`;
 
-exports[`packager > deno > ni foo -D 1`] = `"deno add foo -D"`;
+exports[`packager > deno > ni foo -D 1`] = `"deno add npm:foo -D"`;
 
-exports[`packager > deno > ni foo 1`] = `"deno add foo"`;
+exports[`packager > deno > ni foo 1`] = `"deno add npm:foo"`;
 
 exports[`packager > deno > nlx --local 1`] = `"deno task --eval foo"`;
 

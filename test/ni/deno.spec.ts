@@ -14,11 +14,11 @@ function _(arg: string, expected: string) {
 
 it('empty', _('', 'deno install'))
 
-it('single add', _('axios', 'deno add axios'))
+it('single add', _('axios', 'deno add npm:axios'))
 
-it('multiple', _('eslint @types/node', 'deno add eslint @types/node'))
+it('multiple', _('eslint @types/node', 'deno add npm:eslint npm:@types/node'))
 
-it('-D', _('eslint @types/node -D', 'deno add eslint @types/node -D'))
+it('-D', _('eslint @types/node -D', 'deno add npm:eslint npm:@types/node -D'))
 
 it('global', _('eslint -g', 'deno install -g eslint'))
 

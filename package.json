@@ -24,6 +24,7 @@
     "./nr": "./dist/nr.mjs",
     "./nun": "./dist/nun.mjs",
     "./nup": "./dist/nup.mjs",
+    "./nwhy": "./dist/nwhy.mjs",
     "./package.json": "./package.json"
   },
   "types": "./dist/index.d.mts",
@@ -33,6 +34,7 @@
     "nr": "bin/nr.mjs",
     "nup": "bin/nup.mjs",
     "nd": "bin/nd.mjs",
+    "nwhy": "bin/nwhy.mjs",
     "nlx": "bin/nlx.mjs",
     "na": "bin/na.mjs",
     "nun": "bin/nun.mjs"

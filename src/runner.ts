@@ -176,6 +176,7 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
     console.log(`nci   ${dash}  clean install`)
     console.log(`na    ${dash}  agent alias`)
     console.log(`nd    ${dash}  dedupe dependencies`)
+    console.log(`nwhy  ${dash}  why is a package installed`)
     console.log(`ni -v       ${dash}  show used agent`)
     console.log(`ni --agent  ${dash}  print detected agent name (for scripting)`)
     console.log(`ni -i ${dash}  interactive package management`)

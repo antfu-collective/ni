@@ -358,6 +358,22 @@ nd
 
 <br>
 
+### `nwhy` - why is a package installed
+
+```bash
+nwhy lodash
+
+# npm why lodash
+# yarn why lodash
+# pnpm why lodash
+# bun why lodash
+# deno why lodash
+# nub why lodash
+# aube why lodash
+```
+
+<br>
+
 ### `na` - agent alias
 
 ```bash
