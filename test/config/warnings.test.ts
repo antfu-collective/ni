@@ -100,3 +100,14 @@ it('warns when the config file cannot be read', async () => {
   expect(warn.mock.calls[0][0]).toContain(path)
   expect(config.defaultAgent).toBe('prompt')
 })
+
+it('warns when NI_CONFIG_FILE points to a missing file', async () => {
+  const path = join(root, 'missing.nirc')
+  vi.stubEnv('NI_CONFIG_FILE', path)
+
+  const { getConfig } = await import('../../src/config')
+  const config = await getConfig()
+
+  expect(warn).toHaveBeenCalledExactlyOnceWith(`[ni] NI_CONFIG_FILE points to ${path}, which does not exist`)
+  expect(config.defaultAgent).toBe('prompt')
+})
