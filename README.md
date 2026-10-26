@@ -407,6 +407,8 @@ ni -h
 
 ### Config
 
+A relative `NI_CONFIG_FILE` path is resolved from the current working directory, not from the directory selected by `-C`.
+
 ```ini
 ; ~/.nirc
 
