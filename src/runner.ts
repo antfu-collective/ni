@@ -128,11 +128,17 @@ export async function run(fn: Runner, args: string[], options: DetectOptions & R
       },
       throwOnError: true,
     } satisfies Partial<TinyExecOptions>
-    const getV = (a: string) => {
+    const getV = async (a: string) => {
       const { command, args } = getCmd(a as Agent)
-      return x(command, args, xVersionOptions)
-        .then(e => e.stdout)
-        .then(e => e.startsWith('v') ? e : `v${e}`)
+      try {
+        const { stdout } = await x(command, args, xVersionOptions)
+        return stdout.startsWith('v') ? stdout : `v${stdout}`
+      }
+      catch {
+        // Soft-fail when an agent binary is broken (e.g. corepack-enabled npm EACCES).
+        // `--version` should still report ni/node (and any agents that work). #271
+        return 'unavailable'
+      }
     }
     const globalAgentPromise = getGlobalAgent()
     const globalAgentVersionPromise = globalAgentPromise.then(getV)
