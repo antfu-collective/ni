@@ -60,7 +60,7 @@ it('keeps unrecognised options out of the config', async () => {
     runAgent: undefined,
     useSfw: false,
     catalog: true,
-    noLastCommand: false,
+    lastCommand: 'shared',
   })
 })
 

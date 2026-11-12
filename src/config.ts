@@ -15,6 +15,17 @@ const defaultRcPath = path.join(home || '~/', '.nirc')
 
 const rcPath = customRcPath || defaultRcPath
 
+/**
+ * Where the last script run by `nr` is remembered:
+ * - `shared`: one record for every terminal and every project (default).
+ * - `terminal`: one record per terminal, so two tabs cannot overwrite each
+ *   other's last script.
+ * - `off`: nothing is remembered, `nr -` is disabled.
+ */
+const LAST_COMMAND_MODES = ['shared', 'terminal', 'off'] as const
+
+export type LastCommandMode = typeof LAST_COMMAND_MODES[number]
+
 interface Config {
   defaultAgent: Agent | 'prompt'
   globalAgent: Agent
@@ -26,7 +37,7 @@ interface Config {
    * and install any other package normally.
    */
   catalog: boolean | 'existing'
-  noLastCommand: boolean
+  lastCommand: LastCommandMode
 }
 
 const defaultConfig: Config = {
@@ -35,10 +46,25 @@ const defaultConfig: Config = {
   runAgent: undefined,
   useSfw: false,
   catalog: true,
-  noLastCommand: false,
+  lastCommand: 'shared',
 }
 
 const configKeys = Object.keys(defaultConfig)
+
+/**
+ * Resolves a configured value, reporting unknown ones instead of letting a typo
+ * silently move the record somewhere else.
+ */
+function resolveLastCommandMode(value: string, source: string): LastCommandMode | undefined {
+  const normalized = value.trim().toLowerCase()
+  const mode = LAST_COMMAND_MODES.find(mode => mode === normalized)
+  if (mode)
+    return mode
+
+  console.warn(
+    `[ni] unknown value "${value}" for ${source}, expected one of ${LAST_COMMAND_MODES.join(', ')}`,
+  )
+}
 
 /**
  * The option `key` was probably meant to be, if any. `ini` lowercases nothing
@@ -77,6 +103,21 @@ function readRcFile(path: string): Partial<Config> {
   const known: Record<string, unknown> = {}
 
   for (const [key, value] of Object.entries(parsed)) {
+    if (key === 'lastCommand') {
+      const mode = resolveLastCommandMode(String(value), `"lastCommand" in ${path}`)
+      if (mode)
+        known[key] = mode
+      continue
+    }
+
+    // https://github.com/antfu-collective/ni/pull/333
+    // Renamed to `lastCommand`, still honoured so existing configs keep working
+    if (key === 'noLastCommand') {
+      known.lastCommand = value === true || value === 'true' ? 'off' : 'shared'
+      console.warn(`[ni] "noLastCommand" is deprecated in ${path}, use "lastCommand" instead`)
+      continue
+    }
+
     if (configKeys.includes(key)) {
       known[key] = value
       continue
@@ -115,8 +156,12 @@ export async function getConfig(): Promise<Config> {
         : process.env.NI_CATALOG !== 'false'
     }
 
-    if (process.env.NI_NO_LAST_COMMAND !== undefined)
-      config.noLastCommand = process.env.NI_NO_LAST_COMMAND === 'true'
+    if (process.env.NI_LAST_COMMAND !== undefined)
+      config.lastCommand = resolveLastCommandMode(process.env.NI_LAST_COMMAND, 'NI_LAST_COMMAND') ?? config.lastCommand
+    // https://github.com/antfu-collective/ni/pull/333
+    // Predates `lastCommand`, mapped silently so nobody has to migrate
+    else if (process.env.NI_NO_LAST_COMMAND !== undefined)
+      config.lastCommand = process.env.NI_NO_LAST_COMMAND === 'true' ? 'off' : 'shared'
 
     const agent = await detect({ programmatic: true })
     if (agent)
