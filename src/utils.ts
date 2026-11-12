@@ -1,12 +1,67 @@
 import type { Buffer } from 'node:buffer'
-import { existsSync, promises as fs } from 'node:fs'
+import { existsSync, promises as fs, fstatSync, readdirSync, readlinkSync, statSync } from 'node:fs'
 import os from 'node:os'
-import { dirname, join } from 'node:path'
+import { basename, dirname, join } from 'node:path'
 import process from 'node:process'
+import { isatty } from 'node:tty'
 import { styleText } from 'node:util'
 import which from 'which'
 
 export const CLI_TEMP_DIR = join(os.tmpdir(), 'antfu-ni')
+
+let terminalId: string | undefined
+
+/**
+ * The terminal this process runs in. Every terminal has to allocate a pty, so
+ * its device name covers iTerm2, Terminal.app, Kitty, WezTerm, tmux, VS Code
+ * and the rest alike. Windows has no such name, so an interactive tab's shell
+ * (the parent process) stands in for it.
+ */
+export function getTerminalId(): string {
+  return terminalId ??= resolveTerminalId()
+}
+
+function resolveTerminalId(): string {
+  for (const fd of [0, 1, 2]) {
+    if (!isatty(fd))
+      continue
+
+    const name = ttyName(fd)
+    if (name)
+      return name
+  }
+
+  return `ppid-${process.ppid}`
+}
+
+/**
+ * The device name behind `fd` — `ttys008` on macOS, `pts/3` on Linux. Node has
+ * no `ttyname(3)`: Linux reports it via `/proc`, macOS only lets us match the
+ * device number against `/dev`.
+ */
+function ttyName(fd: number): string | undefined {
+  if (process.platform === 'linux') {
+    try {
+      const path = readlinkSync(`/proc/self/fd/${fd}`)
+      if (path.startsWith('/dev/'))
+        return basename(path)
+    }
+    catch {
+      // Not a symlink, fall back to the device number
+    }
+  }
+
+  try {
+    const { rdev } = fstatSync(fd)
+    for (const name of readdirSync('/dev')) {
+      if (name.startsWith('tty') && statSync(`/dev/${name}`).rdev === rdev)
+        return name
+    }
+  }
+  catch {
+    // No /dev to scan, the parent process is the only identifier left
+  }
+}
 
 export function remove<T>(arr: T[], v: T) {
   const index = arr.indexOf(v)
@@ -68,22 +123,25 @@ export async function writeFileSafe(
 ): Promise<boolean> {
   const temp = await openTemp()
 
-  if (temp) {
-    fs.writeFile(temp.path, data)
-      .then(() => {
-        const directory = dirname(path)
-        if (!existsSync(directory))
-          fs.mkdir(directory, { recursive: true })
+  if (!temp)
+    return false
 
-        return fs.rename(temp.path, path)
-          .then(() => true)
-          .catch(() => false)
-      })
-      .catch(() => false)
-      .finally(temp.cleanup)
+  try {
+    await fs.writeFile(temp.path, data)
+
+    const directory = dirname(path)
+    if (!existsSync(directory))
+      await fs.mkdir(directory, { recursive: true })
+
+    await fs.rename(temp.path, path)
+    return true
   }
-
-  return false
+  catch {
+    return false
+  }
+  finally {
+    temp.cleanup()
+  }
 }
 
 export function limitText(text: string, maxWidth: number) {

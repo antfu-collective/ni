@@ -202,6 +202,7 @@ nr
 nr -
 
 # rerun the last command
+# see `lastCommand` in the config section to keep one record per terminal
 ```
 
 ```bash
@@ -425,6 +426,12 @@ useSfw=true
 ; use catalog mode when catalogs are detected (default true)
 ; "existing" only reuses packages already in a catalog, never adds new ones
 catalog=true
+
+; where `nr -` remembers the last script (default "shared")
+; "shared": one record for every terminal and every project
+; "terminal": one record per terminal, so two tabs cannot overwrite each other
+; "off": remember nothing, `nr -` is disabled
+lastCommand=terminal
 ```
 
 ```bash
@@ -438,6 +445,7 @@ export NI_DEFAULT_AGENT="npm" # default "prompt"
 export NI_GLOBAL_AGENT="npm"
 export NI_USE_SFW="true"
 export NI_CATALOG="false" # disable catalog mode, "existing" to only reuse existing catalog entries
+export NI_LAST_COMMAND="terminal" # "shared" (default) | "terminal" | "off"
 ```
 
 ```ps

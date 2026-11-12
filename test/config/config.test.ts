@@ -23,7 +23,7 @@ it('has correct defaults', async () => {
     runAgent: undefined,
     useSfw: false,
     catalog: true,
-    noLastCommand: false,
+    lastCommand: 'shared',
   })
 })
 
@@ -39,7 +39,7 @@ it('loads .nirc', async () => {
     runAgent: undefined,
     useSfw: true,
     catalog: true,
-    noLastCommand: false,
+    lastCommand: 'shared',
   })
 })
 
@@ -57,26 +57,91 @@ it('reads environment variable config', async () => {
     runAgent: undefined,
     useSfw: true,
     catalog: true,
-    noLastCommand: false,
+    lastCommand: 'shared',
   })
 })
 
-it('enables noLastCommand via NI_NO_LAST_COMMAND env var', async () => {
+it('reads lastCommand from .nirc', async () => {
+  vi.stubEnv('NI_CONFIG_FILE', join(__dirname, './.nirc-last-command'))
+
+  const { getConfig } = await import('../../src/config')
+  const config = await getConfig()
+
+  expect(config.lastCommand).toBe('terminal')
+})
+
+it('reads lastCommand from NI_LAST_COMMAND', async () => {
+  vi.stubEnv('NI_LAST_COMMAND', 'terminal')
+
+  const { getConfig } = await import('../../src/config')
+  const config = await getConfig()
+
+  expect(config.lastCommand).toBe('terminal')
+})
+
+it('ignores an unknown NI_LAST_COMMAND value', async () => {
+  const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+  vi.stubEnv('NI_LAST_COMMAND', 'terminals')
+
+  const { getConfig } = await import('../../src/config')
+  const config = await getConfig()
+
+  expect(config.lastCommand).toBe('shared')
+  expect(warn).toHaveBeenCalledOnce()
+  expect(warn.mock.calls[0][0]).toContain('NI_LAST_COMMAND')
+  warn.mockRestore()
+})
+
+it('maps the legacy NI_NO_LAST_COMMAND=true to lastCommand=off', async () => {
   vi.stubEnv('NI_NO_LAST_COMMAND', 'true')
 
   const { getConfig } = await import('../../src/config')
   const config = await getConfig()
 
-  expect(config.noLastCommand).toBe(true)
+  expect(config.lastCommand).toBe('off')
 })
 
-it('keeps noLastCommand false when NI_NO_LAST_COMMAND is not "true"', async () => {
+it('keeps lastCommand shared when NI_NO_LAST_COMMAND is not "true"', async () => {
   vi.stubEnv('NI_NO_LAST_COMMAND', 'false')
 
   const { getConfig } = await import('../../src/config')
   const config = await getConfig()
 
-  expect(config.noLastCommand).toBe(false)
+  expect(config.lastCommand).toBe('shared')
+})
+
+it('maps the legacy NI_NO_LAST_COMMAND without warning', async () => {
+  const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+  vi.stubEnv('NI_NO_LAST_COMMAND', 'true')
+
+  const { getConfig } = await import('../../src/config')
+  await getConfig()
+
+  expect(warn).not.toHaveBeenCalled()
+  warn.mockRestore()
+})
+
+it('prefers NI_LAST_COMMAND over the legacy NI_NO_LAST_COMMAND', async () => {
+  vi.stubEnv('NI_LAST_COMMAND', 'terminal')
+  vi.stubEnv('NI_NO_LAST_COMMAND', 'true')
+
+  const { getConfig } = await import('../../src/config')
+  const config = await getConfig()
+
+  expect(config.lastCommand).toBe('terminal')
+})
+
+it('maps the legacy noLastCommand from .nirc and warns', async () => {
+  const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+  vi.stubEnv('NI_CONFIG_FILE', join(__dirname, './.nirc-no-last-command'))
+
+  const { getConfig } = await import('../../src/config')
+  const config = await getConfig()
+
+  expect(config.lastCommand).toBe('off')
+  expect(warn).toHaveBeenCalledOnce()
+  expect(warn.mock.calls[0][0]).toContain('lastCommand')
+  warn.mockRestore()
 })
 
 it('reads catalog=existing from .nirc', async () => {

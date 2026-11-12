@@ -32,7 +32,7 @@ async function createProject(scripts: Record<string, string>): Promise<Project> 
  * `node --import tsx` rather than the `tsx` bin: the bin re-spawns a child,
  * which would give the CLI a different parent process on every run.
  */
-async function runNr(project: Project, args: string[]) {
+async function runNr(project: Project, args: string[], env: Record<string, string> = {}) {
   const result = await x(process.execPath, ['--import', tsxLoader, nr, ...args], {
     throwOnError: false,
     nodeOptions: {
@@ -43,16 +43,25 @@ async function runNr(project: Project, args: string[]) {
         TMP: project.temp,
         TEMP: project.temp,
         NI_CONFIG_FILE: 'false',
+        ...env,
       },
     },
   })
   return { exitCode: result.exitCode, stdout: result.stdout.trim(), stderr: result.stderr }
 }
 
-async function readStored(project: Project) {
-  const file = path.join(project.temp, 'antfu-ni', '_storage.json')
+async function listStored(project: Project) {
   try {
-    return JSON.parse(await fs.readFile(file, 'utf-8'))
+    return (await fs.readdir(path.join(project.temp, 'antfu-ni'))).filter(file => file.endsWith('.json'))
+  }
+  catch {
+    return []
+  }
+}
+
+async function readStored(project: Project, file = '_storage.json') {
+  try {
+    return JSON.parse(await fs.readFile(path.join(project.temp, 'antfu-ni', file), 'utf-8'))
   }
   catch {
     return undefined
@@ -93,5 +102,94 @@ describe('recording the last command', () => {
     await runNr(project, ['?', 'dev'])
 
     expect(await readStored(project)).toEqual({ lastRunCommand: 'dev' })
+  })
+})
+
+describe('lastCommand=shared', () => {
+  it('keeps a single record for every terminal', async () => {
+    const project = await createProject(scripts)
+    const env = { NI_LAST_COMMAND: 'shared' }
+
+    await runNr(project, ['?', 'dev'], env)
+    await runNr(project, ['?', 'build'], env)
+
+    expect(await listStored(project)).toEqual(['_storage.json'])
+    expect(await readStored(project)).toEqual({ lastRunCommand: 'build' })
+  })
+
+  it('is the default', async () => {
+    const project = await createProject(scripts)
+
+    await runNr(project, ['?', 'dev'])
+    await runNr(project, ['?', 'build'])
+
+    expect(await listStored(project)).toEqual(['_storage.json'])
+  })
+})
+
+describe('lastCommand=terminal', () => {
+  it('keeps one record per terminal', async () => {
+    const project = await createProject(scripts)
+
+    await runNr(project, ['?', 'dev'], { NI_LAST_COMMAND: 'terminal' })
+
+    const files = await listStored(project)
+    expect(files).toHaveLength(1)
+    expect(files[0]).toMatch(/^_storage\..+\.json$/)
+    expect(await readStored(project, files[0])).toEqual({ lastRunCommand: 'dev' })
+  })
+
+  it('reruns the script of the same terminal', async () => {
+    const project = await createProject(scripts)
+    const env = { NI_LAST_COMMAND: 'terminal' }
+
+    await runNr(project, ['?', 'build'], env)
+
+    expect((await runNr(project, ['?', '-'], env)).stdout).toBe('npm run build')
+  })
+
+  it('leaves the shared record untouched', async () => {
+    const project = await createProject(scripts)
+
+    await runNr(project, ['?', 'dev'], { NI_LAST_COMMAND: 'shared' })
+    await runNr(project, ['?', 'build'], { NI_LAST_COMMAND: 'terminal' })
+
+    expect(await readStored(project)).toEqual({ lastRunCommand: 'dev' })
+  })
+})
+
+describe('lastCommand=off', () => {
+  it('records nothing and disables `nr -`', async () => {
+    const project = await createProject(scripts)
+    const env = { NI_LAST_COMMAND: 'off' }
+
+    await runNr(project, ['?', 'dev'], env)
+
+    expect(await listStored(project)).toEqual([])
+
+    const last = await runNr(project, ['?', '-'], env)
+    expect(last.exitCode).toBe(1)
+    expect(last.stderr).toContain('No last command found')
+  })
+
+  it('does not use a record written before it was turned off', async () => {
+    const project = await createProject(scripts)
+
+    await runNr(project, ['?', 'dev'], { NI_LAST_COMMAND: 'shared' })
+
+    expect((await runNr(project, ['?', '-'], { NI_LAST_COMMAND: 'off' })).exitCode).toBe(1)
+  })
+})
+
+describe('legacy NI_NO_LAST_COMMAND', () => {
+  it('behaves like the off mode, without warning', async () => {
+    const project = await createProject(scripts)
+    const env = { NI_NO_LAST_COMMAND: 'true' }
+
+    const first = await runNr(project, ['?', 'dev'], env)
+
+    expect(first.stderr).not.toContain('deprecated')
+    expect(await listStored(project)).toEqual([])
+    expect((await runNr(project, ['?', '-'], env)).exitCode).toBe(1)
   })
 })

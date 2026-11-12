@@ -1,5 +1,7 @@
 import type { Choice } from '@posva/prompts'
+import type { LastCommandMode } from '../config'
 import type { PackageScript } from '../package'
+import type { Storage } from '../storage'
 import process from 'node:process'
 import prompts from '@posva/prompts'
 import { byLengthAsc, Fzf } from 'fzf'
@@ -9,24 +11,34 @@ import { withPackageRoot } from '../fs'
 import { readPackageScripts, readWorkspaceScripts } from '../package'
 import { parseNr } from '../parse'
 import { runCli } from '../runner'
-import { dump, load } from '../storage'
+import { dump, getStorageKey, load } from '../storage'
 import { limitText } from '../utils'
 
 runCli(async (agent, args, ctx) => {
-  const storage = await load()
+  // Resolved lazily, so `--completion` does not pay for config and detection
+  let state: { mode: LastCommandMode, storage: Storage } | undefined
+  const getState = async () => {
+    if (state)
+      return state
+
+    const { lastCommand: mode } = await getConfig()
+    const storage = mode === 'off' ? {} : await load(getStorageKey(mode))
+
+    return state = { mode, storage }
+  }
 
   const promptSelectScript = async (raw: PackageScript[]) => {
     const terminalColumns = process.stdout?.columns || 80
 
+    const { storage } = await getState()
     const last = storage.lastRunCommand
-    const { noLastCommand } = await getConfig()
     const choices = raw.reduce<Choice[]>((acc, { key, description }) => {
       const item = {
         title: key,
         value: key,
         description: limitText(description, terminalColumns - 15),
       }
-      if (!noLastCommand && last && key === last) {
+      if (last && key === last) {
         return [item, ...acc]
       }
       return [...acc, item]
@@ -106,13 +118,19 @@ runCli(async (agent, args, ctx) => {
   }
 
   if (args[0] === '-') {
+    const { mode, storage } = await getState()
+
     if (!storage.lastRunCommand) {
+      const message = mode === 'off'
+        ? 'No last command found (`lastCommand` is set to "off")'
+        : 'No last command found'
+
       if (!ctx?.programmatic) {
-        console.error('No last command found')
+        console.error(message)
         process.exit(1)
       }
 
-      throw new Error('No last command found')
+      throw new Error(message)
     }
     args[0] = storage.lastRunCommand
   }
@@ -124,9 +142,10 @@ runCli(async (agent, args, ctx) => {
 
   // `nr -p` keeps the monorepo flag at args[0], the script name follows it
   const script = args[0] === '-p' ? args[1] : args[0]
-  if (typeof script === 'string' && storage.lastRunCommand !== script) {
+  const { mode, storage } = await getState()
+  if (mode !== 'off' && typeof script === 'string' && storage.lastRunCommand !== script) {
     storage.lastRunCommand = script
-    dump()
+    await dump(storage, getStorageKey(mode))
   }
 
   return parseNr(agent, args, ctx)
