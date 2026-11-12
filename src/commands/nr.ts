@@ -122,8 +122,10 @@ runCli(async (agent, args, ctx) => {
     await promptSelectScript(raw)
   }
 
-  if (storage.lastRunCommand !== args[0]) {
-    storage.lastRunCommand = args[0]
+  // `nr -p` keeps the monorepo flag at args[0], the script name follows it
+  const script = args[0] === '-p' ? args[1] : args[0]
+  if (typeof script === 'string' && storage.lastRunCommand !== script) {
+    storage.lastRunCommand = script
     dump()
   }
 
