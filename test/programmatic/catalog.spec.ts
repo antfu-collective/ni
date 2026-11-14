@@ -154,6 +154,23 @@ describe('catalog handler - default catalog only', () => {
     const pkg = readJson(path.join(cwd, 'package.json'))
     expect(pkg.dependencies.lodash).toBe('catalog:')
   })
+
+  it('preserves CRLF line endings and indentation in package.json, #376', async () => {
+    const cwd = await createTempDir('pnpm-default-only')
+    const pkgPath = path.join(cwd, 'package.json')
+    const raw = fs.readFileSync(pkgPath, 'utf-8').replace(/\r?\n/g, '\r\n')
+    fs.writeFileSync(pkgPath, raw)
+
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+    const result = await handleCatalogInstall('pnpm', ['-D', 'react'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    const updated = fs.readFileSync(pkgPath, 'utf-8')
+    expect(updated).not.toMatch(/\r\n\r\n|\n\n/)
+    expect(updated).toContain('\r\n')
+    expect(updated).not.toMatch(/(?<!\r)\n/)
+    expect(JSON.parse(updated).devDependencies.react).toBe('catalog:')
+  })
 })
 
 describe('catalog handler - skip conditions', () => {
@@ -312,6 +329,25 @@ describe('catalog handler - bun default catalog only', () => {
     // Check package.json uses catalog:
     const pkg = readJson(path.join(cwd, 'package.json'))
     expect(pkg.dependencies.lodash).toBe('catalog:')
+  })
+
+  it('preserves CRLF line endings and indentation when updating bun catalog in package.json', async () => {
+    const cwd = await createTempDir('bun-default-only')
+    const pkgPath = path.join(cwd, 'package.json')
+    const raw = fs.readFileSync(pkgPath, 'utf-8').replace(/\r?\n/g, '\r\n')
+    fs.writeFileSync(pkgPath, raw)
+
+    const { handleCatalogInstall } = await import('../../src/catalog/handler')
+    const result = await handleCatalogInstall('bun', ['lodash'], { cwd, programmatic: true })
+
+    expect(result).toBeDefined()
+    const updated = fs.readFileSync(pkgPath, 'utf-8')
+    expect(updated).not.toMatch(/\r\n\r\n|\n\n/)
+    expect(updated).toContain('\r\n')
+    expect(updated).not.toMatch(/(?<!\r)\n/)
+    const parsed = JSON.parse(updated)
+    expect(parsed.workspaces.catalog.lodash).toBe('^1.0.0')
+    expect(parsed.dependencies.lodash).toBe('catalog:')
   })
 })
 

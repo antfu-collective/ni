@@ -1,8 +1,19 @@
 import fs from 'node:fs'
 
 export function detectIndent(content: string): string {
-  const match = content.match(/^(\s+)"/m)
+  const match = content.match(/^([ \t]+)"/m)
   return match?.[1] ?? '  '
+}
+
+export function detectEol(content: string): string {
+  return content.includes('\r\n') ? '\r\n' : '\n'
+}
+
+export function formatPackageJson(data: unknown, originalContent: string): string {
+  const indent = detectIndent(originalContent)
+  const eol = detectEol(originalContent)
+  const serialized = `${JSON.stringify(data, null, indent)}\n`
+  return eol === '\n' ? serialized : serialized.replaceAll('\n', eol)
 }
 
 export type DepType = 'dependencies' | 'devDependencies' | 'peerDependencies'
@@ -13,7 +24,6 @@ export function updatePackageJsonCatalogRefs(
   depType: DepType,
 ): void {
   const content = fs.readFileSync(pkgJsonPath, 'utf-8')
-  const indent = detectIndent(content)
   const data = JSON.parse(content)
 
   if (!data[depType])
@@ -29,5 +39,5 @@ export function updatePackageJsonCatalogRefs(
   }
   data[depType] = sorted
 
-  fs.writeFileSync(pkgJsonPath, `${JSON.stringify(data, null, indent)}\n`)
+  fs.writeFileSync(pkgJsonPath, formatPackageJson(data, content))
 }
