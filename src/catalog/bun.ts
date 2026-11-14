@@ -1,7 +1,7 @@
 import type { CatalogConfig, CatalogInfo, CatalogProvider } from './types'
 import fs from 'node:fs'
 import path from 'node:path'
-import { detectIndent } from './package-json'
+import { formatPackageJson } from './package-json'
 
 interface BunWorkspacesField {
   packages?: string[]
@@ -113,7 +113,6 @@ export const bunCatalogProvider: CatalogProvider = {
 
   async addPackage(config: CatalogConfig, catalogName: string, pkgName: string, version: string): Promise<void> {
     const content = fs.readFileSync(config.filePath, 'utf-8')
-    const indent = detectIndent(content)
     const json: BunPackageJson = JSON.parse(content)
 
     const workspaces = getWorkspacesField(json)
@@ -128,7 +127,7 @@ export const bunCatalogProvider: CatalogProvider = {
       target.catalogs[catalogName] = { ...(target.catalogs[catalogName] ?? {}), [pkgName]: version }
     }
 
-    fs.writeFileSync(config.filePath, `${JSON.stringify(json, null, indent)}\n`)
+    fs.writeFileSync(config.filePath, formatPackageJson(json, content))
 
     // Update the in-memory config
     const existing = config.catalogs.find(c => c.name === catalogName)
